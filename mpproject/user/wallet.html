@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wallet - Quick Recharge</title>
+  <link rel="stylesheet" href="navbar.css">
+  <style>
+    :root {
+      --primary: #5e72e4;
+      --secondary: #f7fafc;
+      --success: #2dce89;
+      --warning: #fb6340;
+      --dark: #32325d;
+      --light: #ffffff;
+      --border: #e9ecef;
+      --text-muted: #8898aa;
+      --shadow: 0 7px 14px rgba(50, 50, 93, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+      --card-shadow: 0 15px 35px rgba(50, 50, 93, 0.1), 0 5px 15px rgba(0, 0, 0, 0.07);
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--secondary);
+      color: var(--dark);
+      line-height: 1.6;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    
+ 
+    
+    
+    
+
+    
+    /* Main Content */
+    .main-content {
+      padding: 40px 0;
+      flex: 1;
+      margin-top: 5%;
+    }
+    
+    .page-title {
+      text-align: center;
+      margin-bottom: 30px;
+      color: var(--dark);
+      font-weight: 600;
+    }
+    
+    /* Wallet Card */
+    .wallet-card {
+      background: var(--light);
+      border-radius: 12px;
+      box-shadow: var(--card-shadow);
+      padding: 30px;
+      max-width: 500px;
+      margin: 0 auto;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .wallet-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 8px;
+      background: linear-gradient(90deg, var(--primary), #b343fd);
+    }
+    
+    .balance-display {
+      text-align: center;
+      padding: 25px 0;
+      position: relative;
+    }
+    
+    .balance-label {
+      font-size: 1rem;
+      color: var(--text-muted);
+      margin-bottom: 5px;
+    }
+    
+    .balance-amount {
+      font-size: 3rem;
+      font-weight: 700;
+      color: var(--dark);
+      display: inline-block;
+      position: relative;
+    }
+    
+    .balance-amount::before {
+      content: '₹';
+      font-size: 1.5rem;
+      position: absolute;
+      top: 8px;
+      left: -20px;
+    }
+    
+    .add-funds-btn {
+      background: linear-gradient(to right, var(--primary), #af43fd);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 50px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: block;
+      margin: 0 auto;
+      transition: all 0.3s;
+      box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+    }
+    
+    .add-funds-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+    }
+    
+    .add-funds-btn:active {
+      transform: translateY(1px);
+    }
+    
+    /* Add Funds Form */
+    .add-funds-form {
+      display: none;
+      margin-top: 25px;
+      padding: 20px;
+      border-radius: 8px;
+      background-color: #f8fafc;
+      border: 1px solid var(--border);
+    }
+    
+    .form-group {
+      margin-bottom: 20px;
+    }
+    
+    .form-label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      color: var(--dark);
+    }
+    
+    .form-control {
+      width: 100%;
+      padding: 12px 15px;
+      font-size: 1rem;
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    }
+    
+    .form-control:focus {
+      border-color: var(--primary);
+      outline: 0;
+      box-shadow: 0 0 0 3px rgba(94, 114, 228, 0.25);
+    }
+    
+    .form-select {
+      width: 100%;
+      padding: 12px 15px;
+      font-size: 1rem;
+      background-color: var(--light);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    
+    .btn-group {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+    
+    .btn {
+      padding: 10px 20px;
+      border-radius: 5px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      flex: 1;
+      border: none;
+    }
+    
+    .btn-primary {
+      background-color: var(--primary);
+      color: var(--light);
+    }
+    
+    .btn-outline {
+      background-color: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+    }
+    
+    .btn:hover {
+      opacity: 0.9;
+      transform: translateY(-1px);
+    }
+    
+    /* Login Message */
+    .login-message {
+      display: none;
+      text-align: center;
+      padding: 20px;
+      color: var(--warning);
+      background-color: rgba(251, 99, 64, 0.1);
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+    
+    .login-btn {
+      display: inline-block;
+      background-color: var(--primary);
+      color: var(--light);
+      text-decoration: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      margin-top: 15px;
+      font-weight: 600;
+      transition: all 0.3s;
+    }
+    
+    .login-btn:hover {
+      background-color: #c434f8;
+    }
+    
+    /* Footer Styles */
+    .footer {
+      background-color: black;
+      color: var(--light);
+      padding: 40px 0 20px;
+      margin-top: auto;
+    }
+    
+    .footer-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 30px;
+    }
+    
+    .footer-section {
+      flex: 1;
+      min-width: 200px;
+    }
+    
+    .footer-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 20px;
+      position: relative;
+      padding-bottom: 10px;
+    }
+    
+    .footer-title::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 50px;
+      height: 2px;
+      background: var(--primary);
+    }
+    
+    .footer-links {
+      list-style: none;
+    }
+    
+    .footer-links li {
+      margin-bottom: 10px;
+    }
+    
+    .footer-links a {
+      color: #ced4da;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    
+    .footer-links a:hover {
+      color: var(--primary);
+    }
+    
+    .social-icons {
+      display: flex;
+      gap: 15px;
+      margin-top: 15px;
+    }
+    
+    .social-icon {
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+    
+    .social-icon:hover {
+      background-color: var(--primary);
+      transform: translateY(-3px);
+    }
+    
+    .contact-info {
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.9rem;
+    }
+    
+    .footer-bottom {
+      text-align: center;
+      padding-top: 30px;
+      margin-top: 30px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      font-size: 0.9rem;
+      color: #ced4da;
+    }
+    
+    /* Back to top button */
+    #backToTop {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 45px;
+      height: 45px;
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      font-size: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      opacity: 0;
+      transition: all 0.3s;
+      visibility: hidden;
+    }
+    
+    #backToTop.show {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    /* Transaction History */
+    .transaction-history {
+      margin-top: 30px;
+      padding: 20px;
+      background-color: var(--light);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+    }
+    
+    .transaction-title {
+      font-size: 1.2rem;
+      margin-bottom: 15px;
+      color: var(--dark);
+      font-weight: 600;
+    }
+    
+    .transaction-list {
+      list-style: none;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+    
+    .transaction-item {
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .transaction-info {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .transaction-type {
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+    
+    .transaction-date {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    
+    .transaction-amount {
+      font-weight: 600;
+    }
+    
+    .transaction-amount.credit {
+      color: var(--success);
+    }
+    
+    .transaction-amount.debit {
+      color: var(--warning);
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 768px) {
+    
+      .wallet-card {
+        margin: 0 15px;
+      }
+      
+      .balance-amount {
+        font-size: 2.5rem;
+      }
+      
+      .btn-group {
+        flex-direction: column;
+      }
+      
+      .footer-container {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="navbar">
+      <nav class="nav-container">
+        <a href="home.html" onclick="handleHomeClick()" class="logo" style="text-decoration: none;margin-right: 50%;">ReZap</a>
+        <button class="menu-toggle" id="mobileMenu">☰</button>
+        <ul class="nav-links" id="navMenu">
+          
+          <li> <a href="login.html" id="loginNav">
+            <button class="cta">
+              <span><b>Login</b></span>
+              <svg width="15px" height="10px" viewBox="0 0 13 10">
+                <path d="M1,5 L11,5"></path>
+                <polyline points="8 1 12 5 8 9"></polyline>
+              </svg>
+            </button>
+          </a></li>
+          <li><a href="profile.html" id="profileNav" style="display:none;">
+            <button class="cta">
+              <span><b>Profile</b></span>
+              <svg width="15px" height="10px" viewBox="0 0 13 10">
+                <path d="M1,5 L11,5"></path>
+                <polyline points="8 1 12 5 8 9"></polyline>
+              </svg>
+            </button>
+          </a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+   <!-- Navbar
+   <header class="navbar" id="navbar">
+    <div class="menu-toggle" id="menuToggle">☰</div>
+    <div class="logo">ReZap</div>
+    <div class="nav-container" id="navContainer">
+      <nav class="nav-links">
+        <a href="home.html">Home</a>
+        <a href="plans.html">Plans</a>
+        <a href="offers.html">Offers</a>
+        <a href="wallet.html">Wallet</a>
+        <a href="support.html">Support</a>
+      </nav>
+    </div>
+    <a href="login.html" id="loginNav">
+      <button class="cta">
+        <span><b>Login</b></span>
+        <svg width="15px" height="10px" viewBox="0 0 13 10">
+          <path d="M1,5 L11,5"></path>
+          <polyline points="8 1 12 5 8 9"></polyline>
+        </svg>
+      </button>
+    </a>
+    <a href="profile.html" id="profileNav" style="display:none;">
+      <button class="cta">
+        <span><b>Profile</b></span>
+        <svg width="15px" height="10px" viewBox="0 0 13 10">
+          <path d="M1,5 L11,5"></path>
+          <polyline points="8 1 12 5 8 9"></polyline>
+        </svg>
+      </button>
+    </a>
+  </header> -->
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="container">
+      <h1 class="page-title">Your ReZap Wallet</h1>
+      
+      <!-- Login Message -->
+      <div id="loginMessage" class="login-message">
+        <h3>Account Required</h3>
+        <p>Please log in to access your wallet and manage your funds.</p>
+        <a href="login.html" class="login-btn">Login Now</a>
+      </div>
+      
+      <!-- Wallet Details -->
+      <div class="wallet-card" id="walletDetails">
+        <div class="balance-display">
+          <div class="balance-label">Available Balance</div>
+          <div class="balance-amount" id="walletBalance">0</div>
+        </div>
+        <button class="add-funds-btn" onclick="showAddFunds()">Add Funds</button>
+        
+        <!-- Add Funds Form -->
+        <div id="addFundsSection" class="add-funds-form">
+          <h3 style="margin-bottom: 15px; text-align: center;">Add Money to Wallet</h3>
+          
+          <div class="form-group">
+            <label for="fundsAmount" class="form-label">Amount (₹)</label>
+            <input type="number" id="fundsAmount" class="form-control" placeholder="Enter amount" min="1">
+          </div>
+          
+          <div class="form-group">
+            <label for="fundsPaymentMethod" class="form-label">Payment Method</label>
+            <select id="fundsPaymentMethod" class="form-select">
+              <option value="Credit Card">Credit Card</option>
+              <option value="UPI">UPI</option>
+              <option value="Bank Transfer">Bank Transfer</option>
+            </select>
+          </div>
+          
+          <div class="btn-group">
+            <button onclick="addFunds()" class="btn btn-primary">Confirm</button>
+            <button onclick="hideAddFunds()" class="btn btn-outline">Cancel</button>
+          </div>
+        </div>
+        
+        <!-- Transaction History -->
+        <div class="transaction-history">
+          <h3 class="transaction-title">Recent Transactions</h3>
+          <ul class="transaction-list" id="transactionList">
+            <!-- Transactions will be added here dynamically -->
+          </ul>
+        </div>
+      </div>
+    </div>
+  </main>
+  
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-container">
+        <div class="footer-section">
+          <h3 class="footer-title">ReZap</h3>
+          <p>Quick and convenient mobile recharge service. Secure payments, instant recharges, and exclusive offers.</p>
+          <div class="social-icons">
+            <a href="#" class="social-icon">f</a>
+            <a href="#" class="social-icon">t</a>
+            <a href="#" class="social-icon">in</a>
+            <a href="#" class="social-icon">ig</a>
+          </div>
+        </div>
+        
+      
+        
+        <div class="footer-section">
+          <h3 class="footer-title">Support</h3>
+          <ul class="footer-links">
+            <li><a href="support.html">Contact Us</a></li>
+            <li><a href="support.html">Help Center</a></li>
+            <li><a href="terms.html">Terms of Service</a></li>
+            <li><a href="privacy.html">Privacy Policy</a></li>
+            <li><a href="refund.html">Refund Policy</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-section">
+          <h3 class="footer-title">Contact Us</h3>
+          <div class="contact-info">
+            <span>📞</span>
+            <p>+91 9876543210</p>
+          </div>
+          <div class="contact-info">
+            <span>✉️</span>
+            <p>support@rezap.com</p>
+          </div>
+          <div class="contact-info">
+            <span>🏢</span>
+            <p>123 Tech Park, Mumbai, India</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <p>&copy; 2025 ReZap. All rights reserved. Quick recharge solutions for a connected world.</p>
+      </div>
+    </div>
+  </footer>
+  
+  <button id="backToTop">↑</button>
+
+  <script>
+    // Mobile menu toggle
+    document.getElementById('mobileMenu').addEventListener('click', function() {
+      document.getElementById('navMenu').classList.toggle('active');
+    });
+
+    // Clear quick recharge number if Home is clicked
+    function handleHomeClick() {
+      localStorage.removeItem("userPhoneNumber");
+      window.location.href = "home.html";
+    }
+
+    // Update the wallet balance from localStorage
+    function updateWalletBalance() {
+      // Get balance with better error handling
+      let balanceStr = localStorage.getItem("walletBalance");
+      let balance = 0;
+      
+      // Make sure we have a valid number
+      if (balanceStr !== null && balanceStr !== "") {
+        balance = parseFloat(balanceStr);
+        // If parsing failed and we got NaN, reset to 0
+        if (isNaN(balance)) {
+          balance = 0;
+        }
+      }
+      
+      // Always ensure we have a valid number in localStorage
+      localStorage.setItem("walletBalance", balance.toString());
+      
+      // Update the display
+      document.getElementById("walletBalance").textContent = balance.toFixed(2);
+    }
+
+    // Show the Add Funds section
+    function showAddFunds() {
+      document.getElementById("addFundsSection").style.display = "block";
+    }
+
+    // Hide the Add Funds section
+    function hideAddFunds() {
+      document.getElementById("addFundsSection").style.display = "none";
+    }
+
+    // Add funds function: adds the entered amount to the wallet
+    function addFunds() {
+      let amountInput = document.getElementById("fundsAmount");
+      let amount = parseFloat(amountInput.value);
+      let paymentMethod = document.getElementById("fundsPaymentMethod").value;
+      
+      if (isNaN(amount) || amount <= 0) {
+        alert("Please enter a valid amount.");
+        return;
+      }
+      
+      // Get current balance with error handling
+      let balanceStr = localStorage.getItem("walletBalance") || "0";
+      let currentBalance = parseFloat(balanceStr);
+      
+      // Ensure we have a valid number
+      if (isNaN(currentBalance)) {
+        currentBalance = 0;
+      }
+      
+      // Add the new amount
+      currentBalance += amount;
+      
+      // Store the result as a string
+      localStorage.setItem("walletBalance", currentBalance.toString());
+      
+      // Add transaction to history
+      addTransaction("Wallet Top-up", amount, true, paymentMethod);
+      
+      // Update display
+      updateWalletBalance();
+      hideAddFunds();
+      updateTransactionHistory();
+      
+      // Show success notification
+      showNotification(`₹${amount.toFixed(2)} added successfully!`, 'success');
+      
+      // Clear the input field
+      amountInput.value = "";
+    }
+    
+    // Function to add transaction record
+    function addTransaction(description, amount, isCredit, method) {
+      // Get existing transactions or initialize empty array
+      let transactions = JSON.parse(localStorage.getItem("transactions") || "[]");
+      
+      // Create new transaction
+      const transaction = {
+        id: Date.now(), // Unique ID
+        description: description,
+        amount: amount,
+        isCredit: isCredit, // true for credit, false for debit
+        method: method || "N/A",
+        date: new Date().toISOString()
+      };
+      
+      // Add to beginning of array (most recent first)
+      transactions.unshift(transaction);
+      
+      // Limit to 20 transactions to avoid localStorage bloat
+      if (transactions.length > 20) {
+        transactions = transactions.slice(0, 20);
+      }
+      
+      // Save back to localStorage
+      localStorage.setItem("transactions", JSON.stringify(transactions));
+    }
+    
+    // Function to update transaction history display
+    function updateTransactionHistory() {
+      const transactionList = document.getElementById("transactionList");
+      const transactions = JSON.parse(localStorage.getItem("transactions") || "[]");
+      
+      // Clear current list
+      transactionList.innerHTML = "";
+      
+      if (transactions.length === 0) {
+        transactionList.innerHTML = "<li class='transaction-item'>No transactions yet</li>";
+        return;
+      }
+      
+      // Add each transaction to the list
+      transactions.forEach(transaction => {
+        const date = new Date(transaction.date);
+        const formattedDate = `${date.toLocaleDateString()} ${date.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}`;
+        
+        const li = document.createElement("li");
+        li.className = "transaction-item";
+        li.innerHTML = `
+          <div class="transaction-info">
+            <div class="transaction-type">${transaction.description}</div>
+            <div class="transaction-date">${formattedDate} • ${transaction.method}</div>
+          </div>
+          <div class="transaction-amount ${transaction.isCredit ? 'credit' : 'debit'}">
+            ${transaction.isCredit ? '+' : '-'}₹${transaction.amount.toFixed(2)}
+          </div>
+        `;
+        
+        transactionList.appendChild(li);
+      });
+    }
+    
+    // Function to show notification
+    function showNotification(message, type = 'info') {
+      const notification = document.createElement('div');
+      notification.style.position = 'fixed';
+      notification.style.bottom = '20px';
+      notification.style.right = '20px';
+      notification.style.backgroundColor = type === 'success' ? '#2dce89' : 
+                                          type === 'warning' ? '#fb6340' : 
+                                          type === 'error' ? '#f5365c' : '#5e72e4';
+      notification.style.color = 'white';
+      notification.style.padding = '15px 25px';
+      notification.style.borderRadius = '5px';
+      notification.style.boxShadow = '0 5px 15px rgba(0,0,0,0.1)';
+      notification.style.zIndex = '1000';
+      notification.textContent = message;
+      document.body.appendChild(notification);
+      
+      setTimeout(() => {
+        notification.style.opacity = '0';
+        notification.style.transition = 'opacity 0.5s ease';
+        setTimeout(() => document.body.removeChild(notification), 500);
+      }, 3000);
+    }
+
+    // Function to handle payment page integration
+    function setupPaymentIntegration() {
+      // Listen for payment events from payment page
+      window.addEventListener('storage', function(e) {
+        // Check if this is a payment event
+        if (e.key === 'paymentCompleted') {
+          const paymentData = JSON.parse(e.newValue || "{}");
+          
+          // Only process if it's a valid payment
+          if (paymentData && paymentData.amount) {
+            const amount = parseFloat(paymentData.amount);
+            const paymentMethod = paymentData.method || "Unknown";
+            const isWalletPayment = paymentMethod.toLowerCase() === 'wallet';
+            
+            // If paid by wallet, deduct from wallet balance
+            if (isWalletPayment) {
+              let currentBalance = parseFloat(localStorage.getItem("walletBalance") || "0");
+              currentBalance = Math.max(0, currentBalance - amount);
+              localStorage.setItem("walletBalance", currentBalance.toString());
+              
+              // Add transaction record
+              addTransaction("Recharge Payment", amount, false, "Wallet");
+              showNotification(`₹${amount.toFixed(2)} deducted from wallet`, 'info');
+            } else {
+              // If paid by other methods, add 20 Rs bonus
+              let currentBalance = parseFloat(localStorage.getItem("walletBalance") || "0");
+              currentBalance += 20;
+              localStorage.setItem("walletBalance", currentBalance.toString());
+              
+              // Add transaction records
+              addTransaction("Recharge Payment", amount, false, paymentMethod);
+              addTransaction("Recharge Cashback", 20, true, "Bonus");
+              
+              showNotification(`Recharge successful! ₹20 cashback added to wallet`, 'success');
+            }
+            
+            // Update UI
+            updateWalletBalance();
+            updateTransactionHistory();
+            
+            // Clear the payment completed flag
+            localStorage.removeItem('paymentCompleted');
+          }
+        }
+      });
+    }
+
+    // Initialize wallet with a clean slate
+    function initializeWallet() {
+      // Only initialize if not already set
+      if (!localStorage.getItem("walletBalance")) {
+        localStorage.setItem("loggedInUser", "demo_user");
+        localStorage.setItem("walletBalance", "500");
+      }
+      
+      // Initialize transactions if not present
+      if (!localStorage.getItem("transactions")) {
+        const initialTransactions = [
+          {
+            id: Date.now() - 1000,
+            description: "Welcome Bonus",
+            amount: 500,
+            isCredit: true,
+            method: "System",
+            date: new Date().toISOString()
+          }
+        ];
+        localStorage.setItem("transactions", JSON.stringify(initialTransactions));
+      }
+    }
+
+    // On page load, check if the user is logged in
+    window.onload = function() {
+      // Initialize wallet
+      initializeWallet();
+      
+      // Set up payment integration
+      setupPaymentIntegration();
+      
+      // Update UI based on login status
+      if (localStorage.getItem("loggedInUser")) {
+        // User is logged in: show wallet details
+        document.getElementById("walletDetails").style.display = "block";
+        document.getElementById("loginMessage").style.display = "none";
+        
+        // Update navbar
+        document.getElementById("loginNav").style.display = "none";
+        document.getElementById("profileNav").style.display = "inline-block";
+      } else {
+        // Not logged in: prompt the user to log in
+        document.getElementById("walletDetails").style.display = "none";
+        document.getElementById("loginMessage").style.display = "block";
+      }
+      
+      // Ensure wallet balance is updated
+      updateWalletBalance();
+      updateTransactionHistory();
+    };
+
+    // Back to top button
+    const backToTop = document.getElementById("backToTop");
+
+    window.addEventListener("scroll", function() {
+      if (window.scrollY > 200) {
+    backToTop.classList.add("show");
+  } else {
+    backToTop.classList.remove("show");
+  }
+});
+
+backToTop.addEventListener("click", function() {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+});</script>
+</body>
+</html>

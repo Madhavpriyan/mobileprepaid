@@ -1,0 +1,384 @@
+
+/*login buton */ 
+.cta {
+  
+  position: relative;
+  margin: auto;
+  padding: 12px 18px;
+  transition: all 0.2s ease;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.cta:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  border-radius: 50px;
+  background: #b1dae7;
+  width: 45px;
+  height: 45px;
+  transition: all 0.3s ease;
+}
+
+.cta span {
+  position: relative;
+  font-family: "Ubuntu", sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: #234567;
+}
+.cta:hover span{
+color: #f4f2f2;
+}
+
+.cta svg {
+  position: relative;
+  top: 0;
+  margin-left: 10px;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke: #234567;
+  stroke-width: 2;
+  transform: translateX(-5px);
+  transition: all 0.3s ease;
+}
+
+.cta:hover:before {
+  width: 100%;
+  background: #ff6f61;
+}
+
+.cta:hover svg {
+  transform: translateX(0);
+}
+
+.cta:active {
+  transform: scale(0.95);
+}
+
+/*input mobile number*/
+.form-container {
+  width: 400px;
+  background: linear-gradient(#e8e4e4, #fffdfd) padding-box,
+              linear-gradient(145deg, transparent 35%,#ff1c1c, #40c9ff) border-box;
+  border: 2px solid transparent;
+  padding: 1px 24px;
+  font-size: 14px;
+  font-family: inherit;
+  color: white;
+  display: flex;
+  margin: auto;
+  margin-bottom: 10%;
+  flex-direction: column;
+  gap: 20px;
+  box-sizing: border-box;
+  border-radius: 16px;
+}
+
+.form-container button:active {
+  scale: 0.95;
+}
+
+.form-container .form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-container .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.form-container .form-group label {
+  display: block;
+  margin-bottom: 5px;
+  color: #121212;
+  font-weight: 600;
+  font-size: 12px;
+}
+
+.form-container .form-group input {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 8px;
+  color: #080808;
+  font-family: inherit;
+  background-color: transparent;
+  border: 1px solid #414141;
+}
+
+.form-container .form-group textarea {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 8px;
+  resize: none;
+  color: #fff;
+  height: 96px;
+  border: 1px solid #414141;
+  background-color: transparent;
+  font-family: inherit;
+}
+
+.form-container .form-group input::placeholder {
+  opacity: 0.5;
+}
+
+.form-container .form-group input:focus {
+  outline: none;
+  border-color: #f54147;
+}
+.form-container .form-submit-btn {
+  display: flex;
+  display: block;
+  margin: auto;
+  font-family: inherit;
+  color: #f4f2f2;
+  font-weight: 600;
+  width: 40%;
+  background: #090909;
+  border: 1px solid #414141;
+  padding: 12px 16px;
+  font-size: inherit;
+  gap: 8px;
+  margin-top: 8px;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.form-container .form-submit-btn:hover {
+  background-color: #0b0b0b;
+  border-color: #fff;
+  color: #fbf6f6;
+}
+ 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+.carousel-container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  padding: 20px;
+  text-align: center;
+}
+
+.container {
+  display: flex;
+  gap: 15px;
+  transition: transform 0.3s ease-in-out;
+}
+
+* {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+font-family: Arial, sans-serif;
+}
+
+.carousel-container {
+position: relative;
+width: 100%;
+overflow: hidden;
+padding: 20px;
+text-align: center;
+}
+
+.container {
+display: flex;
+gap: 15px;
+transition: transform 0.3s ease-in-out;
+}
+
+/* From Uiverse.io by alexruix */ 
+/*Magic card*/
+.card1 {
+  width: 80%;
+  height: 245px;
+  background: linear-gradient(to right, #e80524, #fe4e41);
+  overflow: visible;
+  box-shadow: 0 5px 20px 2px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 10%;
+  margin-bottom: 2%;
+  position: relative; /* So the absolute button is relative to this container */
+}
+
+.card1-img {
+  --size: 100px;
+  width: var(--size);
+  height: var(--size);
+  border-radius: 50%;
+  transform: translateY(-50%);
+  background: linear-gradient(to bottom, #42caff 0%, #e81aff 100%);
+  position: relative;
+  transition: all 0.3s ease-in-out;
+}
+
+.card1-img::before {
+  content: "";
+  border-radius: inherit;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 90%;
+  height: 90%;
+  transform: translate(-50%, -50%);
+  border: 1rem solid #e8e8e8;
+}
+
+/* Hover */
+.card1:hover .card1-img {
+  --size: 110px;
+  width: var(--size);
+  height: var(--size);
+}
+
+.contact-card {
+  
+  color: #f9f9f9;
+  width: 70%;
+  text-align: left;
+  margin-bottom: 4%;
+  margin-left: 0%;
+}
+
+.tagline {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  opacity: 0.9;
+}
+
+.heading {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-top: 0.5rem;
+  line-height: 1.2;
+}
+
+.description {
+  font-size: 1rem;
+  margin-top: 0.75rem;
+}
+
+.callback-btn  {
+  text-decoration: none;
+  position: absolute; /* Absolutely positioned within .card1 */
+  right: 20%;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 0.5rem 1.6rem;
+  background-color: #fff;
+  color: #FF4660;
+  border: none;
+  border-radius: 9999px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.callback-btn:hover {
+  background-color: #FF4660;
+  color: #fff;
+}
+
+
+.buy-btn {
+background-color: #007bff;
+color: white;
+padding: 10px 20px;
+border: none;
+border-radius: 5px;
+cursor: pointer;
+margin-bottom: 10px;
+}
+
+.buy-btn:hover {
+background-color: #0056b3;
+}
+
+.nav-buttons {
+display: none;
+justify-content: center;
+align-items: center;
+margin-top: 10px;
+}
+
+.nav-btn {
+background-color: #007bff;
+color: white;
+border: none;
+padding: 10px;
+border-radius: 5px;
+cursor: pointer;
+margin: 0 10px;
+}
+
+.nav-btn:hover {
+background-color: #0056b3;
+}
+
+.pagination {
+font-size: 16px;
+font-weight: bold;
+}
+
+@media screen and (max-width: 768px) {
+.nav-buttons {
+    display: flex;
+}
+}
+.card {
+  width: 300px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #fff;
+  flex-shrink: 0;
+  text-align: center;
+  transition: transform 0.3s ease-in-out;
+  position: relative;
+  display: block;
+  margin:auto ;
+}
+
+.card:hover {
+  transform: rotateY(10deg) rotateX(10deg) scale(1.05);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.card img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+}
+
+.card-content {
+  padding: 15px;
+}
+
+.card-title {
+  font-weight: bold;
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+
+.card-para {
+  font-size: 14px;
+  margin-bottom: 10px;
+}

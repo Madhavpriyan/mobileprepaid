@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Website Footer with SVG Wave</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+    
+    body {
+      background-color: #f5f5f5;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+    
+    .footer-container {
+      width: 100%;
+      position: relative;
+    }
+    
+    .wave-container {
+      position: relative;
+      width: 100%;
+      height: 150px;
+    }
+    
+    .wave-svg {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+    
+    .footer-content {
+      background-color: #110e47;
+      color: white;
+      padding: 30px 10% 50px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+    }
+    
+    .footer-heading {
+      margin-bottom: 25px;
+      font-size: 1.5rem;
+      letter-spacing: 1px;
+    }
+    
+    .footer-section {
+      margin-bottom: 20px;
+    }
+    
+    .contact-item {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 15px;
+    }
+    
+    .contact-item i {
+      margin-right: 10px;
+      min-width: 24px;
+    }
+    
+    .footer-links a {
+      display: block;
+      color: white;
+      text-decoration: none;
+      margin-bottom: 15px;
+      transition: color 0.3s;
+    }
+    
+    .footer-links a:hover {
+      color: #e83e8c;
+    }
+    
+    .newsletter-form {
+      display: flex;
+    }
+    
+    .newsletter-form input {
+      flex: 1;
+      padding: 12px 15px;
+      border: none;
+      outline: none;
+    }
+    
+    .newsletter-form button {
+      background-color: #e83e8c;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    
+    .newsletter-form button:hover {
+      background-color: #d42d7c;
+    }
+    
+    .newsletter-notice {
+      font-size: 0.8rem;
+      margin-top: 10px;
+      color: #cccccc;
+    }
+    
+    @media (max-width: 768px) {
+      .footer-content {
+        grid-template-columns: 1fr;
+      }
+      
+      .wave-container {
+        height: 100px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="footer-container">
+    <div class="wave-container">
+      <svg class="wave-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 150" preserveAspectRatio="none">
+        <!-- Light pink area -->
+        <path 
+          fill="#f8e1f4" 
+          d="M0,0 L500,0 C400,80 300,120 0,60 L0,0 Z" 
+        />
+        
+        <!-- Dark blue wave with pink border -->
+        <path 
+          fill="#110e47" 
+          stroke="#e83e8c" 
+          stroke-width="4"
+          d="M0,80 C200,100 800,20 1200,50 L1200,150 L0,150 Z" 
+        />
+      </svg>
+    </div>
+    <div class="footer-content">
+      <div class="footer-section">
+        <h2 class="footer-heading">CONTACT</h2>
+        <div class="contact-item">
+          <i>📍</i>
+          <div>35 W 46nd Street, Wall Road<br>New York, USA.</div>
+        </div>
+        <div class="contact-item">
+          <i>📞</i>
+          <div>+(000) 1234-56789</div>
+        </div>
+        <div class="contact-item">
+          <i>✉️</i>
+          <div>support@example.com</div>
+        </div>
+      </div>
+      
+      <div class="footer-section">
+        <h2 class="footer-heading">SUPPORT</h2>
+        <div class="footer-links">
+          <a href="#">Faq</a>
+          <a href="#">Shipping & Returns</a>
+          <a href="#">Contact Us</a>
+          <a href="#">Our Partners</a>
+        </div>
+      </div>
+      
+      <div class="footer-section">
+        <h2 class="footer-heading">INFO</h2>
+        <div class="footer-links">
+          <a href="#">About Us</a>
+          <a href="#">Our Stores</a>
+          <a href="#">Size Guide</a>
+          <a href="#">Our Piercing Service</a>
+        </div>
+      </div>
+      
+      <div class="footer-section">
+        <h2 class="footer-heading">SUBSCRIBE TO OUR NEWSLETTER</h2>
+        <form class="newsletter-form">
+          <input type="email" placeholder="Email Address">
+          <button type="submit">Subscribe</button>
+        </form>
+        <p class="newsletter-notice">
+          Your email address will be used in accordance with our privacy policy
+        </p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

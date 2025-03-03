@@ -1,0 +1,1311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ReZap Plans</title>
+  <link rel="stylesheet" href="navbar.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #6200ee;
+      --primary-dark: #4b00c4;
+      --secondary: #03dac6;
+      --background: #f5f5f5;
+      --surface: #ffffff;
+      --on-surface: #121212;
+      --on-primary: #ffffff;
+      --shadow: rgba(0, 0, 0, 0.1);
+      --radius: 12px;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    body {
+      background-color: var(--background);
+      color: var(--on-surface);
+      margin: 0;
+      padding: 0;
+    }
+    
+    /* Navbar styles */
+    /* .navbar {
+      background-color: var(--surface);
+      box-shadow: 0 2px 10px var(--shadow);
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.8rem 2rem;
+      transition: all 0.3s ease;
+    }
+    
+    .navbar .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+    
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+    
+    .nav-links a {
+      text-decoration: none;
+      color: var(--on-surface);
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    
+    .nav-links a:hover {
+      color: var(--primary);
+    } */
+    
+    .menu-toggle {
+      display: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+    
+    /* Mobile control panel for filters and categories */
+    .mobile-controls {
+      display: none;
+      position: fixed;
+      top: 70px;
+      left: 0;
+      width: 100%;
+      background: var(--surface);
+      z-index: 900;
+      box-shadow: 0 2px 5px var(--shadow);
+    }
+    
+    .control-buttons {
+      display: flex;
+      justify-content: space-around;
+      padding: 0.8rem;
+    }
+    
+    .control-button {
+      background-color: var(--primary);
+      color: var(--on-primary);
+      border: none;
+      padding: 0.6rem 1rem;
+      border-radius: var(--radius);
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: background-color 0.2s;
+    }
+    
+    .control-button:hover {
+      background-color: var(--primary-dark);
+    }
+    
+    /* Search and filter panel */
+    .search-filter-bar {
+      position: fixed;
+      top: 70px;
+      left: 0;
+      width: 100%;
+      background: var(--surface);
+      padding: 1rem 2rem;
+      z-index: 900;
+      display: flex;
+      justify-content: center;
+      box-shadow: 0 2px 5px var(--shadow);
+    }
+    
+    .search-filter-container {
+      display: flex;
+      width: 100%;
+      max-width: 800px;
+      gap: 1rem;
+    }
+    
+    .search-form {
+      position: relative;
+      flex-grow: 1;
+    }
+    
+    .search-input {
+      width: 100%;
+      padding: 0.8rem 1rem;
+      border: 1px solid #ddd;
+      border-radius: var(--radius);
+      font-size: 0.9rem;
+      transition: border-color 0.2s;
+    }
+    
+    .search-input:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+    
+    .filter-dropdown {
+      padding: 0.8rem 1rem;
+      border: 1px solid #ddd;
+      border-radius: var(--radius);
+      background-color: var(--surface);
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+    
+    .filter-dropdown:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+    
+    /* Main layout */
+    .main-content {
+      display: flex;
+      padding-top: 140px;
+    }
+    
+    /* Sidebar */
+    .sidebar {
+      width: 250px;
+      background: var(--surface);
+      height: 100vh;
+      position: fixed;
+      top: 0;
+      left: 0;
+      padding-top: 140px;
+      box-shadow: 2px 0 5px var(--shadow);
+      transition: transform 0.3s ease;
+      z-index: 800;
+    }
+    
+    .sidebar h2 {
+      padding: 1rem 1.5rem;
+      color: var(--primary);
+      font-size: 1.2rem;
+    }
+    
+    .sidebar a {
+      display: block;
+      padding: 0.8rem 1.5rem;
+      text-decoration: none;
+      color: var(--on-surface);
+      border-left: 4px solid transparent;
+      transition: all 0.2s;
+    }
+    
+    .sidebar a:hover, .sidebar a.active {
+      background-color: rgba(98, 0, 238, 0.1);
+      border-left-color: var(--primary);
+      color: var(--primary);
+    }
+    
+    /* Container for plans */
+    .container {
+      flex: 1;
+      margin-left: 250px;
+      padding: 1rem 2rem;
+    }
+    
+    /* Plan cards */
+    .plans-section {
+      margin-bottom: 2rem;
+    }
+    
+    .section-header {
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--primary);
+      color: var(--on-surface);
+      font-size: 1.5rem;
+    }
+    
+    .plan-card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      box-shadow: 0 4px 10px var(--shadow);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    
+    .plan-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+    }
+    
+    .plan-icon {
+      width: 60px;
+      height: 60px;
+      background-color: rgba(98, 0, 238, 0.1);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 1.5rem;
+      flex-shrink: 0;
+    }
+    
+    .plan-icon i {
+      font-size: 1.5rem;
+      color: var(--primary);
+    }
+    
+    .plan-details {
+      flex: 1;
+    }
+    
+    .plan-price {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+    }
+    
+    .plan-features {
+      margin-bottom: 0.5rem;
+      font-size: 1rem;
+    }
+    
+    .plan-validity {
+      font-size: 0.9rem;
+      color: #666;
+    }
+    
+    .plan-actions {
+      display: flex;
+      gap: 1rem;
+      margin-left: 1rem;
+    }
+    
+    .btn {
+      padding: 0.6rem 1rem;
+      border-radius: var(--radius);
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: none;
+    }
+    
+    .btn-primary {
+      background-color: var(--primary);
+      color: var(--on-primary);
+    }
+    
+    .btn-primary:hover {
+      background-color: var(--primary-dark);
+    }
+    
+    .btn-outline {
+      background-color: transparent;
+      border: 1px solid var(--primary);
+      color: var(--primary);
+    }
+    
+    .btn-outline:hover {
+      background-color: rgba(98, 0, 238, 0.1);
+    }
+    
+    /* Modal styles */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(3px);
+      z-index: 1100;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .modal {
+      background: var(--surface);
+      border-radius: var(--radius);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+      width: 90%;
+      max-width: 500px;
+      padding: 2rem;
+      position: relative;
+    }
+    
+    .modal-close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #666;
+    }
+    
+    .modal-title {
+      margin-bottom: 1.5rem;
+      color: var(--primary);
+      font-size: 1.5rem;
+    }
+    
+    .modal-content {
+      margin-bottom: 1.5rem;
+    }
+    
+    .modal-detail {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.8rem 0;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .modal-detail:last-child {
+      border-bottom: none;
+    }
+    
+    .modal-label {
+      font-weight: 600;
+    }
+    
+    .modal-value {
+      color: #666;
+    }
+    
+    .modal-input {
+      width: 100%;
+      padding: 0.8rem;
+      border: 1px solid #ddd;
+      border-radius: var(--radius);
+      margin-bottom: 1rem;
+    }
+    
+    .error {
+      color: #e53935;
+      font-size: 0.85rem;
+      margin-top: 0.3rem;
+    }
+    
+    /* Filter panel for mobile */
+    .filter-panel {
+      display: none;
+      background: var(--surface);
+      padding: 1rem;
+      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    }
+    
+     
+    #backToTop {
+            position: fixed;
+            right: 20px;
+            top: -60px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: top 0.5s ease-in-out;
+        }
+        
+        #backToTop.show {
+            top: 70%;
+        }
+        
+    
+    /* Login button styles */
+    .cta {
+      position: relative;
+      margin: auto;
+      padding: 12px 18px;
+      transition: all 0.2s ease;
+      border: none;
+      background: none;
+      cursor: pointer;
+    }
+    
+    .cta:before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: block;
+      border-radius: 50px;
+      background: #b1dae7;
+      width: 45px;
+      height: 45px;
+      transition: all 0.3s ease;
+    }
+    
+    .cta span {
+      position: relative;
+      font-family: "Ubuntu", sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: #234567;
+    }
+    
+    .cta:hover span {
+      color: #f4f2f2;
+    }
+    
+    .cta svg {
+      position: relative;
+      top: 0;
+      margin-left: 10px;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke: #234567;
+      stroke-width: 2;
+      transform: translateX(-5px);
+      transition: all 0.3s ease;
+    }
+    
+    .cta:hover:before {
+      width: 100%;
+      background: #ff6f61;
+    }
+    
+    .cta:hover svg {
+      transform: translateX(0);
+    }
+    
+    .cta:active {
+      transform: scale(0.95);
+    }
+    
+    /* Responsive styles */
+    @media (max-width: 992px) {
+      .container {
+        margin-left: 0;
+      }
+      
+      .sidebar {
+        transform: translateX(-100%);
+      }
+      
+      .sidebar.show {
+        transform: translateX(0);
+      }
+      
+      .search-filter-bar {
+        display: none;
+      }
+      
+      .mobile-controls {
+        display: block;
+      }
+      
+      .plan-card {
+        flex-direction: column;
+        text-align: center;
+      }
+      
+      .plan-icon {
+        margin-right: 0;
+        margin-bottom: 1rem;
+      }
+      
+      .plan-actions {
+        margin-left: 0;
+        margin-top: 1rem;
+        justify-content: center;
+      }
+      
+      .main-content {
+        padding-top: 120px;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .navbar {
+        padding: 0.8rem 1rem;
+      }
+      
+      .nav-container {
+        position: fixed;
+        top: 60px;
+        left: 0;
+        width: 100%;
+        background: var(--surface);
+        padding: 1rem;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        transform: translateY(-150%);
+        transition: transform 0.3s;
+      }
+      
+      .nav-container.show {
+        transform: translateY(0);
+      }
+      
+      .nav-links {
+        flex-direction: column;
+        gap: 0.8rem;
+      }
+      
+      .menu-toggle {
+        display: block;
+      }
+      
+      .control-buttons {
+        flex-wrap: wrap;
+      }
+      
+      .control-button {
+        margin-bottom: 0.5rem;
+      }
+      
+      .container {
+        padding: 1rem;
+      }
+    }
+    
+    /* Utility class for hidden elements */
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <header class="navbar" id="navbar">
+    <div class="menu-toggle" id="menuToggle">☰</div>
+    <a href="home.html" class="no-underline"> <div class="logo">ReZap</div></a>
+    <div class="nav-container" id="navContainer">
+      <nav class="nav-links">
+        <a href="home.html">Home</a>
+        <a href="plans.html">Plans</a>
+        <a href="offers.html">Offers</a>
+        <a href="wallet.html">Wallet</a>
+        <a href="support.html">Support</a>
+      </nav>
+    </div>
+    <a href="login.html" id="loginNav">
+      <button class="cta">
+        <span><b>Login</b></span>
+        <svg width="15px" height="10px" viewBox="0 0 13 10">
+          <path d="M1,5 L11,5"></path>
+          <polyline points="8 1 12 5 8 9"></polyline>
+        </svg>
+      </button>
+    </a>
+    <a href="profile.html" id="profileNav" style="display:none;">
+      <button class="cta">
+        <span><b>Profile</b></span>
+        <svg width="15px" height="10px" viewBox="0 0 13 10">
+          <path d="M1,5 L11,5"></path>
+          <polyline points="8 1 12 5 8 9"></polyline>
+        </svg>
+      </button>
+    </a>
+  </header>
+
+  <!-- Mobile control panel -->
+  <div class="mobile-controls" id="mobileControls">
+    <div class="control-buttons">
+      <button class="control-button" id="categoriesToggle">
+        <i class="fas fa-list"></i> Categories
+      </button>
+      <button class="control-button" id="filtersToggle">
+        <i class="fas fa-filter"></i> Filters
+      </button>
+    </div>
+    <!-- Mobile filter panel -->
+    <div class="filter-panel" id="filterPanel">
+      <div class="search-form">
+        <input type="text" class="search-input" id="mobileSearchPlans" placeholder="Search plans...">
+      </div>
+      <div style="margin-top: 1rem; display: flex; flex-direction: column; gap: 1rem;">
+        <select class="filter-dropdown" id="mobilePriceFilter">
+          <option value="all">All Prices</option>
+          <option value="0-100">₹0 - ₹100</option>
+          <option value="101-200">₹101 - ₹200</option>
+          <option value="201-300">₹201 - ₹300</option>
+          <option value="301-500">₹301 - ₹500</option>
+          <option value="501+">₹501+</option>
+        </select>
+        <select class="filter-dropdown" id="mobileDurationFilter">
+          <option value="all">All Durations</option>
+          <option value="7">7 Days</option>
+          <option value="28">28 Days</option>
+          <option value="56">56-70 Days</option>
+          <option value="84">84-90 Days</option>
+          <option value="120">120+ Days</option>
+        </select>
+      </div>
+      <button class="btn btn-primary" style="width: 100%; margin-top: 1rem;" id="applyFilters">Apply Filters</button>
+    </div>
+  </div>
+
+  <!-- Desktop search and filter bar -->
+  <div class="search-filter-bar">
+    <div class="search-filter-container">
+      <div class="search-form">
+        <input type="text" class="search-input" id="searchPlans" placeholder="Search plans...">
+      </div>
+      <select class="filter-dropdown" id="priceFilter">
+        <option value="all">All Prices</option>
+        <option value="0-100">₹0 - ₹100</option>
+        <option value="101-200">₹101 - ₹200</option>
+        <option value="201-300">₹201 - ₹300</option>
+        <option value="301-500">₹301 - ₹500</option>
+        <option value="501+">₹501+</option>
+      </select>
+      <select class="filter-dropdown" id="durationFilter">
+        <option value="all">All Durations</option>
+        <option value="7">7 Days</option>
+        <option value="28">28 Days</option>
+        <option value="56">56-70 Days</option>
+        <option value="84">84-90 Days</option>
+        <option value="120">120+ Days</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Left-aligned sidebar -->
+  <div class="sidebar" id="sidebar">
+    <h2>Categories</h2>
+    <a href="#data-plans" class="active">Data Plans</a>
+    <a href="#talktime-plans">Talktime Plans</a>
+    <a href="#unlimited-plans">Unlimited Plans</a>
+    <a href="#combo-plans">Combo Plans</a>
+    <a href="#sms-plans">SMS Plans</a>
+  </div>
+
+  <div class="main-content">
+    <!-- Plans content -->
+    <div class="container">
+      <!-- Data Plans -->
+      <section class="plans-section" id="data-plans">
+        <h2 class="section-header">Data Plans</h2>
+        <div class="plan-card" data-price="249" data-duration="28">
+          <div class="plan-icon">
+            <i class="fas fa-wifi"></i>
+          </div>
+          <div class="plan-details">
+            <div class="plan-price">₹249</div>
+            <div class="plan-features">2GB/day high-speed data</div>
+            <div class="plan-validity">Validity: 28 Days</div>
+          </div>
+          <div class="plan-actions">
+            <button class="btn btn-outline" onclick="viewPlanDetails('data', 249, '2GB/day', '28 Days')">View Details</button>
+            <button class="btn btn-primary" onclick="selectPlan(249, '2GB/day - 28 Days')">Get Plan</button>
+          </div>
+        </div>
+        <div class="plan-card" data-price="259" data-duration="28">
+          <div class="plan-icon">
+            <i class="fas fa-wifi"></i>
+          </div>
+          <div class="plan-details">
+            <div class="plan-price">₹259</div>
+            <div class="plan-features">2GB/day high-speed data</div>
+            <div class="plan-validity">Validity: 28 Days</div>
+          </div>
+          <div class="plan-actions">
+            <button class="btn btn-outline" onclick="viewPlanDetails('data', 259, '2GB/day', '28 Days')">View Details</button>
+            <button class="btn btn-primary" onclick="selectPlan(259, '2GB/day - 28 Days')">Get Plan</button>
+          </div>
+        </div>
+        
+      </section>
+
+      <!-- Talktime Plans -->
+      <section class="plans-section" id="talktime-plans">
+        <h2 class="section-header">Talktime Plans</h2>
+        <div class="plan-card" data-price="100" data-duration="0">
+          <div class="plan-icon">
+            <i class="fas fa-phone"></i>
+          </div>
+          <div class="plan-details">
+            <div class="plan-price">₹100</div>
+            <div class="plan-features">₹100 Talktime</div>
+            <div class="plan-validity">Existing Validity</div>
+          </div>
+          <div class="plan-actions">
+            <button class="btn btn-outline" onclick="viewPlanDetails('talktime', 100, '₹100 Talktime', 'Existing Validity')">View Details</button>
+            <button class="btn btn-primary" onclick="selectPlan(100, '₹100 Talktime')">Get Plan</button>
+          </div>
+        </div>
+        <div class="plan-card" data-price="150" data-duration="0">
+          <div class="plan-icon">
+            <i class="fas fa-phone"></i>
+          </div>
+          <div class="plan-details">
+            <div class="plan-price">₹150</div>
+            <div class="plan-features">₹150 Talktime</div>
+            <div class="plan-validity">Existing Validity</div>
+          </div>
+          <div class="plan-actions">
+            <button class="btn btn-outline" onclick="viewPlanDetails('talktime', 150, '₹150 Talktime', 'Existing Validity')">View Details</button>
+            <button class="btn btn-primary" onclick="selectPlan(150, '₹150 Talktime')">Get Plan</button>
+          </div>
+        </div>
+        
+      </section>
+
+      <!-- Unlimited Plans -->
+      <section class="plans-section" id="unlimited-plans">
+        <h2 class="section-header">Unlimited Plans</h2>
+        <div class="plan-card" data-price="399" data-duration="56">
+          <div class="plan-icon">
+            <i class="fas fa-infinity"></i>
+          </div>
+          <div class="plan-details">
+            <div class="plan-price">₹399</div>
+            <div class="plan-features">Unlimited Calls + 2GB/day</div>
+            <div class="plan-validity">Validity: 56 Days</div>
+          </div>
+          <div class="plan-actions">
+            <button class="btn btn-outline" onclick="viewPlanDetails('unlimited', 399, 'Unlimited Calls + 2GB/day', '56 Days')">View Details</button>
+            <button class="btn btn-primary" onclick="selectPlan(399, 'Unlimited Calls + 2GB/day - 56 Days')">Get Plan</button>
+          </div>
+        </div>
+
+        <div class="plan-card" data-price="599" data-duration="56">
+          <div class="plan-icon">
+            <i class="fas fa-infinity"></i>
+          </div>
+          <div class="plan-details">
+            <div class="plan-price">₹599</div>
+            <div class="plan-features">Unlimited Calls + 3GB/day</div>
+            <div class="plan-validity">Validity: 56 Days</div>
+          </div>
+          <div class="plan-actions">
+            <button class="btn btn-outline" onclick="viewPlanDetails('unlimited', 599, 'Unlimited Calls + 3GB/day', '56 Days')">View Details</button>
+            <button class="btn btn-primary" onclick="selectPlan(599, 'Unlimited Calls + 3GB/day - 56 Days')">Get Plan</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Combo Plans -->
+      <section class="plans-section" id="combo-plans">
+        <h2 class="section-header">Combo Plans</h2>
+        <div class="plan-card" data-price="299" data-duration="56">
+          <div class="plan-icon">
+            <i class="fas fa-cubes"></i>
+          </div>
+          <div class="plan-details">
+            <div class="plan-price">₹299</div>
+            <div class="plan-features">2GB/day + 200 SMS</div>
+            <div class="plan-validity">Validity: 56 Days</div>
+          </div>
+          <div class="plan-actions">
+            <button class="btn btn-outline" onclick="viewPlanDetails('combo', 299, '2GB/day + 200 SMS', '56 Days')">View Details</button>
+            <button class="btn btn-primary" onclick="selectPlan(299, '2GB/day + 200 SMS - 56 Days')">Get Plan</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- SMS Plans -->
+      <section class="plans-section" id="sms-plans">
+        <h2 class="section-header">SMS Plans</h2>
+        <div class="plan-card" data-price="200" data-duration="30">
+          <div class="plan-icon">
+            <i class="fas fa-comment-dots"></i>
+          </div>
+          <div class="plan-details">
+            <div class="plan-price">₹200</div>
+            <div class="plan-features">1000 SMS</div>
+            <div class="plan-validity">Validity: 30 Days</div>
+          </div>
+          <div class="plan-actions">
+            <button class="btn btn-outline" onclick="viewPlanDetails('sms', 200, '1000 SMS', '30 Days')">View Details</button>
+            <button class="btn btn-primary" onclick="selectPlan(200, '1000 SMS - 30 Days')">Get Plan</button>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <!-- Back to top button -->
+  
+  <button id="backToTop">↑</button>
+
+  <!-- Plan details modal -->
+  <div class="modal-overlay" id="planDetailsModal">
+    <div class="modal">
+      <button class="modal-close" onclick="closeModal('planDetailsModal')">×</button>
+      <h3 class="modal-title" id="planDetailsTitle"></h3>
+      <div class="modal-content" id="planDetailsContent">
+        <!-- Plan details will be populated here -->
+      </div>
+      <button class="btn btn-primary" id="planDetailsAction">Get Plan</button>
+    </div>
+  </div>
+
+  <!-- Mobile number input modal -->
+  <div class="modal-overlay" id="mobileNumberModal">
+    <div class="modal">
+      <button class="modal-close" onclick="closeModal('mobileNumberModal')">×</button>
+      <h3 class="modal-title">Enter Your Mobile Number</h3>
+      <div class="modal-content">
+        <p>Please enter your 10-digit mobile number to continue:</p>
+        <input type="text" id="mobileNumberInput" class="modal-input" placeholder="Enter 10-digit number" maxlength="10">
+        <div id="mobileNumberError" class="error"></div>
+      </div>
+      <button class="btn btn-primary" onclick="savePhoneNumber()">Continue</button>
+    </div>
+  </div>
+
+  <script>
+    // DOM Elements
+    const menuToggle = document.getElementById("menuToggle");
+    const navContainer = document.getElementById("navContainer");
+    const sidebar = document.getElementById("sidebar");
+    const backToTop = document.getElementById("backToTop");
+    const searchInput = document.getElementById("searchPlans");
+    const mobileSearchInput = document.getElementById("mobileSearchPlans");
+    const priceFilter = document.getElementById("priceFilter");
+    const mobilePriceFilter = document.getElementById("mobilePriceFilter");
+    const durationFilter = document.getElementById("durationFilter");
+    const mobileDurationFilter = document.getElementById("mobileDurationFilter");
+    const planCards = document.querySelectorAll('.plan-card');
+    const planDetailsModal = document.getElementById("planDetailsModal");
+    const mobileNumberModal = document.getElementById("mobileNumberModal");
+    const filterPanel = document.getElementById("filterPanel");
+    const categoriesToggle = document.getElementById("categoriesToggle");
+    const filtersToggle = document.getElementById("filtersToggle");
+    const applyFilters = document.getElementById("applyFilters");
+    
+    // Current selected plan info
+    let currentPlan = {
+      price: 0,
+      description: ''
+    };
+    
+    // Toggle mobile navigation
+    menuToggle.addEventListener("click", function() {
+      navContainer.classList.toggle("show");
+    });
+    
+    // Toggle filter panel
+    filtersToggle.addEventListener("click", function() {
+      filterPanel.style.display = filterPanel.style.display === 'block' ? 'none' : 'block';
+      sidebar.classList.remove('show'); // Close categories if open
+    });
+    
+    // Toggle categories sidebar on mobile
+    categoriesToggle.addEventListener("click", function() {
+      sidebar.classList.toggle("show");
+      filterPanel.style.display = 'none'; // Close filters if open
+    });
+    
+    // Apply filters from mobile panel
+    applyFilters.addEventListener("click", function() {
+      // Sync mobile filter values with desktop filters
+      priceFilter.value = mobilePriceFilter.value;
+      durationFilter.value = mobileDurationFilter.value;
+      searchInput.value = mobileSearchInput.value;
+      
+      // Apply filters
+      filterPlans();
+      
+      // Close filter panel
+      filterPanel.style.display = 'none';
+    });
+    
+    // Close mobile nav when clicking outside
+    document.addEventListener("click", function(event) {
+      if (!menuToggle.contains(event.target) && !navContainer.contains(event.target)) {
+        navContainer.classList.removenavContainer.classList.remove("show");
+      }
+    });
+    
+    // Back to top button visibility
+    window.addEventListener("scroll", function() {
+      if (window.scrollY > 300) {
+        backToTop.classList.add("show");
+      } else {
+        backToTop.classList.remove("show");
+      }
+    });
+    
+    // Scroll to top when button clicked
+    backToTop.addEventListener("click", function() {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+    
+    // Smooth scroll to sections
+    document.querySelectorAll('.sidebar a').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        // Update active link
+        document.querySelectorAll('.sidebar a').forEach(a => a.classList.remove('active'));
+        this.classList.add('active');
+        
+        // Close sidebar on mobile
+        if (window.innerWidth < 992) {
+          sidebar.classList.remove('show');
+        }
+        
+        // Scroll to section
+        const targetId = this.getAttribute('href');
+        const targetSection = document.querySelector(targetId);
+        
+        if (targetSection) {
+          const yOffset = -150; // Adjust for fixed header
+          const y = targetSection.getBoundingClientRect().top + window.pageYOffset + yOffset;
+          window.scrollTo({ top: y, behavior: 'smooth' });
+        }
+      });
+    });
+    
+    // Filter plans based on search and filters
+    function filterPlans() {
+      const searchTerm = searchInput.value.toLowerCase();
+      const selectedPriceRange = priceFilter.value;
+      const selectedDuration = durationFilter.value;
+      
+      planCards.forEach(card => {
+        const planText = card.textContent.toLowerCase();
+        const planPrice = parseInt(card.getAttribute('data-price'));
+        const planDuration = parseInt(card.getAttribute('data-duration'));
+        
+        // Filter by search term
+        const matchesSearch = searchTerm === '' || planText.includes(searchTerm);
+        
+        // Filter by price range
+        let matchesPrice = true;
+        if (selectedPriceRange !== 'all') {
+          if (selectedPriceRange === '0-100') {
+            matchesPrice = planPrice <= 100;
+          } else if (selectedPriceRange === '101-200') {
+            matchesPrice = planPrice > 100 && planPrice <= 200;
+          } else if (selectedPriceRange === '201-300') {
+            matchesPrice = planPrice > 200 && planPrice <= 300;
+          } else if (selectedPriceRange === '301-500') {
+            matchesPrice = planPrice > 300 && planPrice <= 500;
+          } else if (selectedPriceRange === '501+') {
+            matchesPrice = planPrice > 500;
+          }
+        }
+        
+        // Filter by duration
+        let matchesDuration = true;
+        if (selectedDuration !== 'all') {
+          if (selectedDuration === '7') {
+            matchesDuration = planDuration > 0 && planDuration <= 14;
+          } else if (selectedDuration === '28') {
+            matchesDuration = planDuration > 14 && planDuration <= 30;
+          } else if (selectedDuration === '56') {
+            matchesDuration = planDuration > 30 && planDuration <= 70;
+          } else if (selectedDuration === '84') {
+            matchesDuration = planDuration > 70 && planDuration <= 90;
+          } else if (selectedDuration === '120') {
+            matchesDuration = planDuration > 90;
+          }
+        }
+        
+        // Show or hide based on all filters
+        if (matchesSearch && matchesPrice && matchesDuration) {
+          card.style.display = '';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+      
+      // Check if sections have visible cards
+      document.querySelectorAll('.plans-section').forEach(section => {
+        const visibleCards = section.querySelectorAll('.plan-card[style=""]').length;
+        if (visibleCards === 0) {
+          section.style.display = 'none';
+        } else {
+          section.style.display = '';
+        }
+      });
+    }
+    
+    // Add event listeners for filters
+    searchInput.addEventListener('input', filterPlans);
+    priceFilter.addEventListener('change', filterPlans);
+    durationFilter.addEventListener('change', filterPlans);
+    
+    // View plan details
+    function viewPlanDetails(planType, price, features, validity) {
+      const planDetailsTitle = document.getElementById("planDetailsTitle");
+      const planDetailsContent = document.getElementById("planDetailsContent");
+      const planDetailsAction = document.getElementById("planDetailsAction");
+      
+      let title = '';
+      let content = '';
+      let benefits = [];
+      
+      switch(planType) {
+        case 'data':
+          title = `Data Plan - ₹${price}`;
+          benefits = [
+            'High-speed data up to 150 Mbps',
+            'Post FUP speed of 64 Kbps',
+            'Data rollover available',
+            'Weekend data bonus'
+          ];
+          break;
+        case 'talktime':
+          title = `Talktime Plan - ₹${price}`;
+          benefits = [
+            'Full talktime value',
+            'No additional service tax',
+            'Call rates at 1p/sec',
+            'Valid for both local and STD calls'
+          ];
+          break;
+        case 'unlimited':
+          title = `Unlimited Plan - ₹${price}`;
+          benefits = [
+            'Truly unlimited voice calls to any network',
+            'High-speed data with daily limits',
+            'Free subscription to ReZap Entertainment',
+            'Access to ReZap Music for 30 days'
+          ];break;
+        case 'combo':
+          title = `Combo Plan - ₹${price}`;
+          benefits = [
+            'Data and SMS combo pack',
+            'Unlimited local calls',
+            'Weekend data boost',
+            'Free Caller Tune for 2 months'
+          ];
+          break;
+        case 'sms':
+          title = `SMS Plan - ₹${price}`;
+          benefits = [
+            'SMS to any network',
+            'Additional 100 international SMS',
+            'Special rates for bulk SMS',
+            'Free news alerts'
+          ];
+          break;
+      }
+      
+      // Build the modal content
+      content += `
+        <div class="modal-detail">
+          <span class="modal-label">Price:</span>
+          <span class="modal-value">₹${price}</span>
+        </div>
+        <div class="modal-detail">
+          <span class="modal-label">Features:</span>
+          <span class="modal-value">${features}</span>
+        </div>
+        <div class="modal-detail">
+          <span class="modal-label">Validity:</span>
+          <span class="modal-value">${validity}</span>
+        </div>
+        <div class="modal-detail">
+          <span class="modal-label">Benefits:</span>
+          <span class="modal-value">
+            <ul style="padding-left: 20px; margin: 0;">
+              ${benefits.map(benefit => `<li>${benefit}</li>`).join('')}
+            </ul>
+          </span>
+        </div>
+      `;
+      
+      // Update modal content
+      planDetailsTitle.textContent = title;
+      planDetailsContent.innerHTML = content;
+      
+      // Set current plan and add event listener to get plan button
+      currentPlan.price = price;
+      currentPlan.description = `${features} - ${validity}`;
+      planDetailsAction.onclick = function() {
+        closeModal('planDetailsModal');
+        selectPlan(price, currentPlan.description);
+      };
+      
+      // Show modal
+      planDetailsModal.style.display = 'flex';
+    }
+    
+    // Close modal
+    function closeModal(modalId) {
+      document.getElementById(modalId).style.display = 'none';
+    }
+    
+    // When user clicks outside of modal, close it
+    window.addEventListener('click', function(event) {
+      if (event.target === planDetailsModal) {
+        closeModal('planDetailsModal');
+      }
+      if (event.target === mobileNumberModal) {
+        closeModal('mobileNumberModal');
+      }
+    });
+    
+    // Select plan
+function selectPlan(price, description) {
+  // Store plan details
+  currentPlan.price = price;
+  currentPlan.description = description;
+  
+  // Always update localStorage with the selected plan
+  localStorage.setItem("selectedPlan", description);
+  localStorage.setItem("planCost", price);
+  
+  // Rest of your code...
+
+      
+      // Check if user is logged in
+      const isLoggedIn = localStorage.getItem("loggedInUser");
+      const hasPhoneNumber = localStorage.getItem("userPhoneNumber");
+      
+      if (isLoggedIn || hasPhoneNumber) {
+        // Redirect to payment page
+        window.location.href = "payment.html";
+      } else {
+        // Show mobile number input modal
+        mobileNumberModal.style.display = 'flex';
+      }
+    }
+    
+    // Save phone number
+    function savePhoneNumber() {
+      const mobileNumberInput = document.getElementById('mobileNumberInput');
+      const mobileNumberError = document.getElementById('mobileNumberError');
+      const phoneNumber = mobileNumberInput.value.trim();
+      
+      // Validate phone number
+      if (phoneNumber.length !== 10 || !/^\d+$/.test(phoneNumber)) {
+        mobileNumberError.textContent = "Please enter a valid 10-digit mobile number";
+        return;
+      }
+      
+      // Store phone number
+      localStorage.setItem("userPhoneNumber", phoneNumber);
+      localStorage.setItem("selectedPlan", currentPlan.description);
+      localStorage.setItem("planCost", currentPlan.price);
+      
+      // Close modal and redirect
+      closeModal('mobileNumberModal');
+      window.location.href = "payment.html";
+    }
+    
+    // Update navbar if logged in
+    window.onload = function() {
+      const loggedInUser = localStorage.getItem("loggedInUser");
+      
+      if (loggedInUser) {
+        document.getElementById("loginNav").style.display = "none";
+        document.getElementById("profileNav").style.display = "inline-block";
+      }
+      
+      // Highlight active section based on scroll position
+      updateActiveSidebarLink();
+    };
+    
+    // Update active sidebar link on scroll
+    window.addEventListener('scroll', function() {
+      updateActiveSidebarLink();
+    });
+    
+    function updateActiveSidebarLink() {
+      const sections = document.querySelectorAll('.plans-section');
+      const sidebarLinks = document.querySelectorAll('.sidebar a');
+      
+      let currentSectionId = sections[0].id;
+      
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop - 180;
+        
+        if (window.scrollY >= sectionTop) {
+          currentSectionId = section.id;
+        }
+      });
+      
+      sidebarLinks.forEach(link => {
+        link.classList.remove('active');
+        
+        if (link.getAttribute('href') === '#' + currentSectionId) {
+          link.classList.add('active');
+        }
+      });
+    }
+  </script>
+  <script>
+    // Get the mobile number input when the DOM is loaded
+    document.addEventListener('DOMContentLoaded', function() {
+      const mobileNumberInput = document.getElementById('mobileNumberInput');
+      
+      // Prevent non-numeric characters when typing
+      mobileNumberInput.addEventListener('keypress', function(e) {
+        // Get the character code
+        const charCode = (e.which) ? e.which : e.keyCode;
+        
+        // If the character is not a number (0-9), prevent the input
+        if (charCode < 48 || charCode > 57) {
+          e.preventDefault();
+          return false;
+        }
+      });
+      
+      // Also handle paste events to filter out non-numeric characters
+      mobileNumberInput.addEventListener('paste', function(e) {
+        // Get pasted data
+        const clipboardData = e.clipboardData || window.clipboardData;
+        const pastedData = clipboardData.getData('Text');
+        
+        // Check if pasted data contains non-numeric characters
+        if (!/^\d*$/.test(pastedData)) {
+          // Prevent the default paste action
+          e.preventDefault();
+          
+          // Extract only numbers from the pasted text and set the value
+          const numericOnly = pastedData.replace(/\D/g, '');
+          
+          // Either update the input value directly or allow only numbers
+          if (numericOnly) {
+            // Get current input value
+            const currentValue = mobileNumberInput.value;
+            const selectionStart = mobileNumberInput.selectionStart;
+            
+            // Calculate new value (respecting cursor position)
+            const newValue = currentValue.substring(0, selectionStart) + 
+                            numericOnly + 
+                            currentValue.substring(mobileNumberInput.selectionEnd);
+            
+            // Set new value (limited to maxlength)
+            mobileNumberInput.value = newValue.substring(0, 10);
+            
+            // Set cursor position
+            const newCursorPos = Math.min(selectionStart + numericOnly.length, 10);
+            mobileNumberInput.setSelectionRange(newCursorPos, newCursorPos);
+          }
+        }
+      });
+      
+      // Additional validation for the existing save function
+      const savePhoneNumberOrig = savePhoneNumber;
+      window.savePhoneNumber = function() {
+        const phoneNumber = mobileNumberInput.value.trim();
+        const mobileNumberError = document.getElementById('mobileNumberError');
+        
+        // Clear previous error
+        mobileNumberError.textContent = "";
+        
+        // Validate phone number
+        if (phoneNumber.length !== 10) {
+          mobileNumberError.textContent = "Please enter a valid 10-digit mobile number";
+          return;
+        }
+        
+        // Call the original function
+        savePhoneNumberOrig();
+      };
+    });
+    
+  </script>
+</body>
+</html>

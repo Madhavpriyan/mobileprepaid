@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Offers Page</title>
+    <link rel="stylesheet" href="home.css">
+    <link rel="stylesheet" href="navbar.css">
+    <style>
+       :root {
+      --primary: #5e72e4;
+      --secondary: #f7fafc;
+      --success: #2dce89;
+      --warning: #fb6340;
+      --dark: #32325d;
+      --light: #ffffff;
+      --border: #e9ecef;
+      --text-muted: #8898aa;
+      --shadow: 0 7px 14px rgba(50, 50, 93, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+      --card-shadow: 0 15px 35px rgba(50, 50, 93, 0.1), 0 5px 15px rgba(0, 0, 0, 0.07);
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--secondary);
+      color: var(--dark);
+      line-height: 1.6;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+        .container {
+            width: 90%;
+            margin: 80px auto 0; /* Added top margin to account for navbar */
+            text-align: center;
+            padding: 30px 0;
+        }
+
+        .heading {
+            font-size: clamp(24px, 5vw, 36px);
+            margin-bottom: 30px;
+            color: #333;
+            padding-top: 20px; /* Added padding to separate from navbar */
+        }
+
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* 3 cards per row on large screens */
+            gap: 20px;
+            justify-content: center;
+            max-width: 1400px; /* Maximum width to maintain readability */
+            margin: 0 auto;
+        }
+
+        .card {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin: 0 auto;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-img {
+            width: 100%;
+            border-radius: 8px;
+            height: 200px;
+            object-fit: cover;
+            margin-bottom: 20px;
+        }
+
+        .card-title {
+            font-size: clamp(20px, 4vw, 24px);
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .card-description {
+            font-size: clamp(14px, 3vw, 16px);
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .card-btn {
+            background-color: #ff6f61;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 100%;
+            max-width: 200px;
+            margin: 0 auto;
+        }
+
+        .card-btn:hover {
+            background-color: #e65b50;
+        }
+
+        #backToTop {
+            position: fixed;
+            right: 20px;
+            top: -60px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: top 0.5s ease-in-out;
+            z-index: 100;
+        }
+
+        #backToTop.show {
+            top: 70%;
+        }
+
+          /* Footer Styles */
+    .footer {
+      background-color: black;
+      color: var(--light);
+      padding: 40px 0 20px;
+      margin-top: auto;
+    }
+    
+    .footer-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 30px;
+    }
+    
+    .footer-section {
+      flex: 1;
+      min-width: 200px;
+    }
+    
+    .footer-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 20px;
+      position: relative;
+      padding-bottom: 10px;
+    }
+    
+    .footer-title::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 50px;
+      height: 2px;
+      background: var(--primary);
+    }
+    
+    .footer-links {
+      list-style: none;
+    }
+    
+    .footer-links li {
+      margin-bottom: 10px;
+    }
+    
+    .footer-links a {
+      color: #ced4da;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    
+    .footer-links a:hover {
+      color: var(--primary);
+    }
+    
+    .social-icons {
+      display: flex;
+      gap: 15px;
+      margin-top: 15px;
+    }
+    
+    .social-icon {
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+    
+    .social-icon:hover {
+      background-color: var(--primary);
+      transform: translateY(-3px);
+    }
+    
+    .contact-info {
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.9rem;
+    }
+    
+    .footer-bottom {
+      text-align: center;
+      padding-top: 30px;
+      margin-top: 30px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      font-size: 0.9rem;
+      color: #ced4da;
+    }
+    
+        /* Media Queries */
+        @media screen and (max-width: 1200px) {
+            .card-container {
+                grid-template-columns: repeat(2, 1fr); /* 2 cards per row on medium screens */
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            .container {
+                width: 95%;
+                margin-top: 60px; /* Reduced top margin for mobile */
+            }
+
+            .card-container {
+                grid-template-columns: 1fr; /* 1 card per row on small screens */
+            }
+
+            .card {
+                padding: 15px;
+                max-width: 400px;
+            }
+
+            #backToTop {
+                right: 10px;
+                padding: 8px 16px;
+                font-size: 14px;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .footer-container {
+        flex-direction: column;
+      }
+
+            #backToTop {
+                right: 5px;
+                padding: 6px 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <header class="navbar" id="navbar">
+    <div class="menu-toggle" id="menuToggle">☰</div>
+    <div class="logo">ReZap</div>
+    <div class="nav-container" id="navContainer">
+        <nav class="nav-links">
+            <a href="home.html" onclick="handleHomeClick()">Home</a>
+            <a href="plans.html">Plans</a>
+            <!-- <a href="#recharge">Recharge</a> -->
+            <a href="offers.html">Offers</a>
+            <a href="wallet.html">Wallet</a>
+            <a href="support.html">Support</a>
+        </nav>
+    </div>
+    
+ 
+    <a href="profile.html" id="profileNav" style="display:none;">
+        <button class="cta">
+            <span><b>Profile</b></span>
+            <svg width="15px" height="10px" viewBox="0 0 13 10">
+                <path d="M1,5 L11,5"></path>
+                <polyline points="8 1 12 5 8 9"></polyline>
+            </svg>
+        </button>
+    </a>
+</header>
+
+<header class="blurred-navbar" id="blurredNavbar">
+    <nav class="nav-links">
+        <a href="home.html" onclick="handleHomeClick()">Home</a>
+        <a href="plans.html">Plans</a>
+        <!-- <a href="#recharge">Recharge</a> -->
+        <a href="offers.html">Offers</a>
+        <a href="wallet.html">Wallet</a>
+        <a href="support.html">Support</a>
+    </nav>
+</header>
+
+<script>
+  const menuToggle = document.getElementById("menuToggle");
+  const navContainer = document.getElementById("navContainer");
+  const navbar = document.getElementById("navbar");
+  const blurredNavbar = document.getElementById("blurredNavbar");
+
+  menuToggle.addEventListener("click", function () {
+      navContainer.classList.toggle("show");
+  });
+
+  document.addEventListener("click", function (event) {
+      if (!menuToggle.contains(event.target) && !navContainer.contains(event.target)) {
+          navContainer.classList.remove("show");
+      }
+  });
+
+  window.addEventListener("scroll", function () {
+      if (window.scrollY > 50) {
+          navbar.classList.add("hidden");
+          blurredNavbar.classList.add("show");
+      } else {
+          navbar.classList.remove("hidden");
+          blurredNavbar.classList.remove("show");
+      }
+  });</script>
+    <div class="container">
+        <h1 class="heading">Special Offers</h1>
+        <div class="card-container">
+            <div class="card">
+                <img src="\mpproject\images\2949042.jpg" alt="Offer 1" class="card-img">
+                <h3 class="card-title">Discount on Products</h3>
+                <p class="card-description">Get 20% off on your favorite items. Limited time offer!</p>
+                <button class="card-btn" onclick="window.location.href='plans.html'">Shop Now</button>
+            </div>
+            <div class="card">
+                <img src="\mpproject\images\2400877.jpg" alt="Offer 2" class="card-img">
+                <h3 class="card-title">Free Shipping</h3>
+                <p class="card-description">Enjoy free shipping on all orders above $50!</p>
+                <button class="card-btn" onclick="window.location.href='plans.html'">Grab the Deal</button>
+            </div>
+            <div class="card">
+                <img src="\mpproject\images\2949042.jpg" alt="Offer 1" class="card-img">
+                <h3 class="card-title">Discount on Products</h3>
+                <p class="card-description">Get 20% off on your favorite items. Limited time offer!</p>
+                <button class="card-btn" onclick="window.location.href='plans.html'">Shop Now</button>
+            </div>
+            <div class="card">
+                <img src="\mpproject\images\2400877.jpg" alt="Offer 2" class="card-img">
+                <h3 class="card-title">Free Shipping</h3>
+                <p class="card-description">Enjoy free shipping on all orders above $50!</p>
+                <button class="card-btn" onclick="window.location.href='plans.html'">Grab the Deal</button>
+            </div>
+            <!-- <div class="card">
+                <img src="offer3.jpg" alt="Offer 3" class="card-img">
+                <h3 class="card-title">Buy One Get One Free</h3>
+                <p class="card-description">Buy one item and get another one absolutely free.</p>
+                <button class="card-btn">Shop Now</button>
+            </div>
+            <div class="card">
+                <img src="offer1.jpg" alt="Offer 1" class="card-img">
+                <h3 class="card-title">Discount on Products</h3>
+                <p class="card-description">Get 20% off on your favorite items. Limited time offer!</p>
+                <button class="card-btn">Shop Now</button>
+            </div>
+            <div class="card">
+                <img src="offer1.jpg" alt="Offer 1" class="card-img">
+                <h3 class="card-title">Discount on Products</h3>
+                <p class="card-description">Get 20% off on your favorite items. Limited time offer!</p>
+                <button class="card-btn">Shop Now</button>
+            </div>
+            <div class="card">
+                <img src="offer1.jpg" alt="Offer 1" class="card-img">
+                <h3 class="card-title">Discount on Products</h3>
+                <p class="card-description">Get 20% off on your favorite items. Limited time offer!</p>
+                <button class="card-btn">Shop Now</button>
+            </div>
+            <div class="card">
+                <img src="offer1.jpg" alt="Offer 1" class="card-img">
+                <h3 class="card-title">Discount on Products</h3>
+                <p class="card-description">Get 20% off on your favorite items. Limited time offer!</p>
+                <button class="card-btn">Shop Now</button>
+            </div>
+            <div class="card">
+                <img src="offer1.jpg" alt="Offer 1" class="card-img">
+                <h3 class="card-title">Discount on Products</h3>
+                <p class="card-description">Get 20% off on your favorite items. Limited time offer!</p>
+                <button class="card-btn">Shop Now</button>
+            </div>
+            <div class="card">
+                <img src="offer1.jpg" alt="Offer 1" class="card-img">
+                <h3 class="card-title">Discount on Products</h3>
+                <p class="card-description">Get 20% off on your favorite items. Limited time offer!</p>
+                <button class="card-btn">Shop Now</button>
+            </div>
+            <div class="card">
+                <img src="offer1.jpg" alt="Offer 1" class="card-img">
+                <h3 class="card-title">Discount on Products</h3>
+                <p class="card-description">Get 20% off on your favorite items. Limited time offer!</p>
+                <button class="card-btn">Shop Now</button>
+            </div> -->
+        </div>
+    </div>
+   <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-container">
+        <div class="footer-section">
+          <h3 class="footer-title">ReZap</h3>
+          <p>Quick and convenient mobile recharge service. Secure payments, instant recharges, and exclusive offers.</p>
+          <div class="social-icons">
+            <a href="#" class="social-icon">f</a>
+            <a href="#" class="social-icon">t</a>
+            <a href="#" class="social-icon">in</a>
+            <a href="#" class="social-icon">ig</a>
+          </div>
+        </div>
+        
+      
+        
+        <div class="footer-section">
+          <h3 class="footer-title">Support</h3>
+          <ul class="footer-links">
+            <li><a href="support.html">Contact Us</a></li>
+            <li><a href="support.html">Help Center</a></li>
+            <li><a href="terms.html">Terms of Service</a></li>
+            <li><a href="privacy.html">Privacy Policy</a></li>
+            <li><a href="refund.html">Refund Policy</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-section">
+          <h3 class="footer-title">Contact Us</h3>
+          <div class="contact-info">
+            <span>📞</span>
+            <p>+91 9876543210</p>
+          </div>
+          <div class="contact-info">
+            <span>✉️</span>
+            <p>support@rezap.com</p>
+          </div>
+          <div class="contact-info">
+            <span>🏢</span>
+            <p>123 Tech Park, Mumbai, India</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <p>&copy; 2025 ReZap. All rights reserved. Quick recharge solutions for a connected world.</p>
+      </div>
+    </div>
+  </footer>
+    
+    <style>
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+        }
+
+        .footer-container {
+            width: 80%;
+            margin: 0 auto;
+        }
+
+        .footer-links {
+            margin-bottom: 15px;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+            font-size: 16px;
+        }
+
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+
+        .footer-info p {
+            font-size: 14px;
+            margin-top: 10px;
+        }
+    </style>
+    <script>
+        
+
+    document.addEventListener("DOMContentLoaded", function () {
+    updateNavButton(); // Call function to update the button on page load
+});
+
+function updateNavButton() {
+    const navButton = document.getElementById("navButton");
+    const isLoggedIn = localStorage.getItem("isLoggedIn"); // Check login status
+
+    if (isLoggedIn === "true") {
+        navButton.innerHTML = "<span><b>Profile</b></span>";
+        navButton.onclick = function () {
+            window.location.href = "profile.html"; // Redirect to Profile Page
+        };
+    } else {
+        navButton.innerHTML = "<span><b>Login</b></span>";
+        navButton.onclick = function () {
+            window.location.href = "login.html"; // Redirect to Login Page
+        };
+    }
+}
+
+function loginUser() {
+    localStorage.setItem("isLoggedIn", "true"); // Store login status
+    updateNavButton(); // Update button
+    window.location.href = "home.html"; // Redirect to home after login
+}
+
+function logoutUser() {
+    localStorage.removeItem("isLoggedIn"); // Clear login status
+    updateNavButton(); // Update button
+    window.location.href = "home.html"; // Redirect to home after logout
+}
+    </script>
+    <button id="backToTop">↑</button>
+
+    <script>
+        const backToTop = document.getElementById("backToTop");
+    
+        window.addEventListener("scroll", function() {
+            if (window.scrollY > 200) {
+                backToTop.classList.add("show");
+            } else {
+                backToTop.classList.remove("show");
+            }
+        });
+    
+        backToTop.addEventListener("click", function() {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+    </script>
+
+</body>
+</html>

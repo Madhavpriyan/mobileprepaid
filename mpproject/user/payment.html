@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment</title>
+  
+    <link rel="stylesheet" href="navbar.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>
+    :root {
+      --primary: #4F46E5;
+      --primary-dark: #4338CA;
+      --success: #10B981;
+      --warning: #F59E0B;
+      --danger: #EF4444;
+      --gray-100: #F3F4F6;
+      --gray-200: #E5E7EB;
+      --gray-800: #1F2937;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #F9FAFB;
+      color: var(--gray-800);
+      line-height: 1.5;
+    }
+
+    /* nav {
+      background: var(--gray-800);
+      padding: 1rem;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin-right: 1.5rem;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: var(--primary);
+    } */
+
+    .container {
+      justify-content: center;
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 10 1rem;
+    }
+
+    .card {
+      width: 100%;
+      margin-top: 10%;
+      background: white;
+      border-radius: 1rem;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      padding: 2rem;
+      margin-bottom: 2rem;
+      transition: transform 0.3s;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+    }
+
+    .section {
+      display: none;
+    }
+
+    .active {
+      display: block;
+      animation: fadeIn 0.3s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h2 {
+      color: var(--gray-800);
+      margin-bottom: 1.5rem;
+      font-size: 1.5rem;
+    }
+
+    .summary-detail {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      padding: 1rem;
+      background: var(--gray-100);
+      border-radius: 0.5rem;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 0.5rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-align: center;
+      margin: 0.5rem;
+      min-width: 150px;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-dark);
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 2px solid var(--primary);
+      color: var(--primary);
+    }
+
+    .btn-outline:hover {
+      background: var(--primary);
+      color: white;
+    }
+
+    .btn-success {
+      background: var(--success);
+      color: white;
+    }
+
+    .btn-success:hover {
+      background: #0DA76F;
+    }
+
+    .payment-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+
+    .payment-option {
+      background: white;
+      border: 2px solid var(--gray-200);
+      border-radius: 0.5rem;
+      padding: 1.5rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .payment-option:hover {
+      border-color: var(--primary);
+      transform: scale(1.02);
+    }
+
+    .payment-option i {
+      font-size: 2rem;
+      color: var(--primary);
+      margin-bottom: 1rem;
+    }
+
+    .payment-option.selected {
+      border-color: var(--primary);
+      background-color: rgba(79, 70, 229, 0.1);
+    }
+
+    .payment-form {
+      display: none;
+      margin-top: 2rem;
+      padding: 1.5rem;
+      background-color: var(--gray-100);
+      border-radius: 0.5rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid var(--gray-200);
+      border-radius: 0.5rem;
+      font-size: 1rem;
+      transition: border-color 0.3s;
+    }
+
+    .form-input:focus {
+      border-color: var(--primary);
+      outline: none;
+    }
+
+    .form-input.error {
+      border-color: var(--danger);
+    }
+
+    .error-message {
+      color: var(--danger);
+      font-size: 0.875rem;
+      margin-top: 0.25rem;
+      display: none;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .bonus {
+      background: #ECFDF5;
+      color: var(--success);
+      padding: 1rem;
+      border-radius: 0.5rem;
+      margin-top: 1rem;
+      display: none;
+    }
+
+    .success-icon {
+      font-size: 3rem;
+      color: var(--success);
+      margin-bottom: 1rem;
+    }
+
+    .bill {
+      background: #F8FAFC;
+      border: 1px dashed var(--gray-200);
+      border-radius: 0.5rem;
+      padding: 1.5rem;
+      margin-top: 1.5rem;
+      text-align: left;
+    }
+
+    .bill-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--gray-200);
+    }
+
+    .bill-logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: var(--primary);
+    }
+
+    .bill-details {
+      margin-bottom: 1.5rem;
+    }
+
+    .bill-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+    }
+
+    .bill-total {
+      font-size: 1.2rem;
+      font-weight: bold;
+      border-top: 1px solid var(--gray-200);
+      padding-top: 1rem;
+      margin-top: 1rem;
+      text-align: right;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 0.5rem;
+      }
+      
+      .card {
+        padding: 1rem;
+      }
+
+      .btn {
+        width: 100%;
+        margin: 0.5rem 0;
+      }
+
+      .payment-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <header class="navbar" id="navbar">
+    <div class="menu-toggle" id="menuToggle">☰</div>
+    <div class="logo">ReZap</div>
+    <div class="nav-container" id="navContainer">
+        <nav class="nav-links">
+            <a href="home.html" onclick="handleHomeClick()">Home</a>
+            <a href="plans.html">Plans</a>
+            <!-- <a href="#recharge">Recharge</a> -->
+            <a href="offers.html">Offers</a>
+            <a href="wallet.html">Wallet</a>
+            <a href="support.html">Support</a>
+        </nav>
+    </div>
+    
+ 
+    <a href="profile.html" id="profileNav" style="display:none;">
+        <button class="cta">
+            <span><b>Profile</b></span>
+            <svg width="15px" height="10px" viewBox="0 0 13 10">
+                <path d="M1,5 L11,5"></path>
+                <polyline points="8 1 12 5 8 9"></polyline>
+            </svg>
+        </button>
+    </a>
+</header>
+
+<header class="blurred-navbar" id="blurredNavbar">
+    <nav class="nav-links">
+        <a href="home.html" onclick="handleHomeClick()">Home</a>
+        <a href="plans.html">Plans</a>
+        <!-- <a href="#recharge">Recharge</a> -->
+        <a href="offers.html">Offers</a>
+        <a href="wallet.html">Wallet</a>
+        <a href="support.html">Support</a>
+    </nav>
+</header>
+
+<script>
+  const menuToggle = document.getElementById("menuToggle");
+  const navContainer = document.getElementById("navContainer");
+  const navbar = document.getElementById("navbar");
+  const blurredNavbar = document.getElementById("blurredNavbar");
+
+  menuToggle.addEventListener("click", function () {
+      navContainer.classList.toggle("show");
+  });
+
+  document.addEventListener("click", function (event) {
+      if (!menuToggle.contains(event.target) && !navContainer.contains(event.target)) {
+          navContainer.classList.remove("show");
+      }
+  });
+
+  window.addEventListener("scroll", function () {
+      if (window.scrollY > 50) {
+          navbar.classList.add("hidden");
+          blurredNavbar.classList.add("show");
+      } else {
+          navbar.classList.remove("hidden");
+          blurredNavbar.classList.remove("show");
+      }
+  });</script>
+
+  <div class="container">
+    <div id="summarySection" class="section active">
+      <div class="card">
+        <h2><i class="fas fa-receipt"></i> Payment Summary</h2>
+        <div class="summary-detail">
+          <strong>Mobile Number:</strong>
+          <span id="finalPhoneNumber"></span>
+        </div>
+        <div class="summary-detail">
+          <strong>Selected Plan:</strong>
+          <span id="finalPlan"></span>
+        </div>
+        <div class="summary-detail">
+          <strong>Plan :</strong>
+          <span>₹<span id="planCost"></span></span>
+        </div>
+        <div style="text-align: center; margin-top: 2rem;">
+          <button class="btn btn-primary" onclick="showPaymentOptions()">Proceed to Payment</button>
+          <button class="btn btn-outline" onclick="changePlan()">Change Plan</button>
+          <button class="btn btn-outline" onclick="backToPlanPage()">Back to Plan Page</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="paymentOptionsSection" class="section">
+      <div class="card">
+        <h2><i class="fas fa-money-bill"></i> Select Payment Method</h2>
+        <div class="payment-grid">
+          <div class="payment-option" id="creditCardOption" onclick="selectPaymentMethod('Credit Card')">
+            <i class="fas fa-credit-card"></i>
+            <h3>Credit Card</h3>
+          </div>
+          <div class="payment-option" id="upiOption" onclick="selectPaymentMethod('UPI')">
+            <i class="fas fa-mobile-alt"></i>
+            <h3>UPI</h3>
+          </div>
+          <div class="payment-option" id="bankOption" onclick="selectPaymentMethod('Bank Transfer')">
+            <i class="fas fa-university"></i>
+            <h3>Bank Transfer</h3>
+          </div>
+          <div class="payment-option" id="walletOption" onclick="selectPaymentMethod('Wallet')">
+            <i class="fas fa-wallet"></i>
+            <h3>Wallet</h3>
+          </div>
+        </div>
+
+        <!-- Credit Card Form -->
+        <div id="creditCardForm" class="payment-form">
+          <h3><i class="fas fa-credit-card"></i> Credit Card Payment</h3>
+          <form id="creditCardPaymentForm">
+            <div class="form-group">
+              <label for="cardNumber" class="form-label">Card Number</label>
+              <input type="text" id="cardNumber" class="form-input" placeholder="1234 5678 9012 3456" maxlength="19" onkeyup="formatCardNumber(this)" onblur="validateCardNumber()">
+              <div id="cardNumberError" class="error-message">Please enter a valid 16-digit card number</div>
+            </div>
+            <div class="form-group">
+              <label for="cardName" class="form-label">Cardholder Name</label>
+              <input type="text" id="cardName" class="form-input" placeholder="John Doe" onblur="validateCardName()">
+              <div id="cardNameError" class="error-message">Please enter the cardholder name</div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="expiryDate" class="form-label">Expiry Date</label>
+                <input type="text" id="expiryDate" class="form-input" placeholder="MM/YY" maxlength="5" onkeyup="formatExpiryDate(this)" onblur="validateExpiryDate()">
+                <div id="expiryDateError" class="error-message">Please enter a valid expiry date</div>
+              </div>
+              <div class="form-group">
+                <label for="cvv" class="form-label">CVV</label>
+                <input type="password" id="cvv" class="form-input" placeholder="123" maxlength="3" onblur="validateCVV()">
+                <div id="cvvError" class="error-message">Please enter a valid 3-digit CVV</div>
+              </div>
+            </div>
+            <button type="button" class="btn btn-primary" onclick="processPayment('Credit Card')">Pay ₹<span id="ccAmount"></span></button>
+          </form>
+        </div>
+
+        <!-- UPI Form -->
+        <div id="upiForm" class="payment-form">
+          <h3><i class="fas fa-mobile-alt"></i> UPI Payment</h3>
+          <form id="upiPaymentForm">
+            <div class="form-group">
+              <label for="upiId" class="form-label">UPI ID</label>
+              <input type="text" id="upiId" class="form-input" placeholder="username@upi" onblur="validateUpiId()">
+              <div id="upiIdError" class="error-message">Please enter a valid UPI ID (e.g. username@upi)</div>
+            </div>
+            <button type="button" class="btn btn-primary" onclick="processPayment('UPI')">Pay ₹<span id="upiAmount"></span></button>
+          </form>
+        </div>
+
+        <!-- Bank Transfer Form -->
+        <div id="bankForm" class="payment-form">
+          <h3><i class="fas fa-university"></i> Bank Transfer</h3>
+          <form id="bankPaymentForm">
+            <div class="form-group">
+              <label for="accountNumber" class="form-label">Account Number</label>
+              <input type="text" id="accountNumber" class="form-input" placeholder="Enter account number" onblur="validateAccountNumber()">
+              <div id="accountNumberError" class="error-message">Please enter a valid account number</div>
+            </div>
+            <div class="form-group">
+              <label for="ifscCode" class="form-label">IFSC Code</label>
+              <input type="text" id="ifscCode" class="form-input" placeholder="ABCD0123456" onblur="validateIfscCode()">
+              <div id="ifscCodeError" class="error-message">Please enter a valid IFSC code</div>
+            </div>
+            <div class="form-group">
+              <label for="accountName" class="form-label">Account Holder Name</label>
+              <input type="text" id="accountName" class="form-input" placeholder="John Doe" onblur="validateAccountName()">
+              <div id="accountNameError" class="error-message">Please enter the account holder name</div>
+            </div>
+            <button type="button" class="btn btn-primary" onclick="processPayment('Bank Transfer')">Pay ₹<span id="bankAmount"></span></button>
+          </form>
+        </div>
+
+        <!-- Wallet Form -->
+        <div id="walletForm" class="payment-form">
+          <h3><i class="fas fa-wallet"></i> Wallet Payment</h3>
+          <div class="form-group">
+            <div class="summary-detail">
+              <strong>Current Wallet Balance:</strong>
+              <span>₹<span id="currentWalletBalance">0</span></span>
+            </div>
+            <div class="summary-detail">
+              <strong>Plan Amount:</strong>
+              <span>₹<span id="walletPlanAmount"></span></span>
+            </div>
+          </div>
+          <div id="insufficientFunds" style="color: var(--danger); display: none; margin-bottom: 1rem;">
+            <i class="fas fa-exclamation-circle"></i> Insufficient funds in your wallet. Please add funds or choose another payment method.
+          </div>
+          <button type="button" id="walletPayButton" class="btn btn-primary" onclick="processPayment('Wallet')">Pay from Wallet</button>
+        </div>
+
+        <div id="bonusMessage" class="bonus">
+          <i class="fas fa-gift"></i> A bonus of ₹20 has been added to your wallet!
+        </div>
+        <div style="text-align: center; margin-top: 2rem;">
+          <button class="btn btn-outline" onclick="showSummary()">Back to Summary</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="successSection" class="section">
+      <div class="card">
+        <div style="text-align: center;">
+          <i class="fas fa-check-circle success-icon"></i>
+          <h2>Payment Successful!</h2>
+          <div class="summary-detail">
+            <strong>Selected Plan:</strong>
+            <span id="successPlan"></span>
+          </div>
+          <div class="summary-detail">
+            <strong>Payment Method:</strong>
+            <span id="paymentMethod"></span>
+          </div>
+          <div class="summary-detail">
+            <strong>Amount Paid:</strong>
+            <span>₹<span id="amountPaid"></span></span>
+          </div>
+          <div class="summary-detail">
+            <strong>Transaction ID:</strong>
+            <span id="transactionId"></span>
+          </div>
+          <div class="summary-detail">
+            <strong>Date & Time:</strong>
+            <span id="transactionDate"></span>
+          </div>
+          
+          <!-- Bill Preview -->
+          <div class="bill">
+            <div class="bill-header">
+              <div class="bill-logo"><i class="fas fa-mobile-alt"></i> MobilePlan</div>
+              <div class="bill-invoice">INVOICE #<span id="invoiceNumber"></span></div>
+            </div>
+            <div class="bill-details">
+              <div class="bill-row">
+                <div>Customer:</div>
+                <div id="billCustomer"></div>
+              </div>
+              <div class="bill-row">
+                <div>Mobile Number:</div>
+                <div id="billMobile"></div>
+              </div>
+              <div class="bill-row">
+                <div>Plan:</div>
+                <div id="billPlan"></div>
+              </div>
+              <div class="bill-row">
+                <div>Payment Method:</div>
+                <div id="billPaymentMethod"></div>
+              </div>
+              <div class="bill-row">
+                <div>Transaction Date:</div>
+                <div id="billDate"></div>
+              </div>
+              <div class="bill-row">
+                <div>Transaction ID:</div>
+                <div id="billTransactionId"></div>
+              </div>
+            </div>
+            <div class="bill-total">
+              Total Amount: ₹<span id="billAmount"></span>
+            </div>
+          </div>
+          
+          <div style="margin-top: 2rem;">
+            <button class="btn btn-success" onclick="downloadPDFBill()"><i class="fas fa-download"></i> Download Bill (PDF)</button>
+            <a href="wallet.html" class="btn btn-outline">View Wallet</a>
+            <button class="btn btn-primary" onclick="returnHome()">Return to Home</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function backToPlanPage() {
+  // Navigate back to the plans page
+  window.location.href = "plans.html";
+}
+    // Make jsPDF accessible globally
+    const { jsPDF } = window.jspdf;
+    
+    // Keeping the original JavaScript functionality
+    function handleHomeClick() {
+      localStorage.removeItem("userPhoneNumber");
+      window.location.href = "home.html";
+    }
+
+    function loadSummary() {
+      let number = localStorage.getItem("userPhoneNumber") || localStorage.getItem("loggedInUser") || "No number provided";
+      let plan = localStorage.getItem("selectedPlan") || "No plan selected";
+      let cost = localStorage.getItem("planCost") || "0";
+      document.getElementById("finalPhoneNumber").textContent = number;
+      document.getElementById("finalPlan").textContent = plan;
+      document.getElementById("planCost").textContent = cost;
+      
+      // Set amounts in all payment forms
+      document.getElementById("ccAmount").textContent = cost;
+      document.getElementById("upiAmount").textContent = cost;
+      document.getElementById("bankAmount").textContent = cost;
+      document.getElementById("walletPlanAmount").textContent = cost;
+      
+      // Set wallet balance
+      let walletBalance = localStorage.getItem("walletBalance") || "0";
+      document.getElementById("currentWalletBalance").textContent = walletBalance;
+      
+      // Check if wallet has sufficient funds
+      if (parseInt(walletBalance, 10) < parseInt(cost, 10)) {
+        document.getElementById("insufficientFunds").style.display = "block";
+        document.getElementById("walletPayButton").disabled = true;
+      } else {
+        document.getElementById("insufficientFunds").style.display = "none";
+        document.getElementById("walletPayButton").disabled = false;
+      }
+      // Make sure this runs when the payment page loads
+window.onload = function() {
+  loadSummary();
+  // Other initialization code...
+};
+    }
+
+    function showPaymentOptions() {
+      document.getElementById("summarySection").classList.remove("active");
+      document.getElementById("paymentOptionsSection").classList.add("active");
+    }
+
+    function showSummary() {
+      document.getElementById("paymentOptionsSection").classList.remove("active");
+      document.getElementById("summarySection").classList.add("active");
+    }
+
+    function changePlan() {
+  // Store the current mobile number so it persists during plan selection
+  const mobileNumber = localStorage.getItem("userPhoneNumber") || localStorage.getItem("loggedInUser");
+  
+  // Make sure the mobile number is saved before redirecting
+  if (mobileNumber) {
+    localStorage.setItem("userPhoneNumber", mobileNumber);
+  }
+  
+  // Redirect to plans page
+  window.location.href = "plans.html";
+}
+
+    function selectPaymentMethod(method) {
+      // Remove selected class from all options
+      document.querySelectorAll('.payment-option').forEach(option => {
+        option.classList.remove('selected');
+      });
+      
+      // Hide all forms
+      document.querySelectorAll('.payment-form').forEach(form => {
+        form.style.display = 'none';
+      });
+      
+      // Add selected class to chosen option
+      let optionId;
+      let formId;
+      
+      switch (method) {
+        case 'Credit Card':
+          optionId = 'creditCardOption';
+          formId = 'creditCardForm';
+          break;
+        case 'UPI':
+          optionId = 'upiOption';
+          formId = 'upiForm';
+          break;
+        case 'Bank Transfer':
+          optionId = 'bankOption';
+          formId = 'bankForm';
+          break;
+        case 'Wallet':
+          optionId = 'walletOption';
+          formId = 'walletForm';
+          break;
+      }
+      
+      document.getElementById(optionId).classList.add('selected');
+      document.getElementById(formId).style.display = 'block';
+    }
+
+    // Format and validation functions
+    function formatCardNumber(input) {
+      // Remove non-digits
+      let value = input.value.replace(/\D/g, '');
+      
+      // Add space after every 4 digits
+      let formattedValue = '';
+      for (let i = 0; i < value.length; i++) {
+        if (i > 0 && i % 4 === 0) {
+          formattedValue += ' ';
+        }
+        formattedValue += value[i];
+      }
+      
+      input.value = formattedValue;
+    }
+
+    function formatExpiryDate(input) {
+      // Remove non-digits
+      let value = input.value.replace(/\D/g, '');
+      
+      // Format as MM/YY
+      if (value.length > 2) {
+        input.value = value.substring(0, 2) + '/' + value.substring(2);
+      } else {
+        input.value = value;
+      }
+    }
+
+    function validateCardNumber() {
+      const cardNumber = document.getElementById('cardNumber').value.replace(/\s/g, '');
+      const errorElement = document.getElementById('cardNumberError');
+      
+      if (!/^\d{16}$/.test(cardNumber)) {
+        errorElement.style.display = 'block';
+        document.getElementById('cardNumber').classList.add('error');
+        return false;
+      } else {
+        errorElement.style.display = 'none';
+        document.getElementById('cardNumber').classList.remove('error');
+        return true;
+      }
+    }
+
+    function validateCardName() {
+      const cardName = document.getElementById('cardName').value.trim();
+      const errorElement = document.getElementById('cardNameError');
+      
+      if (cardName === '' || cardName.length < 3) {
+        errorElement.style.display = 'block';
+        document.getElementById('cardName').classList.add('error');
+        return false;
+      } else {
+        errorElement.style.display = 'none';
+        document.getElementById('cardName').classList.remove('error');
+        return true;
+      }
+    }
+
+    function validateExpiryDate() {
+      const expiryDate = document.getElementById('expiryDate').value;
+      const errorElement = document.getElementById('expiryDateError');
+      
+      if (!/^\d{2}\/\d{2}$/.test(expiryDate)) {
+        errorElement.style.display = 'block';
+        document.getElementById('expiryDate').classList.add('error');
+        return false;
+      }
+      
+      // Check if date is valid
+      const [month, year] = expiryDate.split('/');
+      const currentDate = new Date();
+      const currentYear = currentDate.getFullYear() % 100; // Get last 2 digits
+      const currentMonth = currentDate.getMonth() + 1; // January is 0
+      
+      if (parseInt(month) < 1 || parseInt(month) > 12 || 
+          (parseInt(year) < currentYear || 
+           (parseInt(year) === currentYear && parseInt(month) < currentMonth))) {
+        errorElement.style.display = 'block';
+        document.getElementById('expiryDate').classList.add('error');
+        return false;
+      } else {
+        errorElement.style.display = 'none';
+        document.getElementById('expiryDate').classList.remove('error');
+        return true;
+      }
+    }
+
+    function validateCVV() {
+      const cvv = document.getElementById('cvv').value;
+      const errorElement = document.getElementById('cvvError');
+      
+      if (!/^\d{3}$/.test(cvv)) {
+        errorElement.style.display = 'block';
+        document.getElementById('cvv').classList.add('error');
+        return false;
+      } else {
+        errorElement.style.display = 'none';
+        document.getElementById('cvv').classList.remove('error');
+        return true;
+      }
+    }
+
+    function validateUpiId() {
+      const upiId = document.getElementById('upiId').value;
+      const errorElement = document.getElementById('upiIdError');
+      
+      if (!/^[a-zA-Z0-9._-]+@[a-zA-Z0-9]+$/.test(upiId)) {
+        errorElement.style.display = 'block';
+        document.getElementById('upiId').classList.add('error');
+        return false;
+      } else {
+        errorElement.style.display = 'none';
+        document.getElementById('upiId').classList.remove('error');
+        return true;
+      }
+    }
+
+    function validateAccountNumber() {
+      const accountNumber = document.getElementById('accountNumber').value;
+      const errorElement = document.getElementById('accountNumberError');
+      
+      if (!/^\d{9,18}$/.test(accountNumber)) {
+        errorElement.style.display = 'block';
+        document.getElementById('accountNumber').classList.add('error');
+        return false;
+      } else {
+        errorElement.style.display = 'none';
+        document.getElementById('accountNumber').classList.remove('error');
+        return true;
+      }
+    }
+
+    function validateIfscCode() {
+      const ifscCode = document.getElementById('ifscCode').value;
+      const errorElement = document.getElementById('ifscCodeError');
+      
+      if (!/^[A-Z]{4}0[A-Z0-9]{6}$/.test(ifscCode)) {
+        errorElement.style.display = 'block';
+        document.getElementById('ifscCode').classList.add('error');
+        return false;
+      } else {
+        errorElement.style.display = 'none';
+        document.getElementById('ifscCode').classList.remove('error');
+        return true;
+      }
+    }
+
+    function validateAccountName() {
+      const accountName = document.getElementById('accountName').value.trim();
+      const errorElement = document.getElementById('accountNameError');
+      
+      if (accountName === '' || accountName.length < 3) {
+        errorElement.style.display = 'block';
+        document.getElementById('accountName').classList.add('error');
+        return false;
+      } else {
+        errorElement.style.display = 'none';
+        document.getElementById('accountName').classList.remove('error');
+        return true;
+      }
+    }
+
+    function validateCreditCardForm() {
+      return validateCardNumber() && validateCardName() && validateExpiryDate() && validateCVV();
+    }
+
+    function validateUpiForm() {
+      return validateUpiId();
+    }
+
+    function validateBankForm() {
+      return validateAccountNumber() && validateIfscCode() && validateAccountName();
+    }
+
+    function generateTransactionId() {
+      return 'TXN' + Math.random().toString(36).substr(2, 9).toUpperCase();
+    }
+
+    function generateInvoiceNumber() {
+      return 'INV-' + new Date().getFullYear() + '-' + Math.floor(1000 + Math.random() * 9000);
+    }
+
+    function formatDate(date) {
+      const options = { 
+        year: 'numeric', 
+        month: 'short', 
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      };
+      return date.toLocaleString('en-IN', options);
+    }
+
+    function processPayment(method) {
+      let isValid = true;
+      
+      // Validate form based on payment method
+      switch (method) {
+        case 'Credit Card':
+          isValid = validateCreditCardForm();
+          break;
+        case 'UPI':
+          isValid = validateUpiForm();
+          break;
+        case 'Bank Transfer':
+          isValid = validateBankForm();
+          break;
+        case 'Wallet':
+          // No validation needed for walletcase 'Wallet':
+          // No validation needed for wallet
+          isValid = true;
+          break;
+      }
+      
+      if (!isValid) {
+        return;
+      }
+      
+      // Process the payment
+      const planCost = parseInt(localStorage.getItem("planCost") || "0", 10);
+      const transactionId = generateTransactionId();
+      const currentDate = new Date();
+      const formattedDate = formatDate(currentDate);
+      
+      // Update wallet balance if wallet payment
+      if (method === 'Wallet') {
+        const currentBalance = parseInt(localStorage.getItem("walletBalance") || "0", 10);
+        localStorage.setItem("walletBalance", (currentBalance - planCost).toString());
+      } else {
+        // For other payment methods, add a bonus to wallet on first payment
+        const firstPayment = localStorage.getItem("firstPayment") !== "done";
+        if (firstPayment) {
+          const currentBalance = parseInt(localStorage.getItem("walletBalance") || "0", 10);
+          localStorage.setItem("walletBalance", (currentBalance + 20).toString());
+          document.getElementById("bonusMessage").style.display = "block";
+          localStorage.setItem("firstPayment", "done");
+        }
+      }
+      
+      // Store transaction details
+      localStorage.setItem("lastTransactionId", transactionId);
+      localStorage.setItem("lastTransactionDate", formattedDate);
+      localStorage.setItem("lastPaymentMethod", method);
+      localStorage.setItem("lastAmountPaid", planCost.toString());
+      
+      // Update UI in success section
+      document.getElementById("successPlan").textContent = localStorage.getItem("selectedPlan") || "No plan selected";
+      document.getElementById("paymentMethod").textContent = method;
+      document.getElementById("amountPaid").textContent = planCost;
+      document.getElementById("transactionId").textContent = transactionId;
+      document.getElementById("transactionDate").textContent = formattedDate;
+      
+      // Update bill details
+      const invoiceNumber = generateInvoiceNumber();
+      document.getElementById("invoiceNumber").textContent = invoiceNumber;
+      document.getElementById("billCustomer").textContent = localStorage.getItem("userName") || "Guest User";
+      document.getElementById("billMobile").textContent = localStorage.getItem("userPhoneNumber") || localStorage.getItem("loggedInUser") || "No number provided";
+      document.getElementById("billPlan").textContent = localStorage.getItem("selectedPlan") || "No plan selected";
+      document.getElementById("billPaymentMethod").textContent = method;
+      document.getElementById("billDate").textContent = formattedDate;
+      document.getElementById("billTransactionId").textContent = transactionId;
+      document.getElementById("billAmount").textContent = planCost;
+      
+      // Show success section
+      document.getElementById("paymentOptionsSection").classList.remove("active");
+      document.getElementById("successSection").classList.add("active");
+    }
+
+    function downloadPDFBill() {
+      const doc = new jsPDF();
+      const invoiceNumber = document.getElementById("invoiceNumber").textContent;
+      const customerName = document.getElementById("billCustomer").textContent;
+      const mobileNumber = document.getElementById("billMobile").textContent;
+      const planName = document.getElementById("billPlan").textContent;
+      const paymentMethod = document.getElementById("billPaymentMethod").textContent;
+      const transactionDate = document.getElementById("billDate").textContent;
+      const transactionId = document.getElementById("billTransactionId").textContent;
+      const amount = document.getElementById("billAmount").textContent;
+      
+      // Add company logo/name
+      doc.setFontSize(20);
+      doc.setTextColor(79, 70, 229);
+      doc.text("MobilePlan", 105, 20, { align: "center" });
+      
+      // Add invoice title
+      doc.setFontSize(16);
+      doc.setTextColor(0, 0, 0);
+      doc.text("INVOICE", 105, 30, { align: "center" });
+      doc.text(`#${invoiceNumber}`, 105, 40, { align: "center" });
+      
+      // Add a horizontal line
+      doc.setDrawColor(200, 200, 200);
+      doc.line(20, 45, 190, 45);
+      
+      // Add bill details
+      doc.setFontSize(12);
+      let y = 60;
+      
+      doc.text("Bill To:", 20, y);
+      doc.text(customerName, 80, y);
+      y += 10;
+      
+      doc.text("Mobile Number:", 20, y);
+      doc.text(mobileNumber, 80, y);
+      y += 10;
+      
+      doc.text("Plan:", 20, y);
+      doc.text(planName, 80, y);
+      y += 10;
+      
+      doc.text("Payment Method:", 20, y);
+      doc.text(paymentMethod, 80, y);
+      y += 10;
+      
+      doc.text("Transaction Date:", 20, y);
+      doc.text(transactionDate, 80, y);
+      y += 10;
+      
+      doc.text("Transaction ID:", 20, y);
+      doc.text(transactionId, 80, y);
+      y += 20;
+      
+      // Add a horizontal line
+      doc.line(20, y, 190, y);
+      y += 10;
+      
+      // Add total
+      doc.setFontSize(14);
+      doc.text("Total Amount:", 120, y);
+      doc.text(`₹${amount}`, 170, y);
+      
+      // Add footer
+      y = 250;
+      doc.setFontSize(10);
+      doc.setTextColor(100, 100, 100);
+      doc.text("Thank you for your business!", 105, y, { align: "center" });
+      
+      // Save the PDF
+      doc.save(`Invoice-${invoiceNumber}.pdf`);
+    }
+
+    function returnHome() {
+      window.location.href = "home.html";
+    }
+
+    // Initialize the page
+    document.addEventListener("DOMContentLoaded", function() {
+      loadSummary();
+      
+      // Show login/profile based on login status
+      const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+      document.getElementById("loginNav").style.display = isLoggedIn ? "none" : "inline";
+      document.getElementById("profileNav").style.display = isLoggedIn ? "inline" : "none";
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Home - Quick Recharge</title>
+  <link rel="stylesheet" href="home.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <style>
+     * {
+            top: 0%;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(to right, #f3f4f3, #f4f4f3, #f6f7f6);
+            color: #000;
+            text-align: center;
+            padding-top: 80px;
+        }
+        
+        input, button { 
+            padding: 10px; 
+            font-size: 16px; 
+            margin: 5px; 
+        }
+        
+        .error { 
+            color: red; 
+            font-size: 14px; 
+        }
+        
+        .navbar {
+            
+            margin-left: 10;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: linear-gradient(to right, #f5f6f4, #f2f3f2, #e5f7e3);
+            z-index: 1000;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .navbar.hidden {
+            transform: translateY(-100%);
+        }
+        
+        .logo {
+            margin-left: 20%;
+            font-size: 24px;
+            font-weight: 700;
+            color: #f80e0e;
+            text-decoration: none;
+        }
+        .no-underline {
+  text-decoration: none;
+}
+        
+        .nav-container {
+            display: flex;
+            justify-content: center;
+            flex-grow: 1;
+        }
+        
+        .nav-links {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: #000;
+            font-weight: 600;
+            font-size: 15px;
+            padding: 5px 30px;
+            position: relative;
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: -2px;
+            width: 0;
+            height: 2px;
+            background: #fa3924;
+            transition: width 0.3s ease-in-out, left 0.3s ease-in-out;
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+            left: 0;
+        }
+        
+        .menu-toggle {
+            display: none;
+            cursor: pointer;
+        }
+        
+        .blurred-navbar {
+            position: fixed;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40%;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 8px 15px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            z-index: 999;
+            border-radius: 20px;
+            text-align: center;
+            transition: opacity 0.3s ease-in-out;
+        }
+        
+        .blurred-navbar.show {
+            display: flex;
+        }
+
+        .blurred-navbar .nav-links {
+            display: flex;
+            flex-direction: row;
+        }
+        
+        .blurred-navbar .nav-links a {
+            font-size: 15px;
+            padding: 3px 10px;
+        }
+        
+        /* Text-image section responsive */
+        .text-image {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            margin: 10%;
+            top: 0;
+        }
+        
+        .text-image > div {
+            flex: 1;
+            min-width: 300px;
+            padding: 20px;
+        }
+        
+        .text-image img {
+            flex: 1;
+            min-width: 300px;
+            max-width: 100%;
+            height: auto;
+        }
+        
+    
+       
+        
+        /* Form styling */
+        .form-container {
+            width: 100%;
+            max-width: 500px;
+            margin: 20px auto;
+            padding: 15px;
+        }
+        
+        .form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .form-group {
+            width: 100%;
+            margin-bottom: 15px;
+        }
+        
+        .form-submit-btn {
+            background: #f8f8f9;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        
+        .form-submit-btn:hover {
+            background: #f71f26;
+        }
+        
+        /* Carousel styling */
+        .carousel-container {
+            width: 100%;
+            overflow: hidden;
+            margin: 30px 0;
+        }
+        
+        .container {
+            display: flex;
+            transition: transform 0.5s ease;
+            gap: 15px;
+            padding: 10px;
+        }
+        
+      
+        .nav-buttons {
+            display: none;
+            justify-content: center;
+            gap: 20px;
+            margin: 15px 0;
+        }
+        
+        .nav-btn {
+            background: #ba3cf9;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        .nav-btn:hover {
+            background: #f71f26;
+        }
+        
+       /* Footer Styles */
+    .footer {
+      background-color: black;
+      color: white;
+      padding: 40px 0 20px;
+      margin-top: auto;
+    }
+    
+    .footer-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 30px;
+    }
+    
+    .footer-section {
+      flex: 1;
+      min-width: 200px;
+    }
+    
+    .footer-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 20px;
+      position: relative;
+      padding-bottom: 10px;
+    }
+    
+    .footer-title::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 50px;
+      height: 2px;
+      background: var(--primary);
+    }
+    
+    .footer-links {
+      list-style: none;
+    }
+    
+    .footer-links li {
+      margin-bottom: 10px;
+    }
+    
+    .footer-links a {
+      color: #ced4da;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    
+    .footer-links a:hover {
+      color: var(--primary);
+    }
+    
+    .social-icons {
+      display: flex;
+      gap: 15px;
+      margin-top: 15px;
+    }
+    
+    .social-icon {
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+    
+    .social-icon:hover {
+      background-color: var(--primary);
+      transform: translateY(-3px);
+    }
+    
+    .contact-info {
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.9rem;
+    }
+    
+    .footer-bottom {
+      text-align: center;
+      padding-top: 30px;
+      margin-top: 30px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      font-size: 0.9rem;
+      color: #ced4da;
+    }
+    
+        
+        #backToTop {
+            position: fixed;
+            right: 20px;
+            top: -60px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: top 0.5s ease-in-out;
+        }
+        
+        #backToTop.show {
+            top: 70%;
+        }
+        
+        
+        /* Import font */
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap');
+        
+        .font h1 {
+            font-family: 'Montserrat', 'Times New Roman', Times, serif;
+            font-weight: 700;
+            font-size: 1.9rem;
+        }
+        
+        /* Responsive styles */
+        @media screen and (max-width: 1000px) {
+            .navbar {
+                padding: 2%;
+            }
+            
+            .logo {
+                position: absolute;
+                left: 30%;
+                transform: translateX(-50%);
+            }
+            
+            .nav-links a {
+                padding: 4px 10px;
+            }
+            
+            .menu-toggle {
+                display: block;
+            }
+            
+            .nav-container {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                position: absolute;
+                top: 50px;
+                left: 0;
+                background: rgba(255, 255, 255, 0.9);
+                padding: 10px 0;
+                text-align: center;
+            }
+            
+            .nav-container.show {
+                display: flex;
+            }
+            
+            .blurred-navbar {
+                width: 80%;
+            }
+            
+            .text-image > div,
+            .text-image img {
+                flex: 100%;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            
+            
+            .nav-buttons {
+                display: flex;
+            }
+            
+            .footer-container {
+        flex-direction: column;
+      }
+            
+            .text-image {
+                flex-direction: column;
+            }
+            
+            .text-image > div {
+                width: 100%;
+                text-align: center;
+            }
+            
+            .text-image img {
+                width: 100%;
+                margin-top: 20px;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            
+            
+            .nav-links a {
+                padding: 4px 6px;
+                font-size: 13px;
+            }
+            
+            .logo {
+                font-size: 20px;
+                margin-left: 10%;
+            }
+        }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <header class="navbar" id="navbar">
+    <div class="menu-toggle" id="menuToggle">☰</div>
+    <a href="home.html" class="no-underline"> <div class="logo">ReZap</div></a>
+    <div class="nav-container" id="navContainer">
+        <nav class="nav-links">
+            <a href="home.html" onclick="handleHomeClick()">Home</a>
+            <a href="plans.html">Plans</a>
+            <a href="#call">Recharge</a>
+            <a href="offers.html">Offers</a>
+            <a href="wallet.html">Wallet</a>
+            <a href="support.html">Support</a>
+        </nav>
+    </div>
+    
+    <a href="login.html" id="loginNav">
+        <button class="cta">
+            <span><b>Login</b></span>
+            <svg width="15px" height="10px" viewBox="0 0 13 10">
+                <path d="M1,5 L11,5"></path>
+                <polyline points="8 1 12 5 8 9"></polyline>
+            </svg>
+        </button>
+    </a>
+    <a href="profile.html" id="profileNav" style="display:none;">
+        <button class="cta">
+            <span><b>Profile</b></span>
+            <svg width="15px" height="10px" viewBox="0 0 13 10">
+                <path d="M1,5 L11,5"></path>
+                <polyline points="8 1 12 5 8 9"></polyline>
+            </svg>
+        </button>
+    </a>
+</header>
+
+<header class="blurred-navbar" id="blurredNavbar">
+    <nav class="nav-links">
+        <a href="home.html" onclick="handleHomeClick()">Home</a>
+        <a href="plans.html">Plans</a>
+        <a href="#call">Recharge</a>
+        <a href="offers.html">Offers</a>
+        <a href="wallet.html">Wallet</a>
+        <a href="support.html">Support</a>
+    </nav>
+</header>
+
+<script>
+  const menuToggle = document.getElementById("menuToggle");
+  const navContainer = document.getElementById("navContainer");
+  const navbar = document.getElementById("navbar");
+  const blurredNavbar = document.getElementById("blurredNavbar");
+
+  menuToggle.addEventListener("click", function () {
+      navContainer.classList.toggle("show");
+  });
+
+  document.addEventListener("click", function (event) {
+      if (!menuToggle.contains(event.target) && !navContainer.contains(event.target)) {
+          navContainer.classList.remove("show");
+      }
+  });
+
+  window.addEventListener("scroll", function () {
+      if (window.scrollY > 50) {
+          navbar.classList.add("hidden");
+          blurredNavbar.classList.add("show");
+      } else {
+          navbar.classList.remove("hidden");
+          blurredNavbar.classList.remove("show");
+      }
+  });</script>
+
+<div class="text-image">
+  <div style="text-align: left;" class="font">
+      <h1><b>Experience seamless connectivity</b></h1>
+      <div style="opacity: 0.7;">
+          Experience seamless connectivity with our mobile prepaid recharge plans.
+      </div>
+  </div>
+  <img src="\mpproject\images\2331655.jpg">
+</div>
+
+<div class="card1">
+  <div class="card1-img"></div>
+  <div class="contact-card">
+    <p class="tagline">#get in touch</p>
+    <h2 class="heading">Ready to get started?</h2>
+    <p class="description">
+      Cashback on every recharge on your Wallet
+    </p>
+  </div>
+  <a href="plans.html" class="callback-btn" id="call">Get Plan</a>
+</div>
+
+
+
+  <h3><b></b>Quick Recharge</b></h3>
+  <div id="recharge">
+    <div class="form-container" style="text-align: center;">
+  <div class="form-group">
+  <input type="text" id="phoneNumber" placeholder="Enter 10-digit number" maxlength="10" oninput="validateNumber(this)">
+  <div id="phoneError" class="error"></div>
+  <button id="recharge" class="form-submit-btn" onclick="saveNumberAndRedirect()">Recharge</button>
+</div></div></div>
+<hr>
+
+<div class="font"><h1>Recommened for you</h1></div>
+    <div class="carousel-container">
+        <div class="container" id="cardContainer">
+            <div class="card">
+                <img src="\mpproject\images\4703503.jpg" alt="Plan Image">
+                <div class="card-content">
+                    <p class="card-title">Enjoy Unlimited Connectivity!</p>
+                    <p class="card-para">Get 1.5GB/day, Unlimited Calls & 100 SMS/day for 28 days with the ₹299 Plan.</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <img src="\mpproject\images\playing-young-mobile-phone-people-happy.jpg" alt="Plan Image">
+                <div class="card-content">
+                    <p class="card-title">Stay Connected Always!</p>
+                    <p class="card-para">Recharge with ₹199 and enjoy 2GB/day, Unlimited Calls & 100 SMS/day for 23 days.</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <img src="\mpproject\images\stylish-girl-city.jpg" alt="Plan Image">
+                <div class="card-content">
+                    <p class="card-title">Power Up Your Data!</p>
+                    <p class="card-para">Get ₹399 plan with 3GB/day, Unlimited Calls & 100 SMS/day for 28 days.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="nav-buttons" id="navButtons">
+        <button class="nav-btn" onclick="prevSlide()">&#9665; Prev</button>
+        <span class="pagination" id="pagination">1 / 3</span>
+        <button class="nav-btn" onclick="nextSlide()">Next &#9655;</button>
+    </div>
+
+    <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-container">
+        <div class="footer-section">
+          <h3 class="footer-title">ReZap</h3>
+          <p>Quick and convenient mobile recharge service. Secure payments, instant recharges, and exclusive offers.</p>
+          <div class="social-icons">
+            <a href="#" class="social-icon">f</a>
+            <a href="#" class="social-icon">t</a>
+            <a href="#" class="social-icon">in</a>
+            <a href="#" class="social-icon">ig</a>
+          </div>
+        </div>
+        
+      
+        
+        <div class="footer-section">
+          <h3 class="footer-title">Support</h3>
+          <ul class="footer-links">
+            <li><a href="support.html">Contact Us</a></li>
+            <li><a href="support.html">Help Center</a></li>
+            <li><a href="terms.html">Terms of Service</a></li>
+            <li><a href="privacy.html">Privacy Policy</a></li>
+            <li><a href="refund.html">Refund Policy</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-section">
+          <h3 class="footer-title">Contact Us</h3>
+          <div class="contact-info">
+            <span>📞</span>
+            <p>+91 9876543210</p>
+          </div>
+          <div class="contact-info">
+            <span>✉️</span>
+            <p>support@rezap.com</p>
+          </div>
+          <div class="contact-info">
+            <span>🏢</span>
+            <p>123 Tech Park, Mumbai, India</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <p>&copy; 2025 ReZap. All rights reserved. Quick recharge solutions for a connected world.</p>
+      </div>
+    </div>
+  </footer>
+  
+  <button id="backToTop">↑</button>
+
+
+
+  <script>
+    // Validate so that only digits are entered.
+    function validateNumber(el) {
+      el.value = el.value.replace(/\D/g, '');
+      if (el.value.length > 10) {
+        document.getElementById("phoneError").textContent = "Cannot exceed 10 digits.";
+      } else {
+        document.getElementById("phoneError").textContent = "";
+      }
+    }
+
+    // When Home is clicked, clear the quick recharge number.
+    // If logged in, keep the profile number.
+    function handleHomeClick() {
+      // Always clear quick recharge number.
+      localStorage.removeItem("userPhoneNumber");
+      // Then redirect to home.
+      window.location.href = "home.html";
+    }
+
+    // Save a valid number and go to the Plans page.
+    function saveNumberAndRedirect() {
+      const phoneInput = document.getElementById("phoneNumber");
+      const errorDiv = document.getElementById("phoneError");
+      let number = phoneInput.value.trim();
+      if (number.length !== 10) {
+        errorDiv.textContent = "Enter a valid 10-digit mobile number.";
+        return;
+      }
+      errorDiv.textContent = "";
+      localStorage.setItem("userPhoneNumber", number);
+      window.location.href = "plans.html";
+    }
+
+    // Update navbar depending on login state.
+    window.onload = function() {
+      if (localStorage.getItem("loggedInUser")) {
+        document.getElementById("loginNav").style.display = "none";
+        document.getElementById("profileNav").style.display = "inline-block";
+      }
+    }
+
+    // Carousel functionality
+    let currentIndex = 0;
+        const totalCards = document.querySelectorAll('.card').length;
+        const cardContainer = document.getElementById('cardContainer');
+        const pagination = document.getElementById('pagination');
+        const navButtons = document.getElementById('navButtons');
+
+        function updateCarousel() {
+            const cardWidth = document.querySelector('.card').offsetWidth + 15; // Including gap
+            cardContainer.style.transform = `translateX(${-currentIndex * cardWidth}px)`;
+            pagination.innerText = `${currentIndex + 1} / ${totalCards}`;
+        }
+
+        function nextSlide() {
+            if (currentIndex < totalCards - 1) {
+                currentIndex++;
+                updateCarousel();
+            }
+        }
+
+        function prevSlide() {
+            if (currentIndex > 0) {
+                currentIndex--;
+                updateCarousel();
+            }
+        }
+
+        function checkScreenSize() {
+            if (window.innerWidth <= 768) {
+                navButtons.style.display = 'flex';
+            } else {
+                navButtons.style.display = 'none';
+            }
+        }
+
+        window.addEventListener('resize', checkScreenSize);
+        checkScreenSize();
+
+        // Back to top button
+        const backToTop = document.getElementById("backToTop");
+
+        window.addEventListener("scroll", function() {
+            if (window.scrollY > 200) {
+                backToTop.classList.add("show");
+            } else {
+                backToTop.classList.remove("show");
+            }
+        });
+
+        backToTop.addEventListener("click", function() {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+  </script>
+</body>
+</html>

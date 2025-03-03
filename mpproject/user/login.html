@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #4F46E5;
+      --primary-dark: #4338CA;
+      --success: #10B981;
+      --danger: #EF4444;
+      --gray-100: #F3F4F6;
+      --gray-800: #1F2937;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: var(--gray-800);
+      line-height: 1.5;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Animated background */
+    .background-animations {
+      position: fixed;
+      width: 100vw;
+      height: 100vh;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .circle {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      animation: float 15s infinite;
+    }
+
+    .circle:nth-child(1) {
+      width: 150px;
+      height: 150px;
+      top: 10%;
+      left: 10%;
+      animation-delay: 0s;
+    }
+
+    .circle:nth-child(2) {
+      width: 200px;
+      height: 200px;
+      top: 60%;
+      right: 10%;
+      animation-delay: -5s;
+    }
+
+    .circle:nth-child(3) {
+      width: 100px;
+      height: 100px;
+      bottom: 20%;
+      left: 20%;
+      animation-delay: -10s;
+    }
+
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0) rotate(0deg);
+      }
+      50% {
+        transform: translateY(-20px) rotate(180deg);
+      }
+    }
+
+    nav {
+      background: rgba(31, 41, 55, 0.95);
+      padding: 1rem;
+      backdrop-filter: blur(10px);
+      position: relative;
+      z-index: 10;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin-right: 1.5rem;
+      font-weight: 500;
+      transition: color 0.3s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    nav a:hover {
+      color: var(--primary);
+    }
+
+    .container {
+      max-width: 400px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .login-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 1rem;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+      padding: 2rem;
+      text-align: center;
+      animation: slideUp 0.5s ease-out;
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    h1 {
+      color: var(--gray-800);
+      margin-bottom: 0.5rem;
+      font-size: 1.75rem;
+    }
+
+    .subtitle {
+      color: #6B7280;
+      margin-bottom: 2rem;
+    }
+
+    .input-group {
+      position: relative;
+      margin-bottom: 1.5rem;
+    }
+
+    .input-group i {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #6B7280;
+    }
+
+    input {
+      width: 100%;
+      padding: 0.75rem 1rem 0.75rem 2.5rem;
+      border: 2px solid var(--gray-100);
+      border-radius: 0.5rem;
+      font-size: 1rem;
+      transition: all 0.3s;
+      background: white;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+    }
+
+    .error {
+      color: var(--danger);
+      font-size: 0.875rem;
+      margin-top: 0.5rem;
+      text-align: left;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 0.75rem 1.5rem;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 0.5rem;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .btn:hover {
+      background: var(--primary-dark);
+      transform: translateY(-1px);
+    }
+
+    /* OTP Popup styles */
+    #otpOverlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(5px);
+      z-index: 500;
+    }
+
+    #otpPopup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      padding: 2rem;
+      border-radius: 1rem;
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+      z-index: 1000;
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+    }
+
+    #otpPopup .close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: transparent;
+      border: none;
+      color: var(--danger);
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 0.5rem;
+      line-height: 1;
+      transition: transform 0.3s;
+    }
+
+    #otpPopup .close:hover {
+      transform: scale(1.1);
+    }
+
+    #otpPopup h2 {
+      margin-bottom: 1rem;
+      color: var(--gray-800);
+    }
+
+    #generatedOTP {
+      font-size: 2rem;
+      font-weight: bold;
+      color: var(--primary);
+      letter-spacing: 0.25rem;
+      margin: 1rem 0;
+      display: block;
+    }
+
+    @media (max-width: 640px) {
+      .container {
+        margin: 1rem auto;
+      }
+
+      .login-card {
+        padding: 1.5rem;
+      }
+
+      nav a {
+        margin-right: 1rem;
+        font-size: 0.875rem;
+      }
+
+      h1 {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="background-animations">
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
+  </div>
+
+  <nav>
+    <a href="home.html" onclick="handleHomeClick()">
+      <i class="fas fa-home"></i>
+      <span>Home</span>
+    </a>
+  </nav>
+
+  <div class="container">
+    <div class="login-card">
+      <h1>Welcome Back</h1>
+      <p class="subtitle">Login with your mobile number</p>
+      
+      <div class="input-group">
+        <i class="fas fa-mobile-alt"></i>
+        <input 
+          type="text" 
+          id="loginPhoneNumber" 
+          placeholder="Enter 10-digit number" 
+          maxlength="10" 
+          oninput="validateLoginNumber(this)"
+        >
+        <div id="loginPhoneError" class="error"></div>
+      </div>
+
+      <button class="btn" onclick="sendOTP()">
+        Send OTP
+      </button>
+    </div>
+  </div>
+
+  <!-- OTP Popup -->
+  <div id="otpOverlay"></div>
+  <div id="otpPopup">
+    <button class="close" onclick="closeOTPPopup()">
+      <i class="fas fa-times"></i>
+    </button>
+    <h2>Enter OTP</h2>
+    <p>We've sent a verification code to your mobile number</p>
+    <span id="generatedOTP"></span>
+    <div class="input-group">
+      <i class="fas fa-key"></i>
+      <input 
+        type="text" 
+        id="otpInput" 
+        placeholder="Enter 6-digit OTP" 
+        maxlength="6" 
+        oninput="validateOTP(this)"
+      >
+      <div id="otpError" class="error"></div>
+    </div>
+    <button class="btn" onclick="verifyOTP()">Verify OTP</button>
+  </div>
+
+  <script>
+    // Variable to store the current OTP
+    let currentOTP = "";
+    
+    function handleHomeClick() {
+      localStorage.removeItem("userPhoneNumber");
+      window.location.href = "home.html";
+    }
+
+    function validateLoginNumber(el) {
+      el.value = el.value.replace(/\D/g, '');
+      if (el.value.length > 10) {
+        document.getElementById("loginPhoneError").textContent = "Cannot exceed 10 digits.";
+      } else {
+        document.getElementById("loginPhoneError").textContent = "";
+      }
+    }
+
+    // Generate a random 6-digit OTP
+    function generateRandomOTP() {
+      // Generate a random number between 100000 and 999999
+      return Math.floor(100000 + Math.random() * 900000).toString();
+    }
+
+    function sendOTP() {
+      const loginInput = document.getElementById("loginPhoneNumber");
+      const errorDiv = document.getElementById("loginPhoneError");
+      let number = loginInput.value.trim();
+      
+      if (number.length !== 10) {
+        errorDiv.textContent = "Enter a valid 10-digit mobile number.";
+        return;
+      }
+      
+      errorDiv.textContent = "";
+      
+      // Generate a new random OTP
+      currentOTP = generateRandomOTP();
+      
+      // Display the generated OTP
+      document.getElementById("generatedOTP").textContent = currentOTP;
+      
+      // Reset any previous OTP input and error
+      document.getElementById("otpInput").value = "";
+      document.getElementById("otpError").textContent = "";
+      
+      // Show the OTP popup
+      document.getElementById("otpOverlay").style.display = "block";
+      document.getElementById("otpPopup").style.display = "block";
+    }
+
+    function validateOTP(el) {
+      el.value = el.value.replace(/\D/g, '');
+    }
+
+    function verifyOTP() {
+      const otpInput = document.getElementById("otpInput");
+      const otpError = document.getElementById("otpError");
+      let otp = otpInput.value.trim();
+      
+      if (otp !== currentOTP) {
+        otpError.textContent = "Invalid OTP. Please try again.";
+        return;
+      }
+      
+      otpError.textContent = "";
+      let number = document.getElementById("loginPhoneNumber").value.trim();
+      localStorage.setItem("loggedInUser", number);
+      closeOTPPopup();
+      window.location.href = "profile.html";
+    }
+
+    function closeOTPPopup() {
+      document.getElementById("otpPopup").style.display = "none";
+      document.getElementById("otpOverlay").style.display = "none";
+    }
+
+    window.onload = function() {
+      if (localStorage.getItem("loggedInUser")) {
+        // If there are login/profile nav elements, handle their visibility
+        if (document.getElementById("loginNav")) {
+          document.getElementById("loginNav").style.display = "none";
+        }
+        if (document.getElementById("profileNav")) {
+          document.getElementById("profileNav").style.display = "inline-block";
+        }
+      }
+    }
+  </script>
+</body>
+</html>

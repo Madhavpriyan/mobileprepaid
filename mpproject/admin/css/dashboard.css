@@ -1,0 +1,146 @@
+body {
+    display: flex;
+    min-height: 100vh;
+  }
+  .sidebar {
+    width: 250px;
+    background-color: #3a0ca3;
+    color: #fff;
+    padding-top: 20px;
+    position: fixed;
+    height: 100%;
+    transition: transform 0.3s ease;
+    z-index: 1000;
+  }
+  .sidebar a {
+    color: #fff;
+    padding: 10px 20px;
+    display: block;
+    text-decoration: none;
+  }
+  .sidebar a:hover {
+    background-color: #495057;
+  }
+  .content {
+    margin-left: 260px;
+    padding: 20px;
+    width: 100%;
+    transition: margin-left 0.3s ease;
+  }
+  .header {
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-bottom: 1px solid #dee2e6;
+    margin-bottom: 20px;
+  }
+  .chart-container {
+    position: relative;
+    height: 300px;
+    margin-bottom: 30px;
+  }
+  .small-chart-container {
+    height: 250px;
+  }
+  .stats-card {
+    border-left: 4px solid;
+    transition: transform 0.2s;
+  }
+  .stats-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  /* Mobile/Responsive styles */
+  .sidebar-toggle {
+    display: none;
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1001;
+    background-color: #343a40;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 12px;
+    font-size: 20px;
+  }
+  .sidebar-closed {
+    transform: translateX(-100%);
+  }
+  
+  @media (max-width: 992px) {
+    .sidebar {
+      transform: translateX(-100%);
+    }
+    .sidebar-toggle {
+      display: block;
+    }
+    .content {
+      margin-left: 0;
+    }
+    .sidebar-open {
+      transform: translateX(0);
+      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    }
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 999;
+      display: none;
+    }
+    .overlay.active {
+      display: block;
+    }
+  }
+
+  /* User Management Styles */
+.stats-card {
+  border-left: 4px solid;
+  border-radius: 0.25rem;
+}
+
+.avatar-placeholder {
+  font-weight: bold;
+}
+
+/* Table Styles */
+.table-hover tbody tr:hover {
+  background-color: rgba(0, 0, 0, 0.03);
+}
+
+/* Adjust button sizing in table */
+.table .btn-sm {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+}
+
+/* Search and filter container spacing */
+.search-filter-container {
+  margin-bottom: 1.5rem;
+}
+
+/* Make sure modals appear above everything */
+.modal {
+  z-index: 1060;
+}
+
+/* Make pagination more compact */
+.pagination {
+  margin-bottom: 0;
+}
+
+/* User detail styling */
+.user-detail-section {
+  margin-bottom: 1.5rem;
+}
+
+/* Activity list styling */
+.activity-list .list-group-item {
+  padding-left: 0;
+  padding-right: 0;
+  border-left: none;
+  border-right: none;
+}
