@@ -1,194 +1,505 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Website Footer with SVG Wave</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: Arial, sans-serif;
-    }
-    
-    body {
-      background-color: #f5f5f5;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-    }
-    
-    .footer-container {
-      width: 100%;
-      position: relative;
-    }
-    
-    .wave-container {
-      position: relative;
-      width: 100%;
-      height: 150px;
-    }
-    
-    .wave-svg {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-    }
-    
-    .footer-content {
-      background-color: #110e47;
-      color: white;
-      padding: 30px 10% 50px;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 30px;
-    }
-    
-    .footer-heading {
-      margin-bottom: 25px;
-      font-size: 1.5rem;
-      letter-spacing: 1px;
-    }
-    
-    .footer-section {
-      margin-bottom: 20px;
-    }
-    
-    .contact-item {
-      display: flex;
-      align-items: flex-start;
-      margin-bottom: 15px;
-    }
-    
-    .contact-item i {
-      margin-right: 10px;
-      min-width: 24px;
-    }
-    
-    .footer-links a {
-      display: block;
-      color: white;
-      text-decoration: none;
-      margin-bottom: 15px;
-      transition: color 0.3s;
-    }
-    
-    .footer-links a:hover {
-      color: #e83e8c;
-    }
-    
-    .newsletter-form {
-      display: flex;
-    }
-    
-    .newsletter-form input {
-      flex: 1;
-      padding: 12px 15px;
-      border: none;
-      outline: none;
-    }
-    
-    .newsletter-form button {
-      background-color: #e83e8c;
-      color: white;
-      border: none;
-      padding: 12px 20px;
-      cursor: pointer;
-      transition: background-color 0.3s;
-    }
-    
-    .newsletter-form button:hover {
-      background-color: #d42d7c;
-    }
-    
-    .newsletter-notice {
-      font-size: 0.8rem;
-      margin-top: 10px;
-      color: #cccccc;
-    }
-    
-    @media (max-width: 768px) {
-      .footer-content {
-        grid-template-columns: 1fr;
-      }
-      
-      .wave-container {
-        height: 100px;
-      }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobi-Comm</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            color: #495057;
+            font-family: Arial, sans-serif; /* Updated font family */
+            padding-top: 70px; /* Prevent content from being hidden under navbar */
+        }
+
+        /* Navbar styles */
+        .navbar {
+            background: linear-gradient(to right, #488286, #B7D5D4);
+            padding: 10px 0;
+            font-family: Arial, sans-serif; /* Updated font family for navbar */
+        }
+
+        .navbar-brand img {
+            width: 50px;
+            height: auto;
+        }
+
+        .navbar-nav .nav-link {
+            color: white !important;
+            padding: 8px 15px;
+            border-radius: 20px;
+            transition: 0.3s;
+        }
+
+        .navbar-nav .nav-link:hover {
+            background: #00796b;
+        }
+
+        .dropdown-menu {
+            background-color: white;
+            border: none;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+        }
+
+        .dropdown-item {
+            color: #004d40;
+        }
+
+        .dropdown-item:hover {
+            background: #00796b;
+            color: white;
+        }
+
+        .search-container {
+            display: flex;
+            align-items: center;
+            background: white;
+            border-radius: 20px;
+            padding: 5px;
+        }
+
+        .search-bar {
+            border: none;
+            padding: 5px;
+            outline: none;
+            width: 150px;
+            background: transparent;
+            font-family: inherit; /* Inherit font from body */
+        }
+
+        .search-icon {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #004d40;
+            font-size: 18px;
+        }
+
+        /* Main content styles */
+        .title {
+            font-weight: bold;
+            margin: 20px 0;
+            font-size: 2.5rem;
+            color: #343a40;
+            font-family: 'Montserrat', sans-serif; /* Updated font family */
+        }
+
+        .recharge-box {
+            background: linear-gradient(135deg, #c7d1d1, #d1d5d5);
+            padding: 30px;
+            width: 100%;
+            max-width: 400px;
+            margin: 50px auto;
+            border-radius: 15px;
+            box-shadow: 0px 5px 12px rgba(0, 0, 0, 0.15);
+            text-align: center;
+            font-family: 'Roboto', sans-serif; /* Updated font family */
+        }
+
+        .recharge-title {
+            font-size: 1.75rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #1b5b6b;
+        }
+
+        .label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            font-size: 1rem;
+            color: #1b5b6b;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #B7D5D4;
+            border-radius: 8px;
+            font-size: 1rem;
+            text-align: center;
+            outline: none;
+            transition: 0.3s ease;
+        }
+
+        .input-field:focus {
+            border: 2px solid #488286;
+            box-shadow: 0px 0px 8px rgba(72, 130, 134, 0.6);
+        }
+
+        .error-message {
+            display: none;
+            color: #d9534f;
+            font-size: 0.875rem;
+            margin-top: 5px;
+        }
+
+        .recharge-button {
+            background-color: #eef3f5;
+            color: #1b5b6b;
+            padding: 12px;
+            width: 100%;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            margin-top: 15px;
+        }
+
+        .recharge-button:hover {
+            background-color: #1b5b6b;
+            color: white;
+            transform: scale(1.05);
+        }
+
+        /* Carousel styles */
+        .carousel {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin: 20px auto;
+            overflow: hidden;
+            border-radius: 10px;
+        }
+
+        .carousel-slide {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            display: none;
+        }
+
+        .carousel-slide.active {
+            display: block;
+        }
+        .features-section {
+            padding: 60px 0;
+            background-color: white;
+        }
+
+        .feature-card {
+            text-align: center;
+            padding: 20px;
+            border-radius: 15px;
+            background: #f8f9fa;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            color: #1b5b6b;
+            margin-bottom: 15px;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .feature-card p {
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+
+        .arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 10px;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .arrow-left {
+            left: 0;
+        }
+
+        .arrow-right {
+            right: 0;
+        }
+
+        /* Footer styles */
+        .footer {
+            background-color: #B7D5D4;
+            color: rgb(29, 28, 28);
+            padding: 20px 0;
+            margin-top: 30px;
+        }
+
+        .footer h4 {
+            margin-bottom: 10px;
+        }
+
+        .footer ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer ul li {
+            margin-bottom: 5px;
+        }
+    </style>
 </head>
+
 <body>
-  <div class="footer-container">
-    <div class="wave-container">
-      <svg class="wave-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 150" preserveAspectRatio="none">
-        <!-- Light pink area -->
-        <path 
-          fill="#f8e1f4" 
-          d="M0,0 L500,0 C400,80 300,120 0,60 L0,0 Z" 
-        />
+   <header style="background: linear-gradient(to right, #488286, #B7D5D4); padding: 20px 0;">
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="Mobi-comm_image-removebg-preview.png" alt="Mobi-Comm Logo">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="front page.html">Home</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">Plans</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li><a class="dropdown-item" href="per-month.html">Per Month</a></li>
+                            <li><a class="dropdown-item" href="per-year.html">Per Year</a></li>
+                            <li><a class="dropdown-item" href="per-day.html">Per Day</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="recharge-box.html">Recharge</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownSupport" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">Support</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownSupport">
+                            <li>
+                                <a class="dropdown-item" href="contact us.html">
+                                    <i class="bi bi-telephone-fill"></i> Contact Us
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="faq.html">
+                                    <i class="bi bi-question-circle-fill"></i> FAQ
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <div class="search-container ms-3">
+                    <input type="text" class="search-bar" placeholder="Search">
+                    <button class="btn" type="button">
+                        <i class="bi bi-search" style="color:#004d40"></i>
+                    </button>
+                </div>
+                <button class="btn btn-outline-light ms-3" onclick="window.location.href='profile.html'">
+                    <i class="bi bi-person-fill"></i> Profile
+                </button><br>
+            </div>
+        </div>
+    </nav>
+    <h1 class="title text-center text-white mt-4">Welcome to Mobi-Comm !!!</h1>
+    <h3 class="text-center text-white"><i class="bi bi-phone-fill"></i> Recharge today, stay connected always!</h3>
+</header>
+
+    <main class="container">
+        <!-- Main Content -->
+        <!-- Image Carousel -->
+        <div class="carousel">
+            <button class="arrow arrow-left" onclick="prevSlide()">&#10094;</button>
+            <img src="./offer1.jpg" class="carousel-slide active" alt="Recharge on the Fly">
+            <img src="./offfer3.jpg" class="carousel-slide" alt="Another Recharge Offer">
+            <img src="offer4.png" class="carousel-slide" alt="Special Deals">
+            <button class="arrow arrow-right" onclick="nextSlide()">&#10095;</button>
+        </div>
+
+        <!-- Recharge Box -->
+        <div class="recharge-box">
+            <h2 class="recharge-title">Recharge Your Mobile</h2>
+            <form>
+                <div class="mb-3">
+                    <label for="mobile" class="label">Mobile <i class="bi bi-phone-fill"></i></label>
+                    <input type="text" id="mobile" class="input-field" placeholder="Enter mobile number"
+                        oninput="validateMobile()">
+                    <div id="error-message" class="error-message">Please enter a valid 10-digit number.</div>
+                </div>
+                <button type="button" class="recharge-button" onclick="processRecharge()">Recharge Now</button>
+            </form>
+        </div>
+
+       
+    </main>
+
+    <div class="container">
+        <h1>Online Mobile Prepaid Recharge – Mobi-Comm Services Ltd</h1>
+        <p class="highlight"><span class="icon"><i class="bi bi-check-circle-fill"></i></span>Mobi-Comm Services Ltd is a leading provider of online mobile prepaid recharge solutions, offering fast, secure, and convenient services to customers worldwide. With a user-friendly platform and a commitment to customer satisfaction, Mobi-Comm Services Ltd makes mobile recharges seamless and hassle-free.</p>
         
-        <!-- Dark blue wave with pink border -->
-        <path 
-          fill="#110e47" 
-          stroke="#e83e8c" 
-          stroke-width="4"
-          d="M0,80 C200,100 800,20 1200,50 L1200,150 L0,150 Z" 
-        />
-      </svg>
+        <p class="highlight"><span class="icon"><i class="bi bi-check-circle-fill"></i></span>Easy and Instant Recharge: Mobi-Comm Services Ltd ensures that users can recharge their prepaid mobile numbers in just a few clicks. Whether you need to top up your balance, activate special packs, or renew your data plan, the process is quick and efficient. The platform supports multiple payment methods, including credit/debit cards, digital wallets, and net banking, ensuring maximum convenience.</p>
+                
+        <p class="highlight"><span class="icon"><i class="bi bi-check-circle-fill"></i></span>Secure Transactions: Security is a top priority for Mobi-Comm Services Ltd. The platform uses advanced encryption and secure payment gateways to protect user data and financial transactions. Customers can recharge with confidence, knowing their personal and payment details are safeguarded.</p>
+        
+        <p class="highlight"><span class="icon"><i class="bi bi-check-circle-fill"></i></span>Promotions and Discounts: Mobi-Comm Services Ltd frequently offers exclusive deals, cashback, and discounts on prepaid mobile recharges. Customers can enjoy savings while staying connected.</p>
+        
+        <p class="highlight"><span class="icon"><i class="bi bi-check-circle-fill"></i></span>24/7 Customer Support: For any queries or issues, Mobi-Comm Services Ltd provides round-the-clock customer support. Their dedicated team is always ready to assist users with recharge failures, payment issues, and other concerns.</p>
+        
+        <p>With its reliable services, secure transactions, and customer-friendly approach, Mobi-Comm Services Ltd is the ideal choice for online mobile prepaid recharge. Stay connected effortlessly with Mobi-Comm!</p>
+        
+        <div class="footer" style="text-align: center;">Stay connected effortlessly with Mobi-Comm!</div>
     </div>
-    <div class="footer-content">
-      <div class="footer-section">
-        <h2 class="footer-heading">CONTACT</h2>
-        <div class="contact-item">
-          <i>📍</i>
-          <div>35 W 46nd Street, Wall Road<br>New York, USA.</div>
+    <section class="features-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <i class="bi bi-lightning-charge feature-icon"></i>
+                        <h3>Instant Recharge</h3>
+                        <p>Recharge your mobile in seconds with our fast and reliable service.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <i class="bi bi-wallet2 feature-icon"></i>
+                        <h3>Affordable Plans</h3>
+                        <p>Choose from a variety of budget-friendly plans tailored to your needs.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <i class="bi bi-headset feature-icon"></i>
+                        <h3>24/7 Support</h3>
+                        <p>Our support team is always available to assist you with any queries.</p>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="contact-item">
-          <i>📞</i>
-          <div>+(000) 1234-56789</div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <h4>Company</h4>
+                    <ul>
+                        <li>About Us</li>
+                        <li>Careers</li>
+                        <li>Partnerships</li>
+                        <li>Press & Media</li>
+                        <li>Sustainability</li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h4>Support</h4>
+                    <ul>
+                        <li>Contact</li>
+                        <li>Help Center</li>
+                        <li>Track Status</li>
+                        <li>FAQ</li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h4>Social</h4>
+                    <ul>
+                        <li>Facebook</li>
+                        <li>Twitter</li>
+                        <li>Instagram</li>
+                        <li>LinkedIn</li>
+                        <li>YouTube</li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li>Terms</li>
+                        <li>Privacy</li>
+                        <li>Refunds</li>
+                        <li>Cookie Policy</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="text-center mt-4">
+                <div class="social-icons">
+                    <a href="#"><i class="bi bi-facebook"></i></a>
+                    <a href="#"><i class="bi bi-twitter"></i></a>
+                    <a href="#"><i class="bi bi-instagram"></i></a>
+                    <a href="#"><i class="bi bi-linkedin"></i></a>
+                    <a href="#"><i class="bi bi-youtube"></i></a>
+                </div>
+                <p class="mt-3">© 2025 Mobi-Comm. All Rights Reserved.</p>
+            </div>
         </div>
-        <div class="contact-item">
-          <i>✉️</i>
-          <div>support@example.com</div>
-        </div>
-      </div>
-      
-      <div class="footer-section">
-        <h2 class="footer-heading">SUPPORT</h2>
-        <div class="footer-links">
-          <a href="#">Faq</a>
-          <a href="#">Shipping & Returns</a>
-          <a href="#">Contact Us</a>
-          <a href="#">Our Partners</a>
-        </div>
-      </div>
-      
-      <div class="footer-section">
-        <h2 class="footer-heading">INFO</h2>
-        <div class="footer-links">
-          <a href="#">About Us</a>
-          <a href="#">Our Stores</a>
-          <a href="#">Size Guide</a>
-          <a href="#">Our Piercing Service</a>
-        </div>
-      </div>
-      
-      <div class="footer-section">
-        <h2 class="footer-heading">SUBSCRIBE TO OUR NEWSLETTER</h2>
-        <form class="newsletter-form">
-          <input type="email" placeholder="Email Address">
-          <button type="submit">Subscribe</button>
-        </form>
-        <p class="newsletter-notice">
-          Your email address will be used in accordance with our privacy policy
-        </p>
-      </div>
-    </div>
-  </div>
+    </footer>
+
+    <!-- Bootstrap JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function validateMobile() {
+            let mobileInput = document.getElementById("mobile");
+            let errorMessage = document.getElementById("error-message");
+
+            if (/^\d{10}$/.test(mobileInput.value)) {
+                errorMessage.style.display = "none"; // Hide error message if valid
+                return true;
+            } else {
+                errorMessage.style.display = "block"; // Show error message if invalid
+                return false;
+            }
+        }
+
+        function processRecharge() {
+            if (validateMobile()) {
+                window.location.href = 'per-year.html'; // Redirect if valid
+            }
+        }
+
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.carousel-slide');
+
+        function showSlide(index) {
+            if (index >= slides.length) currentSlide = 0;
+            else if (index < 0) currentSlide = slides.length - 1;
+            else currentSlide = index;
+
+            slides.forEach((slide, i) => {
+                slide.classList.remove('active');
+                if (i === currentSlide) {
+                    slide.classList.add('active');
+                }
+            });
+        }
+
+        // Auto-slide every 3 seconds
+        setInterval(() => {
+            nextSlide();
+        }, 3000);
+
+        function nextSlide() {
+            showSlide(currentSlide + 1);
+        }
+
+        function prevSlide() {
+            showSlide(currentSlide - 1);
+        }
+    </script>
 </body>
+
 </html>

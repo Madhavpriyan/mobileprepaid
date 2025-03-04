@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ReZap Plans</title>
   <link rel="stylesheet" href="navbar.css">
+  <link rel="stylesheet" href="button.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     :root {
@@ -71,12 +72,7 @@
       color: var(--primary);
     } */
     
-    .menu-toggle {
-      display: none;
-      font-size: 1.5rem;
-      cursor: pointer;
-    }
-    
+   
     /* Mobile control panel for filters and categories */
     .mobile-controls {
       display: none;
@@ -423,68 +419,9 @@
         }
         
     
-    /* Login button styles */
-    .cta {
-      position: relative;
-      margin: auto;
-      padding: 12px 18px;
-      transition: all 0.2s ease;
-      border: none;
-      background: none;
-      cursor: pointer;
-    }
+   
     
-    .cta:before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      display: block;
-      border-radius: 50px;
-      background: #b1dae7;
-      width: 45px;
-      height: 45px;
-      transition: all 0.3s ease;
-    }
     
-    .cta span {
-      position: relative;
-      font-family: "Ubuntu", sans-serif;
-      font-size: 18px;
-      font-weight: 700;
-      letter-spacing: 0.05em;
-      color: #234567;
-    }
-    
-    .cta:hover span {
-      color: #f4f2f2;
-    }
-    
-    .cta svg {
-      position: relative;
-      top: 0;
-      margin-left: 10px;
-      fill: none;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      stroke: #234567;
-      stroke-width: 2;
-      transform: translateX(-5px);
-      transition: all 0.3s ease;
-    }
-    
-    .cta:hover:before {
-      width: 100%;
-      background: #ff6f61;
-    }
-    
-    .cta:hover svg {
-      transform: translateX(0);
-    }
-    
-    .cta:active {
-      transform: scale(0.95);
-    }
     
     /* Responsive styles */
     @media (max-width: 992px) {
@@ -530,34 +467,9 @@
     }
     
     @media (max-width: 768px) {
-      .navbar {
-        padding: 0.8rem 1rem;
-      }
-      
-      .nav-container {
-        position: fixed;
-        top: 60px;
-        left: 0;
-        width: 100%;
-        background: var(--surface);
-        padding: 1rem;
-        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-        transform: translateY(-150%);
-        transition: transform 0.3s;
-      }
-      
-      .nav-container.show {
-        transform: translateY(0);
-      }
-      
-      .nav-links {
-        flex-direction: column;
-        gap: 0.8rem;
-      }
-      
-      .menu-toggle {
-        display: block;
-      }
+     
+    
+  
       
       .control-buttons {
         flex-wrap: wrap;
@@ -584,33 +496,35 @@
     <div class="menu-toggle" id="menuToggle">☰</div>
     <a href="home.html" class="no-underline"> <div class="logo">ReZap</div></a>
     <div class="nav-container" id="navContainer">
-      <nav class="nav-links">
-        <a href="home.html">Home</a>
-        <a href="plans.html">Plans</a>
-        <a href="offers.html">Offers</a>
-        <a href="wallet.html">Wallet</a>
-        <a href="support.html">Support</a>
-      </nav>
+        <nav class="nav-links">
+            <a href="home.html" onclick="handleHomeClick()">Home</a>
+            <a href="plans.html">Plans</a>
+            
+            <a href="offers.html">Offers</a>
+            <a href="wallet.html">Wallet</a>
+            <a href="support.html">Support</a>
+        </nav>
     </div>
+    
     <a href="login.html" id="loginNav">
-      <button class="cta">
-        <span><b>Login</b></span>
-        <svg width="15px" height="10px" viewBox="0 0 13 10">
-          <path d="M1,5 L11,5"></path>
-          <polyline points="8 1 12 5 8 9"></polyline>
-        </svg>
-      </button>
+        <button class="cta">
+            <span><b>Login</b></span>
+            <svg width="15px" height="10px" viewBox="0 0 13 10">
+                <path d="M1,5 L11,5"></path>
+                <polyline points="8 1 12 5 8 9"></polyline>
+            </svg>
+        </button>
     </a>
     <a href="profile.html" id="profileNav" style="display:none;">
-      <button class="cta">
-        <span><b>Profile</b></span>
-        <svg width="15px" height="10px" viewBox="0 0 13 10">
-          <path d="M1,5 L11,5"></path>
-          <polyline points="8 1 12 5 8 9"></polyline>
-        </svg>
-      </button>
+        <button class="cta">
+            <span><b>Profile</b></span>
+            <svg width="15px" height="10px" viewBox="0 0 13 10">
+                <path d="M1,5 L11,5"></path>
+                <polyline points="8 1 12 5 8 9"></polyline>
+            </svg>
+        </button>
     </a>
-  </header>
+</header>
 
   <!-- Mobile control panel -->
   <div class="mobile-controls" id="mobileControls">

@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Support Center</title>
-  <!-- <link rel="stylesheet" href="home.css"> -->
+  <link rel="stylesheet" href="button.css">
   <link rel="stylesheet" href="navbar.css">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
   <style>
@@ -34,27 +34,6 @@
       color: var(--gray-800);
       line-height: 1.6;
     }
-
-    /* nav {
-      background: var(--gray-800);
-      padding: 1rem;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    }
-
-    nav a {
-      color: white;
-      text-decoration: none;
-      margin-right: 1.5rem;
-      font-weight: 500;
-      transition: color 0.3s;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    nav a:hover {
-      color: var(--primary-light);
-    } */
 
     .container {
       max-width: 1200px;
@@ -344,6 +323,14 @@
     .notification-card .close-btn:hover {
       opacity: 1;
     }
+    
+    .no-underline {
+      text-decoration: none;
+    }
+    
+    .mt-4 {
+      margin-top: 1.5rem;
+    }
   </style>
 </head>
 <body>
@@ -354,60 +341,50 @@
           <p>Thank you for your message. We will get back to you soon!</p>
         </div>
         <i class="fas fa-times close-btn" onclick="hideNotification()"></i>
-      </div>
-       <!-- Navbar -->
-  <header class="navbar" id="navbar">
-    <div class="menu-toggle" id="menuToggle">☰</div>
-    <div class="logo">ReZap</div>
-    <div class="nav-container" id="navContainer">
+    </div>
+    
+    <header class="navbar" id="navbar">
+        <div class="menu-toggle" id="menuToggle">☰</div>
+        <a href="home.html" class="no-underline"> <div class="logo">ReZap</div></a>
+        <div class="nav-container" id="navContainer">
+            <nav class="nav-links">
+                <a href="home.html" onclick="handleHomeClick()">Home</a>
+                <a href="plans.html">Plans</a>
+                <a href="offers.html">Offers</a>
+                <a href="wallet.html">Wallet</a>
+                <a href="support.html">Support</a>
+            </nav>
+        </div>
+        
+        <a href="login.html" id="loginNav">
+            <button class="cta">
+                <span><b>Login</b></span>
+                <svg width="15px" height="10px" viewBox="0 0 13 10">
+                    <path d="M1,5 L11,5"></path>
+                    <polyline points="8 1 12 5 8 9"></polyline>
+                </svg>
+            </button>
+        </a>
+        <a href="profile.html" id="profileNav" style="display:none;">
+            <button class="cta">
+                <span><b>Profile</b></span>
+                <svg width="15px" height="10px" viewBox="0 0 13 10">
+                    <path d="M1,5 L11,5"></path>
+                    <polyline points="8 1 12 5 8 9"></polyline>
+                </svg>
+            </button>
+        </a>
+    </header>
+    
+    <header class="blurred-navbar" id="blurredNavbar">
         <nav class="nav-links">
             <a href="home.html" onclick="handleHomeClick()">Home</a>
             <a href="plans.html">Plans</a>
-            <!-- <a href="#recharge">Recharge</a> -->
             <a href="offers.html">Offers</a>
             <a href="wallet.html">Wallet</a>
             <a href="support.html">Support</a>
         </nav>
-    </div>
-<!--     
-    <a href="login.html" id="loginNav">
-        <button class="cta">
-            <span><b>Login</b></span>
-            <svg width="15px" height="10px" viewBox="0 0 13 10">
-                <path d="M1,5 L11,5"></path>
-                <polyline points="8 1 12 5 8 9"></polyline>
-            </svg>
-        </button>
-    </a> -->
-    <a href="profile.html" id="profileNav" style="display:none;">
-        <button class="cta">
-            <span><b>Profile</b></span>
-            <svg width="15px" height="10px" viewBox="0 0 13 10">
-                <path d="M1,5 L11,5"></path>
-                <polyline points="8 1 12 5 8 9"></polyline>
-            </svg>
-        </button>
-    </a>
-</header>
-
-<header class="blurred-navbar" id="blurredNavbar">
-    <nav class="nav-links">
-        <a href="home.html" onclick="handleHomeClick()">Home</a>
-        <a href="plans.html">Plans</a>
-        <!-- <a href="#recharge">Recharge</a> -->
-        <a href="offers.html">Offers</a>
-        <a href="wallet.html">Wallet</a>
-        <a href="support.html">Support</a>
-    </nav>
-</header>
-      
-  <!-- <nav>
-    <a href="home.html"><i class="fas fa-home"></i> Home</a>
-    <a href="plans.html"><i class="fas fa-list"></i> Plans</a>
-    <a href="wallet.html"><i class="fas fa-wallet"></i> Wallet</a>
-    <a href="login.html" id="loginNav"><i class="fas fa-sign-in-alt"></i> Login</a>
-    <a href="profile.html" id="profileNav" style="display:none;"><i class="fas fa-user"></i> Profile</a>
-  </nav> -->
+    </header>
 
   <div class="header">
     <h1>How can we help you?</h1>
@@ -439,37 +416,48 @@
         <div class="card">
           <h3><i class="fas fa-mobile-alt"></i> Recharge Issues</h3>
           <ul>
-            <li>How to recharge your mobile</li>
-            <li>Payment failed but amount deducted</li>
-            <li>Recharge not reflected</li>
-            <li>Cancel or refund recharge</li>
+            <li onclick="showHelpArticle('recharge-how-to')">How to recharge your mobile</li>
+            <li onclick="showHelpArticle('payment-failed')">Payment failed but amount deducted</li>
+            <li onclick="showHelpArticle('recharge-not-reflected')">Recharge not reflected</li>
+            <li onclick="showHelpArticle('cancel-refund')">Cancel or refund recharge</li>
           </ul>
         </div>
 
         <div class="card">
           <h3><i class="fas fa-wallet"></i> Wallet & Payments</h3>
           <ul>
-            <li>Add money to wallet</li>
-            <li>Payment methods</li>
-            <li>Transaction history</li>
-            <li>Refund status</li>
+            <li onclick="showHelpArticle('add-money')">Add money to wallet</li>
+            <li onclick="showHelpArticle('payment-methods')">Payment methods</li>
+            <li onclick="showHelpArticle('transaction-history')">Transaction history</li>
+            <li onclick="showHelpArticle('refund-status')">Refund status</li>
           </ul>
         </div>
 
         <div class="card">
           <h3><i class="fas fa-user-shield"></i> Account Security</h3>
           <ul>
-            
-            <li>Update contact details</li>
-            <li>Enable two-factor authentication</li>
-            <li>Suspicious activity</li>
+            <li onclick="showHelpArticle('update-details')">Update contact details</li>
+            <li onclick="showHelpArticle('two-factor')">Enable two-factor authentication</li>
+            <li onclick="showHelpArticle('suspicious-activity')">Suspicious activity</li>
           </ul>
         </div>
       </div>
     </div>
 
     <!-- FAQ Tab -->
-    
+    <div id="faq" class="tab-content">
+      <div class="card">
+        <h3>Frequently Asked Questions</h3>
+
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFAQ(this)">
+            How do I recharge my mobile phone?
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            To recharge your mobile phone, login to your account, select "New Recharge", enter your phone number, select your operator, choose a plan, and proceed to payment. Your recharge will be processed immediately upon successful payment.
+          </div>
+        </div>
 
         <div class="faq-item">
           <div class="faq-question" onclick="toggleFAQ(this)">
@@ -490,6 +478,26 @@
             Refunds are typically processed within 5-7 business days, depending on your payment method and bank processing times.
           </div>
         </div>
+        
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFAQ(this)">
+            Can I schedule a recharge for later?
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            Yes, you can schedule recharges for future dates. Go to "Schedule Recharge", enter your details, select the date and time, and confirm. We'll automatically process the recharge at your specified time.
+          </div>
+        </div>
+        
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFAQ(this)">
+            How do I check my transaction history?
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            You can view your complete transaction history by going to "Wallet" and then selecting the "Transaction History" tab. This shows all your recharges, wallet additions, and refunds.
+          </div>
+        </div>
       </div>
     </div>
 
@@ -508,13 +516,13 @@
             <i class="fas fa-comments"></i>
             <h4>Live Chat</h4>
             <p>Chat with our agents</p>
-            <button class="btn">Start Chat</button>
+            <button class="btn" onclick="startLiveChat()">Start Chat</button>
           </div>
           <div class="contact-card">
             <i class="fas fa-envelope"></i>
             <h4>Email Support</h4>
             <p>Response within 24 hours</p>
-            <p>support@example.com</p>
+            <p>support@rezap.com</p>
           </div>
         </div>
       </div>
@@ -524,7 +532,7 @@
     <div id="about" class="tab-content">
       <div class="card">
         <h3>Our Mission</h3>
-        <p>We're dedicated to providing exceptional support and service to our customers. Our team works tirelessly to ensure you have the best possible experience with our products and services.</p>
+        <p>At ReZap, we're dedicated to providing a seamless mobile recharge experience. Our platform allows you to quickly and securely recharge your mobile, pay bills, and manage digital payments, all in one place.</p>
         
         <h3 class="mt-4">Our Team</h3>
         <div class="team-grid">
@@ -574,39 +582,8 @@
   </div>
 </div>
 
+<script src="navbar.js"></script>
 <script>
-
-    // Navbar and menu toggle functionality
-    const menuToggle = document.getElementById("menuToggle");
-    const navContainer = document.getElementById("navContainer");
-    const navbar = document.getElementById("navbar");
-    const blurredNavbar = document.getElementById("blurredNavbar");
-    const sidebar = document.getElementById("sidebar");
-    const sidebarToggle = document.getElementById("sidebarToggle");
-    const searchInput = document.getElementById("searchPlans");
-    const priceFilter = document.getElementById("priceFilter");
-    const durationFilter = document.getElementById("durationFilter");
-    const plans = document.querySelectorAll('.plan');
-
-    menuToggle.addEventListener("click", function () {
-        navContainer.classList.toggle("show");
-    });
-
-    document.addEventListener("click", function (event) {
-        if (!menuToggle.contains(event.target) && !navContainer.contains(event.target)) {
-            navContainer.classList.remove("show");
-        }
-    });
-
-    window.addEventListener("scroll", function () {
-        if (window.scrollY > 50) {
-            navbar.classList.add("hidden");
-            blurredNavbar.classList.add("show");
-        } else {
-            navbar.classList.remove("hidden");
-            blurredNavbar.classList.remove("show");
-        }
-    });
   // Tab switching functionality
   function showTab(tabId) {
     // Hide all tab contents
@@ -632,45 +609,126 @@
     const icon = element.querySelector('i');
     
     answer.classList.toggle('show');
-    icon.classList.toggle('fa-chevron-up');
-    icon.classList.toggle('fa-chevron-down');
+    
+    if (icon.classList.contains('fa-chevron-down')) {
+      icon.classList.remove('fa-chevron-down');
+      icon.classList.add('fa-chevron-up');
+    } else {
+      icon.classList.remove('fa-chevron-up');
+      icon.classList.add('fa-chevron-down');
+    }
   }
 
   // Contact form submission
   document.getElementById('contactForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      
-      // Get form values
-      const name = document.getElementById('name').value;
-      const email = document.getElementById('email').value;
-      const subject = document.getElementById('subject').value;
-      const message = document.getElementById('message').value;
-      
-      // Here you would typically send this data to your server
-      console.log('Form submitted:', { name, email, subject, message });
-      
-      // Clear form
-      this.reset();
-      
-      // Show notification
-      showNotification();
-    });
-
-    // Notification functions
-    function showNotification() {
-      const notification = document.getElementById('notificationCard');
-      notification.classList.add('show');
-      
-      // Auto-hide after 5 seconds
-      setTimeout(() => {
-        hideNotification();
-      }, 5000);
+    e.preventDefault();
+    
+    // Get form values
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const subject = document.getElementById('subject').value;
+    const message = document.getElementById('message').value;
+    
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      showErrorNotification("Please enter a valid email address");
+      return;
     }
+    
+    // Here you would typically send this data to your server
+    console.log('Form submitted:', { name, email, subject, message });
+    
+    // Clear form
+    this.reset();
+    
+    // Show success notification
+    showNotification();
+  });
 
-    function hideNotification() {
-      const notification = document.getElementById('notificationCard');
-      notification.classList.remove('show');
+  // Notification functions
+  function showNotification() {
+    const notification = document.getElementById('notificationCard');
+    notification.classList.remove('error');
+    notification.classList.add('success');
+    notification.querySelector('i').className = 'fas fa-check-circle';
+    notification.querySelector('h4').textContent = 'Success!';
+    notification.querySelector('p').textContent = 'Thank you for your message. We will get back to you soon!';
+    notification.classList.add('show');
+    
+    // Auto-hide after 5 seconds
+    setTimeout(() => {
+      hideNotification();
+    }, 5000);
+  }
+  
+  function showErrorNotification(message) {
+    const notification = document.getElementById('notificationCard');
+    notification.classList.remove('success');
+    notification.classList.add('error');
+    notification.querySelector('i').className = 'fas fa-exclamation-circle';
+    notification.querySelector('h4').textContent = 'Error!';
+    notification.querySelector('p').textContent = message;
+    notification.classList.add('show');
+    
+    // Auto-hide after 5 seconds
+    setTimeout(() => {
+      hideNotification();
+    }, 5000);
+  }
+
+  function hideNotification() {
+    const notification = document.getElementById('notificationCard');
+    notification.classList.remove('show');
+  }
+  
+  // Help article display function
+  function showHelpArticle(articleId) {
+    // This would typically load or display a help article
+    // For now, we'll just show a notification with the article ID
+    const notification = document.getElementById('notificationCard');
+    notification.querySelector('h4').textContent = 'Help Article';
+    notification.querySelector('p').textContent = `Loading help article: ${articleId}`;
+    notification.classList.add('show');
+    
+    setTimeout(() => {
+      hideNotification();
+    }, 3000);
+  }
+  
+  // Live chat function
+  function startLiveChat() {
+    // This would typically open a chat widget
+    // For now, we'll just show a notification
+    const notification = document.getElementById('notificationCard');
+    notification.querySelector('h4').textContent = 'Live Chat';
+    notification.querySelector('p').textContent = 'Connecting you to a support agent...';
+    notification.classList.add('show');
+    
+    setTimeout(() => {
+      hideNotification();
+    }, 3000);
+  }
+  
+  // Check if user is logged in (demo)
+  function checkLoginStatus() {
+    // This would normally check a cookie or session storage
+    // For demo purposes, we'll just simulate a login status
+    const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+    
+    if (isLoggedIn) {
+      document.getElementById('loginNav').style.display = 'none';
+      document.getElementById('profileNav').style.display = 'inline-block';
+    } else {
+      document.getElementById('loginNav').style.display = 'inline-block';
+      document.getElementById('profileNav').style.display = 'none';
     }
+  }
+  
+  // Run on page load
+  document.addEventListener('DOMContentLoaded', function() {
+    checkLoginStatus();
+  });
 </script>
 </body>
 </html>
