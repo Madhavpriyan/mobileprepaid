@@ -1,0 +1,250 @@
+
+       :root {
+      --primary: #5e72e4;
+      --secondary: #f7fafc;
+      --success: #2dce89;
+      --warning: #fb6340;
+      --dark: #32325d;
+      --light: #ffffff;
+      --border: #e9ecef;
+      --text-muted: #8898aa;
+      --shadow: 0 7px 14px rgba(50, 50, 93, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+      --card-shadow: 0 15px 35px rgba(50, 50, 93, 0.1), 0 5px 15px rgba(0, 0, 0, 0.07);
+    }
+    
+   
+        .container {
+            width: 90%;
+            margin: 80px auto 0; /* Added top margin to account for navbar */
+            text-align: center;
+            padding: 30px 0;
+        }
+
+        .heading {
+            font-size: clamp(24px, 5vw, 36px);
+            margin-bottom: 30px;
+            color: #333;
+            padding-top: 20px; /* Added padding to separate from navbar */
+        }
+
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* 3 cards per row on large screens */
+            gap: 20px;
+            justify-content: center;
+            max-width: 1400px; /* Maximum width to maintain readability */
+            margin: 0 auto;
+        }
+
+        .card {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin: 0 auto;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-img {
+            width: 100%;
+            border-radius: 8px;
+            height: 200px;
+            object-fit: cover;
+            margin-bottom: 20px;
+        }
+
+        .card-title {
+            font-size: clamp(20px, 4vw, 24px);
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .card-description {
+            font-size: clamp(14px, 3vw, 16px);
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .card-btn {
+            background-color: #ff6f61;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 100%;
+            max-width: 200px;
+            margin: 0 auto;
+        }
+
+        .card-btn:hover {
+            background-color: #e65b50;
+        }
+
+        #backToTop {
+            position: fixed;
+            right: 20px;
+            top: -60px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: top 0.5s ease-in-out;
+            z-index: 100;
+        }
+
+        #backToTop.show {
+            top: 70%;
+        }
+
+          /* Footer Styles */
+    .footer {
+      background-color: black;
+      color: var(--light);
+      padding: 40px 0 20px;
+      margin-top: auto;
+    }
+    
+    .footer-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 30px;
+    }
+    
+    .footer-section {
+      flex: 1;
+      min-width: 200px;
+    }
+    
+    .footer-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 20px;
+      position: relative;
+      padding-bottom: 10px;
+    }
+    
+    .footer-title::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 50px;
+      height: 2px;
+      background: var(--primary);
+    }
+    
+    .footer-links {
+      list-style: none;
+    }
+    
+    .footer-links li {
+      margin-bottom: 10px;
+    }
+    
+    .footer-links a {
+      color: #ced4da;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    
+    .footer-links a:hover {
+      color: var(--primary);
+    }
+    
+    .social-icons {
+      display: flex;
+      gap: 15px;
+      margin-top: 15px;
+    }
+    
+    .social-icon {
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+    
+    .social-icon:hover {
+      background-color: var(--primary);
+      transform: translateY(-3px);
+    }
+    
+    .contact-info {
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.9rem;
+    }
+    
+    .footer-bottom {
+      text-align: center;
+      padding-top: 30px;
+      margin-top: 30px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      font-size: 0.9rem;
+      color: #ced4da;
+    }
+    
+        /* Media Queries */
+        @media screen and (max-width: 1200px) {
+            .card-container {
+                grid-template-columns: repeat(2, 1fr); /* 2 cards per row on medium screens */
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            .container {
+                width: 95%;
+                margin-top: 60px; /* Reduced top margin for mobile */
+            }
+
+            .card-container {
+                grid-template-columns: 1fr; /* 1 card per row on small screens */
+            }
+
+            .card {
+                padding: 15px;
+                max-width: 400px;
+            }
+
+            #backToTop {
+                right: 10px;
+                padding: 8px 16px;
+                font-size: 14px;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .footer-container {
+        flex-direction: column;
+      }
+
+            #backToTop {
+                right: 5px;
+                padding: 6px 12px;
+            }
+        }
+   

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Home - Quick Recharge</title>
+  <link rel="stylesheet" href="../css/home.css">
+  <link rel="stylesheet" href="../css/navbar.css">
+  <link rel="stylesheet" href="../css/button.css">
+  <link rel="stylesheet" href="../css/footer.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../js/navbar.js"></script>
+  <script src="../js/home.js"></script>
+</head>
+<body>
+  <!-- Navbar -->
+  <header class="navbar" id="navbar">
+    <div class="menu-toggle" id="menuToggle">☰</div>
+    <a href="home.html" class="no-underline"> <div class="logo">ReZap</div></a>
+    <div class="nav-container" id="navContainer">
+        <nav class="nav-links">
+            <a href="home.html" class="active" onclick="handleHomeClick()">Home</a>
+            <a href="plans.html">Plans</a>
+            <a href="#call">Recharge</a>
+            <a href="offers.html">Offers</a>
+            <a href="wallet.html">Wallet</a>
+            <a href="support.html">Support</a>
+            
+        </nav>
+    </div>
+    
+    <a href="login.html" id="loginNav">
+        <button class="cta">
+            <span><b>Login</b></span>
+            <svg width="15px" height="10px" viewBox="0 0 13 10">
+                <path d="M1,5 L11,5"></path>
+                <polyline points="8 1 12 5 8 9"></polyline>
+            </svg>
+        </button>
+    </a>
+    <a href="profile.html" id="profileNav" style="display:none;">
+        <button class="cta">
+            <span><b>Profile</b></span>
+            <svg width="15px" height="10px" viewBox="0 0 13 10">
+                <path d="M1,5 L11,5"></path>
+                <polyline points="8 1 12 5 8 9"></polyline>
+            </svg>
+        </button>
+    </a>
+</header>
+
+<!-- Main Content -->
+<div class="text-image">
+  <div class="font">
+      <h1><b>Experience seamless connectivity</b></h1>
+      <div>
+          Experience seamless connectivity with our mobile prepaid recharge plans.
+      </div>
+  </div>
+  <img src="\mpproject\images\2331655.jpg">
+</div>
+
+<div class="card1">
+  <div class="card1-img"></div>
+  <div class="contact-card">
+    <p class="tagline">#get in touch</p>
+    <h2 class="heading">Ready to get started?</h2>
+    <p class="description">
+      Cashback on every recharge on your Wallet
+    </p>
+  </div>
+  <a href="plans.html" class="callback-btn" id="call">Get Plan</a>
+</div>
+
+
+
+  <h2 class="section-heading">Quick Recharge</h2>
+  <div id="rechargeSection">
+    <div class="form-container">
+        <div class="form-group">
+        <input type="text" id="phoneNumber" placeholder="Enter 10-digit number" maxlength="10">
+        <div id="phoneError" class="error"></div>
+        <button id="rechargeButton" class="form-submit-btn">Recharge</button>
+      </div>
+    </div>
+  </div>
+<hr>
+
+<div class="font section-heading"><h2>Recommended for you</h2></div>
+    <div class="carousel-container">
+        <div class="container" id="cardContainer">
+            <div class="card">
+                <img src="\mpproject\images\4703503.jpg" alt="Plan Image">
+                <div class="card-content">
+                    <p class="card-title">Enjoy Unlimited Connectivity!</p>
+                    <p class="card-para">Get 1.5GB/day, Unlimited Calls & 100 SMS/day for 28 days with the ₹299 Plan.</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <img src="\mpproject\images\playing-young-mobile-phone-people-happy.jpg" alt="Plan Image">
+                <div class="card-content">
+                    <p class="card-title">Stay Connected Always!</p>
+                    <p class="card-para">Recharge with ₹199 and enjoy 2GB/day, Unlimited Calls & 100 SMS/day for 23 days.</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <img src="\mpproject\images\stylish-girl-city.jpg" alt="Plan Image">
+                <div class="card-content">
+                    <p class="card-title">Power Up Your Data!</p>
+                    <p class="card-para">Get ₹399 plan with 3GB/day, Unlimited Calls & 100 SMS/day for 28 days.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="nav-buttons" id="navButtons">
+        <button class="nav-btn" onclick="prevSlide()">&#9665; Prev</button>
+        <span class="pagination" id="pagination">1 / 3</span>
+        <button class="nav-btn" onclick="nextSlide()">Next &#9655;</button>
+    </div>
+
+    <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-section">
+        <h3 class="footer-title">ReZap</h3>
+        <p>Your trusted partner for quick and secure mobile recharges. Experience seamless connectivity with our wide range of plans and instant recharge solutions.</p>
+        <div class="social-links">
+          <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+          <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+      </div>
+
+      <div class="footer-section">
+        <h3 class="footer-title">Quick Links</h3>
+        <ul>
+          <li><a href="home.html"><i class="fas fa-home"></i>Home</a></li>
+          <li><a href="plans.html"><i class="fas fa-list"></i>Plans</a></li>
+          <li><a href="offers.html"><i class="fas fa-gift"></i>Offers</a></li>
+          <li><a href="wallet.html"><i class="fas fa-wallet"></i>Wallet</a></li>
+          <li><a href="support.html"><i class="fas fa-headset"></i>Support</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-section">
+        <h3 class="footer-title">Support</h3>
+        <ul>
+          <li><a href="support.html"><i class="fas fa-phone"></i>Contact Us</a></li>
+          <li><a href="support.html"><i class="fas fa-question-circle"></i>Help Center</a></li>
+          <li><a href="#"><i class="fas fa-shield-alt"></i>Privacy Policy</a></li>
+          <li><a href="#"><i class="fas fa-file-alt"></i>Terms of Service</a></li>
+          <li><a href="#"><i class="fas fa-undo"></i>Refund Policy</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-section">
+        <h3 class="footer-title">Contact Info</h3>
+        <ul>
+          <li><a href="tel:+919876543210"><i class="fas fa-phone-alt"></i>+91 9876543210</a></li>
+          <li><a href="mailto:support@rezap.com"><i class="fas fa-envelope"></i>support@rezap.com</a></li>
+          <li><a href="#"><i class="fas fa-map-marker-alt"></i>123 Tech Park, Mumbai, India</a></li>
+          <li><a href="#"><i class="fas fa-clock"></i>Mon - Sat: 9:00 AM - 6:00 PM</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; 2024 ReZap. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Back to Top Button -->
+  <button id="backToTop" title="Back to Top">
+    <i class="fas fa-chevron-up"></i>
+  </button>
+
+</body>
+</html>

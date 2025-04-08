@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReZap - User Dashboard</title>
+    <link rel="stylesheet" href="../css/profile.css">
+    <link rel="stylesheet" href="../css/navbar.css">
+    <link rel="stylesheet" href="../css/button.css">
+    <link rel="stylesheet" href="../css/footer.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="../js/profile.js"></script>
+</head>
+<body>
+    <header class="navbar" id="navbar">
+        <div class="menu-toggle" id="menuToggle">☰</div>
+        <div class="logo">ReZap</div>
+        <div class="nav-container" id="navContainer">
+            <nav class="nav-links">
+                <a href="home.html" onclick="handleHomeClick()">Home</a>
+                <a href="plans.html">Plans</a>
+                <a href="#call">Recharge</a>
+                <a href="offers.html">Offers</a>
+                <a href="wallet.html">Wallet</a>
+                <a href="support.html">Support</a>
+                <a href="profile.html" class="active">Profile</a>
+            </nav>
+        </div>
+        <a href="login.html" id="loginNav" style="display: none;">
+            <button class="cta">
+                <span><b>Login</b></span>
+                <svg width="15px" height="10px" viewBox="0 0 13 10">
+                    <path d="M1,5 L11,5"></path>
+                    <polyline points="8 1 12 5 8 9"></polyline>
+                </svg>
+            </button>
+        </a>
+        <a href="profile.html" id="profileNav">
+            <button class="cta">
+                <span><b>Profile</b></span>
+                <svg width="15px" height="10px" viewBox="0 0 13 10">
+                    <path d="M1,5 L11,5"></path>
+                    <polyline points="8 1 12 5 8 9"></polyline>
+                </svg>
+            </button>
+        </a>
+    </header>
+
+    <div class="container">
+        <div class="main-body">
+            <div class="row gutters-sm">
+                <div class="col-md-4 mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex flex-column align-items-center text-center">
+                                <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="User" class="rounded-circle" width="150">
+                                <div class="mt-3">
+                                    <h4 id="profileName">ABCD</h4>
+                                    <div class="profile-actions">
+                                        <button class="btn btn-primary" onclick="toggleEditProfileForm()">Edit Profile</button>
+                                        <button class="btn btn-outline-danger" onclick="(function(){window.location.replace('login.html');localStorage.clear();})()">Logout</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card mt-3">
+                        <div class="card-body">
+                            <h5 class="card-title">Current Plan</h5>
+                            <div class="plan-details">
+                                <div class="plan-info">
+                                    <span class="plan-label">Plan:</span>
+                                    <span id="currentPlan">₹299 Unlimited Pack</span>
+                                </div>
+                                <div class="plan-info">
+                                    <span class="plan-label">Status:</span>
+                                    <span id="planStatus"><span class="valid-indicator valid-active"></span>Active</span>
+                                </div>
+                                <div class="plan-info">
+                                    <span class="plan-label">Activated on:</span>
+                                    <span id="activationDate">15-Feb-2025</span>
+                                </div>
+                                <div class="plan-info">
+                                    <span class="plan-label">Expires on:</span>
+                                    <span id="expiryDate">15-Mar-2025</span>
+                                </div>
+                                <div class="mt-3">
+                                    <a href="plans.html" onclick="rechargeCurrentPlan()" class="btn btn-sm btn-info">Change Plan</a>
+                                    <!-- <button class="btn btn-sm btn-success ms-2" onclick="rechargeCurrentPlan()">Recharge</button> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-8">
+                    <!-- Profile Information Card -->
+                    <div class="card mb-3" id="profileInfoCard">
+                        <div class="card-body">
+                            <div class="row mb-2">
+                                <div class="col-sm-12">
+                                    <h5 class="mb-0">Profile Information</h5>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Full Name</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary" id="userName">
+                                   ABCD
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Email</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary" id="userEmail">
+                                    ABCD.doe@example.com
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Phone</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary" id="userPhone">
+                                    Loading...
+                                </div>
+                            </div>
+                            <hr>
+                         
+                        </div>
+                    </div>
+                    
+                    <!-- Edit Profile Form -->
+                    <div class="card mb-3" id="editProfileForm" style="display: none;">
+                        <div class="card-body">
+                            <h5 class="card-title">Edit Profile</h5>
+                            <form id="userProfileForm">
+                                <div class="edit-form-group">
+                                    <label for="editName">Full Name</label>
+                                    <input type="text" class="form-control" id="editName" value="ABCD Doe" disabled>
+                                </div>
+                                <div class="edit-form-group">
+                                    <label for="editEmail">Email</label>
+                                    <input type="email" class="form-control" id="editEmail" value="ABCD.doe@example.com">
+                                </div>
+                                <div class="edit-form-group">
+                                    <label for="editPhone">Phone</label>
+                                    <input type="text" class="form-control" id="editPhone" disabled>
+                                </div>
+                              
+                                <div class="d-flex justify-content-between">
+                                    <button type="button" class="btn btn-primary" onclick="saveProfileChanges()">Save Changes</button>
+                                    <button type="button" class="btn btn-secondary" onclick="toggleEditProfileForm()">Cancel</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Data Usage Card -->
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title">Data Usage</h5>
+                            <div class="row mt-3">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Data</h6>
+                                </div>
+                                <div class="col-sm-9">
+                                    <div class="progress">
+                                        <div class="progress-bar bg-primary" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                    <small class="text-muted">1.5 GB used of 2 GB</small>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Validity</h6>
+                                </div>
+                                <div class="col-sm-9">
+                                    <div class="progress">
+                                        <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                    <small class="text-muted">15 days left of 30 days</small>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Voice</h6>
+                                </div>
+                                <div class="col-sm-9">
+                                    <div class="progress">
+                                        <div class="progress-bar " role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                    <small class="text-muted">90 mins used of 300 mins</small>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">SMS</h6>
+                                </div>
+                                <div class="col-sm-9">
+                                    <div class="progress">
+                                        <div class="progress-bar bg-warning" role="progressbar" style="width: 10%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                    <small class="text-muted">10 SMS used of 100 SMS</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Transaction History Card -->
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Transaction History</h5>
+                            <div class="accordion" id="transactionAccordion">
+                                <!-- Transaction history will be populated by JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3 class="footer-title">ReZap</h3>
+                <p>Your trusted partner for quick and secure mobile recharges. Experience seamless connectivity with our wide range of plans and instant recharge solutions.</p>
+                <div class="social-links">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-section">
+                <h3 class="footer-title">Quick Links</h3>
+                <ul>
+                    <li><a href="home.html"><i class="fas fa-home"></i>Home</a></li>
+                    <li><a href="plans.html"><i class="fas fa-list"></i>Plans</a></li>
+                    <li><a href="offers.html"><i class="fas fa-gift"></i>Offers</a></li>
+                    <li><a href="wallet.html"><i class="fas fa-wallet"></i>Wallet</a></li>
+                    <li><a href="support.html"><i class="fas fa-headset"></i>Support</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3 class="footer-title">Support</h3>
+                <ul>
+                    <li><a href="support.html"><i class="fas fa-phone"></i>Contact Us</a></li>
+                    <li><a href="support.html"><i class="fas fa-question-circle"></i>Help Center</a></li>
+                    <li><a href="#"><i class="fas fa-shield-alt"></i>Privacy Policy</a></li>
+                    <li><a href="#"><i class="fas fa-file-alt"></i>Terms of Service</a></li>
+                    <li><a href="#"><i class="fas fa-undo"></i>Refund Policy</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3 class="footer-title">Contact Info</h3>
+                <ul>
+                    <li><a href="tel:+919876543210"><i class="fas fa-phone-alt"></i>+91 9876543210</a></li>
+                    <li><a href="mailto:support@rezap.com"><i class="fas fa-envelope"></i>support@rezap.com</a></li>
+                    <li><a href="#"><i class="fas fa-map-marker-alt"></i>123 Tech Park, Mumbai, India</a></li>
+                    <li><a href="#"><i class="fas fa-clock"></i>Mon - Sat: 9:00 AM - 6:00 PM</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2024 ReZap. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="backToTop" title="Back to Top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/navbar.js"></script>
+    <script>
+        // Navigation scripts
+        const menuToggle = document.getElementById("menuToggle");
+        const navContainer = document.getElementById("navContainer");
+        const navbar = document.getElementById("navbar");
+
+        menuToggle.addEventListener("click", function () {
+            navContainer.classList.toggle("show");
+        });
+
+        document.addEventListener("click", function (event) {
+            if (!menuToggle.contains(event.target) && !navContainer.contains(event.target)) {
+                navContainer.classList.remove("show");
+            }
+        });
+
+        // Back to top button
+        const backToTop = document.getElementById("backToTop");
+        
+        window.addEventListener("scroll", function() {
+            if (window.scrollY > 200) {
+                backToTop.classList.add("show");
+            } else {
+                backToTop.classList.remove("show");
+            }
+        });
+        
+        backToTop.addEventListener("click", function() {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+
+        // User Profile Functions
+        function getUserProfile() {
+            const userProfileStr = localStorage.getItem("userProfile");
+            if (userProfileStr) {
+                const userProfile = JSON.parse(userProfileStr);
+                document.getElementById("profileName").innerText = userProfile.name || "User";
+                document.getElementById("userName").innerText = userProfile.name || "User";
+                document.getElementById("userEmail").innerText = userProfile.email || "user@example.com";
+                document.getElementById("userPhone").innerText = userProfile.phone || "";
+                return userProfile;
+            }
+            return null;
+        }
+
+        function handleHomeClick() {
+            // Clear only the quick recharge number
+            localStorage.removeItem("userPhoneNumber");
+            window.location.href = "home.html";
+        }
+        
+        function toggleEditProfileForm() {
+            const profileInfoCard = document.getElementById("profileInfoCard");
+            const editProfileForm = document.getElementById("editProfileForm");
+            
+            if (profileInfoCard.style.display !== "none") {
+                profileInfoCard.style.display = "none";
+                editProfileForm.style.display = "block";
+                
+                // Load current values into form
+                const userProfile = getUserProfile();
+                document.getElementById("editName").value = userProfile.name;
+                document.getElementById("editEmail").value = userProfile.email;
+                document.getElementById("editPhone").value = userProfile.phone;
+             
+            } else {
+                profileInfoCard.style.display = "block";
+                editProfileForm.style.display = "none";
+            }
+        }
+        
+        function saveProfileChanges() {
+            const name = document.getElementById("editName").value;
+            const email = document.getElementById("editEmail").value;
+            const phone = document.getElementById("editPhone").value;
+            
+            
+            // Validate inputs
+            if (!name || !email) {
+                alert("Name and email are required!");
+                return;
+            }
+            
+            // Save profile data
+            const userProfile = {
+                name: name,
+                email: email,
+                phone: phone,
+               
+            };
+            
+            localStorage.setItem("userProfile", JSON.stringify(userProfile));
+            
+            // Update display
+            document.getElementById("profileName").innerText = name;
+            document.getElementById("userName").innerText = name;
+            document.getElementById("userEmail").innerText = email;
+            document.getElementById("userPhone").innerText = phone;
+            
+            
+            // Close edit form
+            toggleEditProfileForm();
+            
+            // Show success message
+            alert("Profile updated successfully!");
+        }
+        
+        // Transaction History Functions
+        function loadTransactions() {
+            const transactionAccordion = document.getElementById("transactionAccordion");
+            let transactions = getTransactions();
+            
+            // Clear existing content
+            transactionAccordion.innerHTML = "";
+            
+            // Add transactions in reverse order (newest first)
+            transactions.reverse().forEach((transaction, index) => {
+                const transactionItem = document.createElement("div");
+                transactionItem.className = "accordion-item";
+                
+                const statusBadge = getStatusBadge(transaction.status);
+                
+                transactionItem.innerHTML = `
+                    <h2 class="accordion-header" id="heading${index}">
+                        <button class="accordion-button ${index === 0 ? '' : 'collapsed'}" type="button" 
+                                data-bs-toggle="collapse" data-bs-target="#collapse${index}" 
+                                aria-expanded="${index === 0 ? 'true' : 'false'}" aria-controls="collapse${index}">
+                            Transaction ID: ${transaction.id} - ₹${transaction.amount}
+                            ${statusBadge}
+                        </button>
+                    </h2>
+                    <div id="collapse${index}" class="accordion-collapse collapse ${index === 0 ? 'show' : ''}" 
+                         aria-labelledby="heading${index}" data-bs-parent="#transactionAccordion">
+                        <div class="accordion-body">
+                            <strong>Amount:</strong> ₹${transaction.amount} <br>
+                            <strong>Status:</strong> ${transaction.status} <br>
+                            <strong>Date:</strong> ${transaction.date} <br>
+                            <strong>Plan:</strong> ${transaction.plan} <br>
+                            <strong>Payment Method:</strong> ${transaction.paymentMethod}
+                        </div>
+                    </div>
+                `;
+                
+                transactionAccordion.appendChild(transactionItem);
+            });
+        }
+        
+        function getStatusBadge(status) {
+            switch(status) {
+                case "Successful":
+                    return '<span class="badge bg-success transaction-badge">Successful</span>';
+                case "Pending":
+                    return '<span class="badge bg-warning transaction-badge">Pending</span>';
+                case "Failed":
+                    return '<span class="badge bg-danger transaction-badge">Failed</span>';
+                default:
+                    return '';
+            }
+        }
+        
+        function getTransactions() {
+            let transactionsJson = localStorage.getItem("transactions");
+            
+            if (!transactionsJson) {
+                // Create default transactions if none exist
+                const defaultTransactions = [
+                    {
+                        id: "TXN123456789",
+                        amount: "199",
+                        status: "Successful",
+                        date: "20-Feb-2025",
+                        plan: "Monthly Data Pack",
+                        paymentMethod: "UPI"
+                    },
+                    {
+                        id: "TXN987654321",
+                        amount: "299",
+                        status: "Pending",
+                        date: "19-Feb-2025",
+                        plan: "Unlimited Pack",
+                        paymentMethod: "Credit Card"
+                    },
+                    {
+                        id: "TXN456789123",
+                        amount: "149",
+                        status: "Failed",
+                        date: "18-Feb-2025",
+                        plan: "Weekly Pack",
+                        paymentMethod: "Debit Card"
+                    },
+                    {
+                        id: "TXN852963741",
+                        amount: "399",
+                        status: "Successful",
+                        date: "17-Feb-2025",
+                        plan: "Family Pack",
+                        paymentMethod: "Net Banking"
+                    },
+                    {
+                        id: "TXN369258147",
+                        amount: "599",
+                        status: "Successful",
+                        date: "15-Feb-2025",
+                        plan: "Premium Pack",
+                        paymentMethod: "UPI"
+                    }
+                ];
+                localStorage.setItem("transactions", JSON.stringify(defaultTransactions));
+                return defaultTransactions;
+            }
+            
+            return JSON.parse(transactionsJson);
+        }
+        
+        function rechargeCurrentPlan() {
+            const currentPlan = document.getElementById("currentPlan").innerText;
+            const amount = currentPlan.match(/₹(\d+)/)[1];
+            
+            const today = new Date();
+            const day = String(today.getDate()).padStart(2, '0');
+            const month = String(today.getMonth() + 1).padStart(2, '0');
+            const year = today.getFullYear();
+            const formattedDate = `${day}-${month}-${year}`;
+            
+            // Generate a random transaction ID
+            const txnId = "TXN" + Math.floor(Math.random() * 1000000000).toString().padStart(9, '0');
+            
+            // Create new transaction
+            const newTransaction = {
+                id: txnId,
+                amount: amount,
+                status: "Successful",
+                date: formattedDate,
+                plan: currentPlan.replace(/^₹\d+ /, ''),
+                paymentMethod: "UPI"
+            };
+            
+            // Add to transaction history
+            let transactions = getTransactions();
+            transactions.push(newTransaction);
+            localStorage.setItem("transactions", JSON.stringify(transactions));
+            
+            // Update expiry date (add 30 days)
+            const expiryDate = new Date();
+            expiryDate.setDate(expiryDate.getDate() + 30);
+            const expDay = String(expiryDate.getDate()).padStart(2, '0');
+            const expMonth = String(expiryDate.getMonth() + 1).padStart(2, '0');
+            const expYear = expiryDate.getFullYear();
+            const formattedExpiry = `${expDay}-${expMonth}-${expYear}`;
+            
+            document.getElementById("activationDate").innerText = formattedDate;
+            document.getElementById("expiryDate").innerText = formattedExpiry;
+            
+            // Reload transactions
+            loadTransactions();
+        }
+        
+        // Initialize on page load
+        window.onload = function() {
+            // Check login state
+            const loggedInUser = localStorage.getItem("loggedInUser");
+            if (!loggedInUser) {
+                window.location.href = "login.html";
+                return;
+            }
+            
+            // Show profile button, hide login button
+            document.getElementById("loginNav").style.display = "none";
+            document.getElementById("profileNav").style.display = "inline-block";
+            
+            // Load user profile and transactions
+            getUserProfile();
+            loadTransactions();
+        }
+    </script>
+</body>
+</html>

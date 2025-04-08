@@ -394,93 +394,107 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize charts when page loads
     window.addEventListener('load', initAnalyticsCharts);
 
-    // Dummy plans data (this would typically come from your backend)
-    let plans = [
-      { id: 1, amount: 199, description: "Unlimited calls + 1.5GB/day data" },
-      { id: 2, amount: 299, description: "Unlimited calls + 2GB/day data" }
-    ];
+   // Dummy plans data (this would typically come from your backend)
+let plans = [
+  { id: 1, amount: 199, validity: 28, description: "Unlimited calls + 1.5GB/day data" },
+  { id: 2, amount: 299, validity: 56, description: "Unlimited calls + 2GB/day data" }
+];
 
-    function renderPlans() {
-      const tbody = document.getElementById("plansTableBody");
-      tbody.innerHTML = "";
-      plans.forEach(plan => {
-        tbody.innerHTML += `
-          <tr data-plan-id="${plan.id}">
-            <td>${plan.id}</td>
-            <td>${plan.amount}</td>
-            <td>${plan.description}</td>
-            <td>
-              <button class="btn btn-sm btn-warning me-1" onclick="editPlan(${plan.id})">Modify</button>
-              <button class="btn btn-sm btn-danger" onclick="deletePlan(${plan.id})">Delete</button>
-            </td>
-          </tr>
-        `;
-      });
-    }
+function renderPlans() {
+  const tbody = document.getElementById("plansTableBody");
+  tbody.innerHTML = "";
+  plans.forEach(plan => {
+    tbody.innerHTML += `
+      <tr data-plan-id="${plan.id}">
+        <td>${plan.id}</td>
+        <td>₹${plan.amount}</td>
+        <td>${plan.description}</td>
+        <td>${plan.validity} days</td>
+        <td>
+          <button class="btn btn-sm btn-warning me-1" onclick="editPlan(${plan.id})">Modify</button>
+          <button class="btn btn-sm btn-danger" onclick="deletePlan(${plan.id})">Delete</button>
+        </td>
+      </tr>
+    `;
+  });
+}
 
-    // Handle form submission to add or update a plan
-    document.getElementById("planForm").addEventListener("submit", function (e) {
-      e.preventDefault();
-      const planId = document.getElementById("planId").value;
-      const planAmount = document.getElementById("planAmount").value;
-      const planDescription = document.getElementById("planDescription").value;
+// Handle form submission to add or update a plan
+document.getElementById("planForm").addEventListener("submit", function (e) {
+  e.preventDefault();
+  const planId = document.getElementById("planId").value;
+  const planAmount = parseInt(document.getElementById("planAmount").value);
+  const planDescription = document.getElementById("planDescription").value;
+  const planValidity = parseInt(document.getElementById("planvalidity").value);
 
-      if (planId) {
-        // Update existing plan
-        plans = plans.map(plan => {
-          if (plan.id == planId) {
-            return { id: plan.id, amount: planAmount, description: planDescription };
-          }
-          return plan;
-        });
-        alert("Plan updated for Rezap with amount ₹" + planAmount + " and details: " + planDescription);
-      } else {
-        // Add new plan
-        const newId = plans.length ? plans[plans.length - 1].id + 1 : 1;
-        plans.push({ id: newId, amount: planAmount, description: planDescription });
-        alert("New plan added for Rezap with amount ₹" + planAmount + " and details: " + planDescription);
+  if (planId) {
+    // Update existing plan
+    plans = plans.map(plan => {
+      if (plan.id == planId) {
+        return { 
+          id: parseInt(plan.id), 
+          amount: planAmount, 
+          description: planDescription ,
+          validity: planValidity
+        };
       }
-      renderPlans();
-      resetForm();
+      return plan;
     });
-
-    // Populate form for editing a plan
-    function editPlan(id) {
-      const plan = plans.find(p => p.id === id);
-      if (plan) {
-        document.getElementById("planId").value = plan.id;
-        document.getElementById("planAmount").value = plan.amount;
-        document.getElementById("planDescription").value = plan.description;
-        document.getElementById("formTitle").innerText = "Modify Recharge Plan";
-        document.getElementById("formButton").innerText = "Update Plan";
-        document.getElementById("cancelEdit").style.display = "inline-block";
-      }
-    }
-
-    // Delete a plan
-    function deletePlan(id) {if (confirm("Are you sure you want to delete this plan?")) {
-        plans = plans.filter(p => p.id !== id);
-        renderPlans();
-        resetForm();
-      }
-    }
-
-    // Reset form to default state
-    function resetForm() {
-      document.getElementById("planForm").reset();
-      document.getElementById("planId").value = "";
-      document.getElementById("formTitle").innerText = "Add New Recharge Plan";
-      document.getElementById("formButton").innerText = "Add Plan";
-      document.getElementById("cancelEdit").style.display = "none";
-    }
-
-    // Cancel edit mode
-    document.getElementById("cancelEdit").addEventListener("click", function () {
-      resetForm();
+    alert("Plan updated for Rezap with amount ₹" + planAmount + ", validity " + planValidity + " days, and details: " + planDescription);
+  } else {
+    // Add new plan
+    const newId = plans.length ? plans[plans.length - 1].id + 1 : 1;
+    plans.push({ 
+      id: newId, 
+      amount: planAmount, 
+      description: planDescription,
+      validity: planValidity
     });
+    alert("New plan added for Rezap with amount ₹" + planAmount + ", validity " + planValidity + " days, and details: " + planDescription);
+  }
+  renderPlans();
+  resetForm();
+});
 
-    // Initial render of plans table
+// Populate form for editing a plan
+function editPlan(id) {
+  const plan = plans.find(p => p.id === id);
+  if (plan) {
+    document.getElementById("planId").value = plan.id;
+    document.getElementById("planAmount").value = plan.amount;
+    document.getElementById("planDescription").value = plan.description;
+    document.getElementById("planvalidity").value = plan.validity;
+    document.getElementById("formTitle").innerText = "Modify Recharge Plan";
+    document.getElementById("formButton").innerText = "Update Plan";
+    document.getElementById("cancelEdit").style.display = "inline-block";
+  }
+}
+
+// Delete a plan
+function deletePlan(id) {
+  if (confirm("Are you sure you want to delete this plan?")) {
+    plans = plans.filter(p => p.id !== id);
     renderPlans();
+    resetForm();
+  }
+}
+
+// Reset form to default state
+function resetForm() {
+  document.getElementById("planForm").reset();
+  document.getElementById("planId").value = "";
+  document.getElementById("formTitle").innerText = "Add New Recharge Plan";
+  document.getElementById("formButton").innerText = "Add Plan";
+  document.getElementById("cancelEdit").style.display = "none";
+}
+
+// Cancel edit mode
+document.getElementById("cancelEdit").addEventListener("click", function () {
+  resetForm();
+});
+
+// Initial render of plans table
+renderPlans();
 
     // Sidebar toggle functionality
 document.addEventListener('DOMContentLoaded', function() {
@@ -520,153 +534,167 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 
-// Sample user data - in a real application this would come from your backend
+// Sample user data - in a real application, this would come from your backend
 let users = [
   {
-    id: 1001,
-    name: "Arnav Sharma",
-    phone: "+91 9876543210",
-    email: "arnav.sharma@example.com",
+    id: 1,
+    name: "Rahul Sharma",
+    phone: "9876543210",
+    email: "rahul.sharma@example.com",
     status: "active",
-    lastRecharge: "10 Feb, 2025",
-    joinedDate: "15 Dec, 2022",
+    lastRecharge: "₹399 on 25 Feb, 2025",
+    joinedDate: "15 Jan, 2023",
     recentActivity: [
-      { action: "Recharged ₹599 plan", time: "10 minutes ago" },
-      { action: "Updated payment method", time: "3 days ago" },
-      { action: "Recharged ₹399 plan", time: "1 month ago" }
+      { action: "Recharged ₹399 plan", time: "2 days ago" },
+      { action: "Updated profile information", time: "1 week ago" },
+      { action: "Recharged ₹199 plan", time: "1 month ago" }
     ]
   },
   {
-    id: 1002,
-    name: "Priya Patel",
-    phone: "+91 9876543211",
-    email: "priya.patel@example.com",
+    id: 2,
+    name: "Priya Singh",
+    phone: "9898765432",
+    email: "priya.singh@example.com",
     status: "active",
-    lastRecharge: "25 Feb, 2025",
-    joinedDate: "20 Jan, 2023",
+    lastRecharge: "₹299 on 18 Feb, 2025",
+    joinedDate: "03 Mar, 2023",
     recentActivity: [
-      { action: "Recharged ₹249 plan", time: "25 minutes ago" },
-      { action: "Viewed usage history", time: "5 days ago" },
-      { action: "Updated profile information", time: "3 weeks ago" }
+      { action: "Recharged ₹299 plan", time: "2 weeks ago" },
+      { action: "Login from new device", time: "3 weeks ago" },
+      { action: "Changed password", time: "1 month ago" }
     ]
   },
   {
-    id: 1003,
-    name: "Rahul Gupta",
-    phone: "+91 9876543212",
-    email: "rahul.gupta@example.com",
+    id: 3,
+    name: "Amit Kumar",
+    phone: "9765432109",
+    email: "amit.kumar@example.com",
     status: "inactive",
-    lastRecharge: "15 Jan, 2025",
-    joinedDate: "5 Mar, 2023",
+    lastRecharge: "₹199 on 10 Jan, 2025",
+    joinedDate: "22 May, 2023",
     recentActivity: [
-      { action: "Failed recharge attempt ₹399", time: "42 minutes ago" },
-      { action: "Requested customer support", time: "2 days ago" },
-      { action: "Recharged ₹299 plan", time: "2 months ago" }
+      { action: "Account deactivated", time: "1 week ago" },
+      { action: "Recharged ₹199 plan", time: "2 months ago" },
+      { action: "Updated email address", time: "3 months ago" }
     ]
   },
   {
-    id: 1004,
-    name: "Sneha Reddy",
-    phone: "+91 9876543213",
-    email: "sneha.reddy@example.com",
+    id: 4,
+    name: "Sneha Patel",
+    phone: "9567890123",
+    email: "sneha.patel@example.com",
     status: "active",
-    lastRecharge: "1 Mar, 2025",
-    joinedDate: "10 Apr, 2023",
+    lastRecharge: "₹499 on 01 Mar, 2025",
+    joinedDate: "14 Feb, 2025",
     recentActivity: [
-      { action: "Recharged ₹499 plan", time: "1 hour ago" },
-      { action: "Changed password", time: "1 week ago" },
-      { action: "First login", time: "11 months ago" }
+      { action: "Recharged ₹499 plan", time: "3 days ago" },
+      { action: "Account created", time: "18 days ago" }
     ]
   },
   {
-    id: 1005,
-    name: "Vikram Singh",
-    phone: "+91 9876543214",
-    email: "vikram.singh@example.com",
+    id: 5,
+    name: "Vijay Malhotra",
+    phone: "9234567890",
+    email: "vijay.malhotra@example.com",
     status: "active",
-    lastRecharge: "28 Feb, 2025",
-    joinedDate: "12 May, 2024",
+    lastRecharge: "₹699 on 22 Feb, 2025",
+    joinedDate: "30 Nov, 2023",
     recentActivity: [
-      { action: "Recharged ₹699 plan", time: "2 hours ago" },
-      { action: "Updated email address", time: "10 days ago" },
-      { action: "Created account", time: "9 months ago" }
+      { action: "Recharged ₹699 plan", time: "10 days ago" },
+      { action: "Submitted support ticket", time: "1 month ago" },
+      { action: "Recharged ₹399 plan", time: "3 months ago" }
     ]
   }
 ];
 
+// Helper function to capitalize first letter
+function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
 // Function to render users table
 function renderUsersTable(filteredUsers = null) {
-  const tbody = document.getElementById("usersTableBody");
-  if (!tbody) return;
+  const usersToRender = filteredUsers || users;
+  const tbody = document.getElementById('usersTableBody');
   
-  const displayUsers = filteredUsers || users;
-  tbody.innerHTML = "";
+  if (!tbody) {
+    console.error("Users table body element not found!");
+    return;
+  }
   
-  displayUsers.forEach(user => {
-    const statusBadge = user.status === "active" 
-      ? '<span class="badge bg-success">Active</span>' 
-      : '<span class="badge bg-secondary">Inactive</span>';
-      
+  tbody.innerHTML = '';
+  
+  if (usersToRender.length === 0) {
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="8" class="text-center">No users found</td>
+      </tr>
+    `;
+    return;
+  }
+  
+  usersToRender.forEach(user => {
+    const statusBadgeClass = user.status === 'active' ? 'bg-success' : 'bg-danger';
+    
     tbody.innerHTML += `
       <tr>
         <td>${user.id}</td>
         <td>${user.name}</td>
         <td>${user.phone}</td>
         <td>${user.email}</td>
-        <td>${statusBadge}</td>
+        <td><span class="badge ${statusBadgeClass}">${capitalizeFirstLetter(user.status)}</span></td>
         <td>${user.lastRecharge}</td>
         <td>${user.joinedDate}</td>
         <td>
-          <button class="btn btn-sm btn-info me-1" onclick="viewUserDetails(${user.id})">
+          <button class="btn btn-sm btn-info me-1" onclick="showUserDetails(${user.id})">
             <i class="fas fa-eye"></i>
           </button>
-          <button class="btn btn-sm btn-warning me-1" onclick="editUser(${user.id})">
-            <i class="fas fa-edit"></i>
-          </button>
-          <button class="btn btn-sm btn-danger" onclick="showDeleteUserModal(${user.id})">
-            <i class="fas fa-trash"></i>
+          <button class="btn btn-sm ${user.status === 'active' ? 'btn-warning' : 'btn-success'}" onclick="showToggleStatusModal(${user.id})">
+            <i class="fas fa-${user.status === 'active' ? 'ban' : 'check'}"></i> ${user.status === 'active' ? 'Deactivate' : 'Activate'}
           </button>
         </td>
       </tr>
     `;
   });
   
-  updatePaginationInfo(displayUsers.length);
-}
-
-// Update pagination info text
-function updatePaginationInfo(totalUsers) {
-  const paginationInfo = document.getElementById("userPaginationInfo");
+  // Update pagination info
+  const paginationInfo = document.getElementById('userPaginationInfo');
   if (paginationInfo) {
-    if (totalUsers === 0) {
-      paginationInfo.textContent = "0 of 0";
-    } else {
-      paginationInfo.textContent = `1-${Math.min(10, totalUsers)} of ${totalUsers}`;
-    }
+    paginationInfo.textContent = `1-${usersToRender.length} of ${usersToRender.length}`;
   }
 }
 
-// Function to show user details modal
-function viewUserDetails(userId) {
+// Function to show user details
+function showUserDetails(userId) {
   const user = users.find(u => u.id === userId);
-  if (!user) return;
+  if (!user) {
+    console.error("User not found with ID:", userId);
+    return;
+  }
   
-  // Update user details in modal
-  document.getElementById("userDetailName").textContent = user.name;
-  document.getElementById("userInitials").textContent = getInitials(user.name);
-  document.getElementById("userDetailId").textContent = user.id;
-  document.getElementById("userDetailPhone").textContent = user.phone;
-  document.getElementById("userDetailEmail").textContent = user.email;
+  // Set user details in the modal
+  document.getElementById('userDetailsModalLabel').textContent = `User Details - ${user.name}`;
+  document.getElementById('userDetailName').textContent = user.name;
+  document.getElementById('userDetailId').textContent = user.id;
+  document.getElementById('userDetailPhone').textContent = user.phone;
+  document.getElementById('userDetailEmail').textContent = user.email;
   
-  const statusBadge = document.getElementById("userDetailStatus");
+  const statusBadge = document.getElementById('userDetailStatus');
   statusBadge.textContent = capitalizeFirstLetter(user.status);
-  statusBadge.className = user.status === "active" ? "badge bg-success" : "badge bg-secondary";
+  statusBadge.className = `badge ${user.status === 'active' ? 'bg-success' : 'bg-danger'}`;
   
-  document.getElementById("userDetailJoined").textContent = user.joinedDate;
+  document.getElementById('userDetailJoined').textContent = user.joinedDate;
+  
+  // Set user initials
+  const nameParts = user.name.split(' ');
+  const initials = nameParts.length > 1 
+    ? `${nameParts[0].charAt(0)}${nameParts[1].charAt(0)}`
+    : nameParts[0].charAt(0);
+  document.getElementById('userInitials').textContent = initials.toUpperCase();
   
   // Populate recent activity
-  const activityList = document.getElementById("userDetailActivity");
-  activityList.innerHTML = "";
+  const activityList = document.getElementById('userDetailActivity');
+  activityList.innerHTML = '';
   
   if (user.recentActivity && user.recentActivity.length > 0) {
     user.recentActivity.forEach(activity => {
@@ -680,14 +708,27 @@ function viewUserDetails(userId) {
       `;
     });
   } else {
-    activityList.innerHTML = `<li class="list-group-item px-0">No recent activity</li>`;
+    activityList.innerHTML = `
+      <li class="list-group-item px-0">
+        <div class="d-flex justify-content-center">
+          <span class="text-muted">No recent activity</span>
+        </div>
+      </li>
+    `;
   }
   
-  // Set up edit button to open edit modal
-  document.getElementById("editUserFromDetails").onclick = function() {
-    const userDetailsModal = bootstrap.Modal.getInstance(document.getElementById('userDetailsModal'));
-    userDetailsModal.hide();
-    editUser(userId);
+  // Set up the toggle status button
+  const toggleStatusBtn = document.getElementById('toggleStatusBtn');
+  toggleStatusBtn.textContent = user.status === 'active' ? 'Deactivate User' : 'Activate User';
+  toggleStatusBtn.className = user.status === 'active' 
+    ? 'btn btn-warning' 
+    : 'btn btn-success';
+  
+  // Add event listener to the toggle status button
+  toggleStatusBtn.onclick = function() {
+    const detailsModal = bootstrap.Modal.getInstance(document.getElementById('userDetailsModal'));
+    detailsModal.hide();
+    showToggleStatusModal(userId);
   };
   
   // Show the modal
@@ -695,168 +736,70 @@ function viewUserDetails(userId) {
   userDetailsModal.show();
 }
 
-// Function to open edit user form
-function editUser(userId) {
+// Function to show toggle status modal
+function showToggleStatusModal(userId) {
   const user = users.find(u => u.id === userId);
-  if (!user) return;
+  if (!user) {
+    console.error("User not found with ID:", userId);
+    return;
+  }
   
-  // Populate form fields
-  document.getElementById("userId").value = user.id;
-  document.getElementById("userName").value = user.name;
-  document.getElementById("userPhone").value = user.phone;
-  document.getElementById("userEmail").value = user.email;
-  document.getElementById("userStatus").value = user.status;
+  document.getElementById('toggleStatusUserId').value = userId;
+  document.getElementById('toggleStatusModalLabel').textContent = 
+    `${user.status === 'active' ? 'Deactivate' : 'Activate'} User - ${user.name}`;
+  document.getElementById('toggleStatusMessage').textContent = 
+    `Are you sure you want to ${user.status === 'active' ? 'deactivate' : 'activate'} ${user.name}?`;
   
-  // Adjust password field for editing
-  document.getElementById("userPassword").required = false;
-  document.getElementById("userPassword").value = "";
-  document.getElementById("userPassword").disabled = true;
-  document.getElementById("passwordLabel").textContent = "Password (leave blank to keep unchanged)";
-  document.getElementById("passwordChangeContainer").style.display = "block";
+  // Set the color of the confirm button based on the action
+  const confirmBtn = document.getElementById('confirmToggleStatusBtn');
+  confirmBtn.className = user.status === 'active' 
+    ? 'btn btn-warning' 
+    : 'btn btn-success';
+  confirmBtn.textContent = user.status === 'active' ? 'Deactivate' : 'Activate';
   
-  // Update modal title
-  document.getElementById("userFormModalLabel").textContent = "Edit User";
-  
-  // Toggle welcome email option
-  document.getElementById("sendWelcomeEmail").checked = false;
-  document.getElementById("sendWelcomeEmail").parentElement.style.display = "none";
-  
-  // Show modal
-  const userFormModal = new bootstrap.Modal(document.getElementById('userFormModal'));
-  userFormModal.show();
+  const toggleStatusModal = new bootstrap.Modal(document.getElementById('toggleStatusModal'));
+  toggleStatusModal.show();
 }
 
-// Function to reset user form for adding new user
-function resetUserForm() {
-  document.getElementById("userForm").reset();
-  document.getElementById("userId").value = "";
-  document.getElementById("userPassword").required = true;
-  document.getElementById("userPassword").disabled = false;
-  document.getElementById("passwordLabel").textContent = "Password";
-  document.getElementById("passwordChangeContainer").style.display = "none";
-  document.getElementById("userFormModalLabel").textContent = "Add New User";
-  document.getElementById("sendWelcomeEmail").parentElement.style.display = "block";
-}
-
-// Function to show delete confirmation modal
-function showDeleteUserModal(userId) {
-  document.getElementById("deleteUserId").value = userId;
-  const deleteModal = new bootstrap.Modal(document.getElementById('deleteUserModal'));
-  deleteModal.show();
-}
-
-// Function to delete a user
-function deleteUser(userId) {
-  users = users.filter(user => user.id !== userId);
+// Function to toggle user status
+function toggleUserStatus(userId) {
+  const userIndex = users.findIndex(u => u.id === userId);
+  if (userIndex === -1) {
+    console.error("User not found with ID:", userId);
+    return;
+  }
+  
+  const oldStatus = users[userIndex].status;
+  users[userIndex].status = oldStatus === 'active' ? 'inactive' : 'active';
+  
+  // Add activity for status change
+  const statusChangeActivity = {
+    action: `Status changed from ${capitalizeFirstLetter(oldStatus)} to ${capitalizeFirstLetter(users[userIndex].status)}`,
+    time: "Just now"
+  };
+  
+  if (!users[userIndex].recentActivity) {
+    users[userIndex].recentActivity = [];
+  }
+  
+  users[userIndex].recentActivity.unshift(statusChangeActivity);
+  
+  alert(`${users[userIndex].name}'s status has been changed to ${capitalizeFirstLetter(users[userIndex].status)}.`);
+  
+  // Update the table
   renderUsersTable();
-  
-  // Show success message
-  alert(`User with ID ${userId} has been deleted successfully.`);
 }
 
-// Helper function to get initials from name
-function getInitials(name) {
-  return name
-    .split(' ')
-    .map(word => word.charAt(0))
-    .join('')
-    .toUpperCase()
-    .substring(0, 2);
-}
-
-// Helper function to capitalize first letter
-function capitalizeFirstLetter(string) {
-  return string.charAt(0).toUpperCase() + string.slice(1);
-}
-
-// Add event listeners once DOM is loaded
+// Initialize user management functionality
 document.addEventListener('DOMContentLoaded', function() {
-  // Initial render of users table
-  renderUsersTable();
+  console.log("Initializing user management functionality");
   
-  // Add user button click - reset form and show modal
-  const addNewUserBtn = document.getElementById('addNewUserBtn');
-  if (addNewUserBtn) {
-    addNewUserBtn.addEventListener('click', function() {
-      resetUserForm();
-    });
-  }
-  
-  // Password change checkbox toggle
-  const changePasswordCheck = document.getElementById('changePasswordCheck');
-  if (changePasswordCheck) {
-    changePasswordCheck.addEventListener('change', function() {
-      const passwordField = document.getElementById('userPassword');
-      passwordField.disabled = !this.checked;
-      passwordField.required = this.checked;
-    });
-  }
-  
-  // Save user button click
-  const saveUserBtn = document.getElementById('saveUserBtn');
-  if (saveUserBtn) {
-    saveUserBtn.addEventListener('click', function() {
-      const form = document.getElementById('userForm');
-      
-      // Basic form validation
-      if (!form.checkValidity()) {
-        form.reportValidity();
-        return;
-      }
-      
-      const userId = document.getElementById('userId').value;
-      const userData = {
-        name: document.getElementById('userName').value,
-        phone: document.getElementById('userPhone').value,
-        email: document.getElementById('userEmail').value,
-        status: document.getElementById('userStatus').value,
-        lastRecharge: 'N/A',
-        joinedDate: new Date().toLocaleDateString('en-US', { day: '2-digit', month: 'short', year: 'numeric' })
-      };
-      
-      if (userId) {
-        // Update existing user
-        const existingUser = users.find(u => u.id == userId);
-        if (existingUser) {
-          // Preserve existing properties
-          userData.id = parseInt(userId);
-          userData.lastRecharge = existingUser.lastRecharge;
-          userData.joinedDate = existingUser.joinedDate;
-          userData.recentActivity = existingUser.recentActivity;
-          
-          // Update user in array
-          users = users.map(u => u.id == userId ? userData : u);
-          alert(`User ${userData.name} has been updated successfully.`);
-        }
-      } else {
-        // Add new user
-        userData.id = Math.max(...users.map(u => u.id), 0) + 1;
-        userData.recentActivity = [
-          { action: "Created account", time: "Just now" }
-        ];
-        users.push(userData);
-        alert(`New user ${userData.name} has been added successfully.`);
-      }
-      
-      // Close modal and update table
-      const modal = bootstrap.Modal.getInstance(document.getElementById('userFormModal'));
-      modal.hide();
+  // Show users section when link is clicked
+  const usersLink = document.querySelector('a[href="#users"]');
+  if (usersLink) {
+    usersLink.addEventListener('click', function() {
+      // Initial render of users table when the section is shown
       renderUsersTable();
-    });
-  }
-  
-  // Confirm delete button click
-  const confirmDeleteUserBtn = document.getElementById('confirmDeleteUserBtn');
-  if (confirmDeleteUserBtn) {
-    confirmDeleteUserBtn.addEventListener('click', function() {
-      const userId = parseInt(document.getElementById('deleteUserId').value);
-      
-      // Close modal
-      const modal = bootstrap.Modal.getInstance(document.getElementById('deleteUserModal'));
-      modal.hide();
-      
-      // Delete user
-      deleteUser(userId);
     });
   }
   
@@ -902,7 +845,13 @@ document.addEventListener('DOMContentLoaded', function() {
         thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
         
         filteredUsers = users.filter(user => {
-          const joinDate = new Date(user.joinedDate);
+          // Simple date parsing for the demo
+          const parts = user.joinedDate.split(' ');
+          const day = parseInt(parts[0]);
+          const month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'].indexOf(parts[1].replace(',', ''));
+          const year = parseInt(parts[2]);
+          
+          const joinDate = new Date(year, month, day);
           return joinDate >= thirtyDaysAgo;
         });
       }
@@ -910,4 +859,26 @@ document.addEventListener('DOMContentLoaded', function() {
       renderUsersTable(filteredUsers);
     });
   }
+  
+  // Toggle status confirmation button
+  const confirmToggleStatusBtn = document.getElementById('confirmToggleStatusBtn');
+  if (confirmToggleStatusBtn) {
+    confirmToggleStatusBtn.addEventListener('click', function() {
+      const userId = parseInt(document.getElementById('toggleStatusUserId').value);
+      toggleUserStatus(userId);
+      
+      // Close the modal
+      const modal = bootstrap.Modal.getInstance(document.getElementById('toggleStatusModal'));
+      modal.hide();
+    });
+  }
+  
+  // Initialize pagination (demo only)
+  document.querySelectorAll('.pagination .page-link').forEach(link => {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      // In a real application, you would fetch data for the selected page
+      alert('Pagination would load different users in a real application.');
+    });
+  });
 });

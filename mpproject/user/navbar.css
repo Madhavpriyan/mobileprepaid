@@ -1,31 +1,5 @@
-/* * {
-    top: 0%;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
-}
-
-body {
-    background: linear-gradient(to right, #f3f4f3, #f4f4f3, #f6f7f6);
-    color: #000;
-    text-align: center;
-    padding-top: 80px;
-} */
-
-input, button { 
-    padding: 10px; 
-    font-size: 16px; 
-    margin: 5px; 
-}
-
-.error { 
-    color: red; 
-    font-size: 14px; 
-}
-
+/* Navbar Styles */
 .navbar {
-    
     margin-left: 10;
     display: flex;
     justify-content: space-between;
@@ -48,6 +22,11 @@ input, button {
     font-size: 24px;
     font-weight: 700;
     color: #f80e0e;
+    text-decoration: none;
+}
+
+.no-underline {
+    text-decoration: none;
 }
 
 .nav-container {
@@ -92,6 +71,7 @@ input, button {
     cursor: pointer;
 }
 
+/* Blurred Navbar */
 .blurred-navbar {
     position: fixed;
     top: 10px;
@@ -123,8 +103,9 @@ input, button {
     font-size: 15px;
     padding: 3px 10px;
 }
- /* Responsive styles */
- @media screen and (max-width: 1000px) {
+
+/* Responsive styles for navbar */
+@media screen and (max-width: 1000px) {
     .navbar {
         padding: 2%;
     }
@@ -162,55 +143,9 @@ input, button {
     .blurred-navbar {
         width: 80%;
     }
-    
-    .text-image > div,
-    .text-image img {
-        flex: 100%;
-    }
-}
-
-@media (max-width: 768px) {
-    
-    
-    .nav-buttons {
-        display: flex;
-    }
-    
-    .form-container {
-        width: 90%;
-    }
-    
-    .text-image {
-        flex-direction: column;
-    }
-    
-    .text-image > div {
-        width: 100%;
-        text-align: center;
-    }
-    
-    .text-image img {
-        width: 100%;
-        margin-top: 20px;
-    }
 }
 
 @media (max-width: 600px) {
-    footer {
-        font-size: 12px;
-        padding: 15px;
-    }
-    
-    .footer-links {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-    
-    .footer-contact p {
-        font-size: 12px;
-    }
-    
     .nav-links a {
         padding: 4px 6px;
         font-size: 13px;
@@ -221,65 +156,3 @@ input, button {
         margin-left: 10%;
     }
 }
-/*login buton */ 
-.cta {
-  
-    position: relative;
-    margin: auto;
-    padding: 12px 18px;
-    transition: all 0.2s ease;
-    border: none;
-    background: none;
-    cursor: pointer;
-  }
-  
-  .cta:before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    display: block;
-    border-radius: 50px;
-    background: #b1dae7;
-    width: 45px;
-    height: 45px;
-    transition: all 0.3s ease;
-  }
-  
-  .cta span {
-    position: relative;
-    font-family: "Ubuntu", sans-serif;
-    font-size: 18px;
-    font-weight: 700;
-    letter-spacing: 0.05em;
-    color: #234567;
-  }
-  .cta:hover span{
-  color: #f4f2f2;
-  }
-  
-  .cta svg {
-    position: relative;
-    top: 0;
-    margin-left: 10px;
-    fill: none;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    stroke: #234567;
-    stroke-width: 2;
-    transform: translateX(-5px);
-    transition: all 0.3s ease;
-  }
-  
-  .cta:hover:before {
-    width: 100%;
-    background: #ff6f61;
-  }
-  
-  .cta:hover svg {
-    transform: translateX(0);
-  }
-  
-  .cta:active {
-    transform: scale(0.95);
-  }

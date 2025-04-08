@@ -20,22 +20,7 @@
       --card-shadow: 0 15px 35px rgba(50, 50, 93, 0.1), 0 5px 15px rgba(0, 0, 0, 0.07);
     }
     
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    
-    body {
-      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
-      background-color: var(--secondary);
-      color: var(--dark);
-      line-height: 1.6;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-    }
-
+   
         .container {
             width: 90%;
             margin: 80px auto 0; /* Added top margin to account for navbar */
@@ -276,19 +261,26 @@
   <!-- Navbar -->
   <header class="navbar" id="navbar">
     <div class="menu-toggle" id="menuToggle">☰</div>
-    <div class="logo">ReZap</div>
+    <a href="home.html" class="no-underline"> <div class="logo">ReZap</div></a>
     <div class="nav-container" id="navContainer">
         <nav class="nav-links">
             <a href="home.html" onclick="handleHomeClick()">Home</a>
             <a href="plans.html">Plans</a>
-            <!-- <a href="#recharge">Recharge</a> -->
+         
             <a href="offers.html">Offers</a>
             <a href="wallet.html">Wallet</a>
             <a href="support.html">Support</a>
         </nav>
     </div>
-    
- 
+    <a href="login.html" id="loginNav">
+        <button class="cta">
+            <span><b>Login</b></span>
+            <svg width="15px" height="10px" viewBox="0 0 13 10">
+                <path d="M1,5 L11,5"></path>
+                <polyline points="8 1 12 5 8 9"></polyline>
+            </svg>
+        </button>
+    </a>
     <a href="profile.html" id="profileNav" style="display:none;">
         <button class="cta">
             <span><b>Profile</b></span>
@@ -298,44 +290,21 @@
             </svg>
         </button>
     </a>
+ 
 </header>
 
 <header class="blurred-navbar" id="blurredNavbar">
     <nav class="nav-links">
         <a href="home.html" onclick="handleHomeClick()">Home</a>
         <a href="plans.html">Plans</a>
-        <!-- <a href="#recharge">Recharge</a> -->
+        
         <a href="offers.html">Offers</a>
         <a href="wallet.html">Wallet</a>
         <a href="support.html">Support</a>
     </nav>
 </header>
 
-<script>
-  const menuToggle = document.getElementById("menuToggle");
-  const navContainer = document.getElementById("navContainer");
-  const navbar = document.getElementById("navbar");
-  const blurredNavbar = document.getElementById("blurredNavbar");
 
-  menuToggle.addEventListener("click", function () {
-      navContainer.classList.toggle("show");
-  });
-
-  document.addEventListener("click", function (event) {
-      if (!menuToggle.contains(event.target) && !navContainer.contains(event.target)) {
-          navContainer.classList.remove("show");
-      }
-  });
-
-  window.addEventListener("scroll", function () {
-      if (window.scrollY > 50) {
-          navbar.classList.add("hidden");
-          blurredNavbar.classList.add("show");
-      } else {
-          navbar.classList.remove("hidden");
-          blurredNavbar.classList.remove("show");
-      }
-  });</script>
     <div class="container">
         <h1 class="heading">Special Offers</h1>
         <div class="card-container">
@@ -497,42 +466,7 @@
             margin-top: 10px;
         }
     </style>
-    <script>
-        
-
-    document.addEventListener("DOMContentLoaded", function () {
-    updateNavButton(); // Call function to update the button on page load
-});
-
-function updateNavButton() {
-    const navButton = document.getElementById("navButton");
-    const isLoggedIn = localStorage.getItem("isLoggedIn"); // Check login status
-
-    if (isLoggedIn === "true") {
-        navButton.innerHTML = "<span><b>Profile</b></span>";
-        navButton.onclick = function () {
-            window.location.href = "profile.html"; // Redirect to Profile Page
-        };
-    } else {
-        navButton.innerHTML = "<span><b>Login</b></span>";
-        navButton.onclick = function () {
-            window.location.href = "login.html"; // Redirect to Login Page
-        };
-    }
-}
-
-function loginUser() {
-    localStorage.setItem("isLoggedIn", "true"); // Store login status
-    updateNavButton(); // Update button
-    window.location.href = "home.html"; // Redirect to home after login
-}
-
-function logoutUser() {
-    localStorage.removeItem("isLoggedIn"); // Clear login status
-    updateNavButton(); // Update button
-    window.location.href = "home.html"; // Redirect to home after logout
-}
-    </script>
+    <script src="navbar.js"></script>
     <button id="backToTop">↑</button>
 
     <script>

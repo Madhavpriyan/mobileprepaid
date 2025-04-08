@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../css/login.css">
+  <script src="../js/login.js"></script>
+</head>
+<body>
+  <div class="background-animations">
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
+  </div>
+
+  <nav>
+    <a href="home.html" onclick="handleHomeClick()">
+      <i class="fas fa-home"></i>
+      <span>Home</span>
+    </a>
+  </nav>
+
+  <div class="container">
+    <div class="login-card">
+      <h1>Welcome Back</h1>
+      <p class="subtitle">Login with your mobile number</p>
+      
+      <div class="input-group">
+        <i class="fas fa-mobile-alt"></i>
+        <input 
+          type="text" 
+          id="loginPhoneNumber" 
+          placeholder="Enter 10-digit number" 
+          maxlength="10" 
+          oninput="validateLoginNumber(this)"
+        >
+        <div id="loginPhoneError" class="error"></div>
+      </div>
+
+      <button class="btn" onclick="sendOTP()">
+        Send OTP
+      </button>
+    </div>
+  </div>
+
+  <!-- OTP Popup -->
+  <div id="otpOverlay"></div>
+  <div id="otpPopup">
+    <button class="close" onclick="closeOTPPopup()">
+      <i class="fas fa-times"></i>
+    </button>
+    <h2>Enter OTP</h2>
+    <p>We've sent a verification code to your mobile number</p>
+    
+    <div class="input-group">
+      <i class="fas fa-key"></i>
+      <input 
+        type="text" 
+        id="otpInput" 
+        placeholder="Enter 6-digit OTP" 
+        maxlength="6" 
+        oninput="validateOTP(this)"
+      >
+      <div id="otpError" class="error"></div>
+    </div>
+    <button class="btn" onclick="verifyOTP()">Verify OTP</button>
+  </div>
+
+  <!-- Success Message -->
+  <div id="successMessage">
+    <i class="fas fa-check-circle"></i>
+    <span>Login successful!</span>
+  </div>
+
+ 
+</body>
+</html>
